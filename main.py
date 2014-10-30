@@ -22,12 +22,8 @@ class Workload(QtGui.QMainWindow):
         self.show()
 
         self.ui.taskList.keyReleaseEvent = self.getKeysOnList
-        k = QtGui.QShortcut(self)
-        k.setKey("Return")
-        k.activated.connect(self.addTask)
-        k = QtGui.QShortcut(self)
-        k.setKey("Enter")
-        k.activated.connect(self.addTask)
+        self.ui.taskInput.keyReleaseEvent= self.getKeysOnInput
+       
         self.ui.taskList.setColumnWidth(0, 20)
         self.currentContext = 1  # tymczasowo
 
@@ -56,7 +52,7 @@ class Workload(QtGui.QMainWindow):
     def createTaskItem(self, t, taskid=None, priority=0):
         print(priority)
         item = QtGui.QTreeWidgetItem(["", t])
-        item.setData(0, 32, taskid)
+        item.setData(0, 32, taskid) 
         item.setSizeHint(0, QtCore.QSize(0, 22))
         self.ui.taskList.addTopLevelItem(item)
 
@@ -65,12 +61,11 @@ class Workload(QtGui.QMainWindow):
 
     def loadTasksList(self, archived=False):
         for i in self.db.getTasks(self.currentContext):
-            self.createTaskItem(i[1], i[0])
+            self.createTaskItem(i[1], i[0],i[2])
 
     def deleteSelectedTask(self, force=False):
-        selectedItems = self.ui.taskList.selectedItems()
-        if len(selectedItems) > 0:
-            item = self.ui.taskList.selectedItems()[0]
+        item = self.getSelectedItem()
+        if item:
             if force:
                 self.deleteTask(item)
             elif self.questionPopup("Delete task",
@@ -78,9 +73,24 @@ class Workload(QtGui.QMainWindow):
                 self.deleteTask(item)
 
     def deleteTask(self, item):
-            self.db.deleteTask(item.data(0, 32))
-            index = self.ui.taskList.indexOfTopLevelItem(item)
-            self.ui.taskList.takeTopLevelItem(index)
+        self.db.deleteTask(item.data(0, 32))
+        index = self.ui.taskList.indexOfTopLevelItem(item)
+        self.ui.taskList.takeTopLevelItem(index)
+        
+    def setTaskPriority(self,priority):
+        item = self.getSelectedItem()
+        if item:
+            print(priority)
+            self.db.setTaskPriority(item.data(0, 32),priority)
+            # TODO: zmienic priority w itemie - Jasiu do boju!
+        
+    def getSelectedItem(self):
+        selectedItems = self.ui.taskList.selectedItems()
+        if len(selectedItems) > 0:
+            item = self.ui.taskList.selectedItems()[0]
+            return item
+        else:
+            return False
 
     # SHORTCUTS AND KEYBOARD EVENTS RELATED ACTIONS
     def getKeysOnList(self, e):
@@ -90,6 +100,13 @@ class Workload(QtGui.QMainWindow):
             if (QtCore.Qt.ShiftModifier & e.modifiers()):
                 force = True
             self.deleteSelectedTask(force)
+        elif e.key()>48 and e.key()<54:
+            self.setTaskPriority(e.key()-48)
+        
+            
+    def getKeysOnInput(self, e):
+        if e.key()==16777221 or e.key()==16777220:  # enter/return
+            self.addTask()
 
     #ADDITIONAL FUNTIONS
     def questionPopup(self, title, msg):
