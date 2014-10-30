@@ -94,14 +94,13 @@ class Workload(QtGui.QMainWindow):
                 self.setPriorityColor(item, priority)
                 item.setText(0,str(priority))
                 self.ui.taskList.sortItems(0,QtCore.Qt.AscendingOrder)
-            
+                
     
     def setPriorityColor(self,item,priority):
-        colors=["#98DCEB","#910000","#E83F3F","#FFC582","#F2E63D","#8EDB84"]
+        colors=["#98DCEB","#BD1515","#ED1B0C","#F2920C","#F2E63D","#8EDB84"]
         backColor = QtGui.QColor(colors[priority])  # kolor tła kolumny
         item.setBackground(0, backColor)     # (priorytet dla elementu)
-    
-            
+        item.setTextAlignment(0,QtCore.Qt.AlignCenter)    
         
     def openTask(self):
         item = self.getSelectedItem()
