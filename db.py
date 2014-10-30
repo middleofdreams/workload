@@ -14,16 +14,18 @@ class DB(object):
         now = datetime.datetime.now().isoformat()
         t = (taskname, taskpriority, context, now)
         self.c.execute("INSERT into tasks ('taskname', 'priority','context',\
-            'created') values (?,?,?,?)", t)
+            'created','closed') values (?,?,?,?,0)", t)
         self.db.commit()
         for i in self.c.execute("SELECT last_insert_rowid()"):
             return i[0]
 
-    def getTasks(self, context):
-        t = (context,)
+    def getTasks(self, context,archive=False):
+        if archive: archive=1
+        else:archive=0
+        t = (context,archive)
         tasks = []
         for i in self.c.execute("SELECT rowid,taskname,priority \
-            FROM tasks where context=?", t):
+            FROM tasks where context=? and closed=?", t):
             tasks.append(i)
         print(tasks)
         return tasks
@@ -61,7 +63,7 @@ class DB(object):
         "created" TEXT,\
         "priority" INTEGER,\
         "due" TEXT,\
-        "closed" TEXT,\
+        "closed" BOOL,\
         "closedat" TEXT,\
         "context" INTEGER NOT NULL DEFAULT (1)\
         )'

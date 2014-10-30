@@ -28,7 +28,7 @@ class Workload(QtGui.QMainWindow):
        
         self.ui.taskList.setColumnWidth(0, 20)
         self.currentContext = 1  # tymczasowo
-
+        
         self.db = DB(self)
         self.loadTasksList()
 
@@ -36,6 +36,8 @@ class Workload(QtGui.QMainWindow):
     def addTask(self):
         t = self.ui.taskInput.text().strip()
         self.ui.taskInput.clear()
+        self.enteredTasks.append(t)
+
         priority = 0
         try:
             if t[1] == ":":
@@ -118,8 +120,10 @@ class Workload(QtGui.QMainWindow):
             self.openTask()
             
     def getKeysOnInput(self, e):
+        print (e.key())
         if e.key()==16777221 or e.key()==16777220:  # enter/return
             self.addTask()
+
 
     #ADDITIONAL FUNTIONS
     def questionPopup(self, title, msg):
@@ -132,7 +136,10 @@ class Workload(QtGui.QMainWindow):
         
     def dummy(self,*args):
         pass
-
+    
+ 
+            
+        
     #WINDOWS MOVEMENT
     def mouseMoveEvent(self, e):
         try:
