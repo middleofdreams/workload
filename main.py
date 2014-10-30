@@ -3,6 +3,7 @@
 from PySide import QtGui, QtCore
 from ui.main_ui import Ui_MainWindow
 from db import DB
+from task import Task
 
 
 class Workload(QtGui.QMainWindow):
@@ -83,6 +84,10 @@ class Workload(QtGui.QMainWindow):
             print(priority)
             self.db.setTaskPriority(item.data(0, 32),priority)
             # TODO: zmienic priority w itemie - Jasiu do boju!
+    def openTask(self):
+        item = self.getSelectedItem()
+        if item:
+            Task(self,item.data(0, 32))
         
     def getSelectedItem(self):
         selectedItems = self.ui.taskList.selectedItems()
@@ -101,8 +106,9 @@ class Workload(QtGui.QMainWindow):
                 force = True
             self.deleteSelectedTask(force)
         elif e.key()>48 and e.key()<54:
-            self.setTaskPriority(e.key()-48)
-        
+            self.setTaskPriority(e.key()-48)    
+        elif e.key()==16777221 or e.key()==16777220:  # enter/return
+            self.openTask()
             
     def getKeysOnInput(self, e):
         if e.key()==16777221 or e.key()==16777220:  # enter/return

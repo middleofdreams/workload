@@ -37,4 +37,12 @@ class DB(object):
         print(t)
         self.c.execute("Update tasks set priority=? where rowid=?", t)
         self.db.commit()
-        
+     
+    def getTaskDetails(self,taskid):
+        t = (taskid,)
+        for i in self.c.execute("SELECT * from tasks where rowid=?", t):
+            columns=["name","description","created","priority","due","closed","closedat","context"]
+            task={}
+            for j in range(0,len(i)):
+                task[columns[j]]=i[j]
+            return task
