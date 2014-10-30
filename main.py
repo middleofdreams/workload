@@ -42,20 +42,20 @@ class Workload(QtGui.QMainWindow):
 
             elif t[-2] == ":":
                 priority = int(t[-1])
-                t = t[:-3]
+                t = t[:-2]
         except:
             pass
-
-        taskid = self.db.addTask(t)
+        print(priority)
+        taskid = self.db.addTask(t,priority,self.currentContext)
         self.createTaskItem(t, taskid, priority)
 
     def createTaskItem(self, t, taskid=None, priority=0):
         print(priority)
-        item = QtGui.QTreeWidgetItem(["", t])
+        item = QtGui.QTreeWidgetItem([str(priority), t])
         item.setData(0, 32, taskid) 
         item.setSizeHint(0, QtCore.QSize(0, 22))
         self.ui.taskList.addTopLevelItem(item)
-
+        # TODO: kolorki do priorytetow
         backColor = QtGui.QColor("#ff0000")  # kolor tła kolumny
         item.setBackground(0, backColor)     # (priorytet dla elementu)
 
