@@ -123,6 +123,24 @@ class Workload(QtGui.QMainWindow):
         else:
             return False
 
+    #WINDOWS MOVEMENT
+    def mouseMoveEvent(self, e):
+        try:
+            self.posx
+            self.posy
+        except:
+            self.posx=e.x()
+            self.posy=e.y()
+        y=e.globalY()-self.posy
+        x=e.globalX()-self.posx
+     
+        self.move(x,y)
+
+    def mouseReleaseEvent(self, e):
+        del(self.posx)
+        del(self.posy)
+            
+
 if __name__ == "__main__":
     import sys
     app = QtGui.QApplication(sys.argv)
