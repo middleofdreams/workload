@@ -24,6 +24,7 @@ class Workload(QtGui.QMainWindow):
 
         self.ui.taskList.keyReleaseEvent = self.getKeysOnList
         self.ui.taskInput.keyReleaseEvent= self.getKeysOnInput
+        self.ui.taskList.keyPressEvent=self.dummy
        
         self.ui.taskList.setColumnWidth(0, 20)
         self.currentContext = 1  # tymczasowo
@@ -46,12 +47,10 @@ class Workload(QtGui.QMainWindow):
                 t = t[:-2]
         except:
             pass
-        print(priority)
         taskid = self.db.addTask(t,priority,self.currentContext)
         self.createTaskItem(t, taskid, priority)
 
     def createTaskItem(self, t, taskid=None, priority=0):
-        print(priority)
         item = QtGui.QTreeWidgetItem([str(priority), t])
         item.setData(0, 32, taskid) 
         item.setSizeHint(0, QtCore.QSize(0, 22))
@@ -81,7 +80,6 @@ class Workload(QtGui.QMainWindow):
     def setTaskPriority(self,priority):
         item = self.getSelectedItem()
         if item:
-            print(priority)
             self.db.setTaskPriority(item.data(0, 32),priority)
             # TODO: zmienic priority w itemie - Jasiu do boju!
     def openTask(self):
@@ -99,7 +97,6 @@ class Workload(QtGui.QMainWindow):
 
     # SHORTCUTS AND KEYBOARD EVENTS RELATED ACTIONS
     def getKeysOnList(self, e):
-        print((e.key()))
         if e.key() == 16777223:  # delete
             force = False
             if (QtCore.Qt.ShiftModifier & e.modifiers()):
@@ -122,6 +119,9 @@ class Workload(QtGui.QMainWindow):
             return True
         else:
             return False
+        
+    def dummy(self,*args):
+        pass
 
     #WINDOWS MOVEMENT
     def mouseMoveEvent(self, e):
