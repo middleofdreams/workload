@@ -31,13 +31,14 @@ class Workload(QtGui.QMainWindow):
         
         self.db = DB(self)
         self.loadTasksList()
-
+      
+        
+        
     # TASKS RELATED ACTIONS
     def addTask(self):
         t = self.ui.taskInput.text().strip()
         self.ui.taskInput.clear()
-        self.enteredTasks.append(t)
-
+        #self.enteredTasks.append(t)        #nie wiem co to ma robic, ale psuje :/
         priority = 0
         try:
             if t[1] == ":":
@@ -52,6 +53,7 @@ class Workload(QtGui.QMainWindow):
         taskid = self.db.addTask(t,priority,self.currentContext)
         self.createTaskItem(t, taskid, priority)
 
+
     def createTaskItem(self, t, taskid=None, priority=0):
         item = QtGui.QTreeWidgetItem([str(priority), t])
         item.setData(0, 32, taskid) 
@@ -61,9 +63,11 @@ class Workload(QtGui.QMainWindow):
         self.setPriorityColor(item, priority)
         self.ui.taskList.sortItems(0,QtCore.Qt.AscendingOrder)
 
+
     def loadTasksList(self, archived=False):
         for i in self.db.getTasks(self.currentContext):
             self.createTaskItem(i[1], i[0],i[2])
+
 
     def deleteSelectedTask(self, force=False):
         item = self.getSelectedItem()
@@ -74,30 +78,36 @@ class Workload(QtGui.QMainWindow):
                 "Do you really want to delete task " + item.text(1) + "?"):
                 self.deleteTask(item)
 
+
     def deleteTask(self, item):
         self.db.deleteTask(item.data(0, 32))
         index = self.ui.taskList.indexOfTopLevelItem(item)
         self.ui.taskList.takeTopLevelItem(index)
+      
         
     def setTaskPriority(self,priority):
-        item = self.getSelectedItem()
-        if item:
-            self.db.setTaskPriority(item.data(0, 32),priority)
-            self.setPriorityColor(item, priority)
-            item.setText(0,str(priority))
-            self.ui.taskList.sortItems(0,QtCore.Qt.AscendingOrder)
+        selectedItems = self.ui.taskList.selectedItems()
+        for i in selectedItems:
+            item = i
+            if item:
+                self.db.setTaskPriority(item.data(0, 32),priority)
+                self.setPriorityColor(item, priority)
+                item.setText(0,str(priority))
+                self.ui.taskList.sortItems(0,QtCore.Qt.AscendingOrder)
             
-            # TODO: zmienic priority w itemie - Jasiu do boju!
     
     def setPriorityColor(self,item,priority):
-        colors=["#98DCEB","#F21835","#F56056","#FFC582","#FC7168","#8EDB84"]
+        colors=["#98DCEB","#910000","#E83F3F","#FFC582","#F2E63D","#8EDB84"]
         backColor = QtGui.QColor(colors[priority])  # kolor tła kolumny
         item.setBackground(0, backColor)     # (priorytet dla elementu)
+    
+            
         
     def openTask(self):
         item = self.getSelectedItem()
         if item:
             Task(self,item.data(0, 32))
+        
         
     def getSelectedItem(self):
         selectedItems = self.ui.taskList.selectedItems()
@@ -119,6 +129,7 @@ class Workload(QtGui.QMainWindow):
         elif e.key()==16777221 or e.key()==16777220:  # enter/return
             self.openTask()
             
+            
     def getKeysOnInput(self, e):
         print (e.key())
         if e.key()==16777221 or e.key()==16777220:  # enter/return
@@ -134,10 +145,9 @@ class Workload(QtGui.QMainWindow):
         else:
             return False
         
+        
     def dummy(self,*args):
         pass
-    
- 
             
         
     #WINDOWS MOVEMENT
@@ -150,8 +160,8 @@ class Workload(QtGui.QMainWindow):
             self.posy=e.y()
         y=e.globalY()-self.posy
         x=e.globalX()-self.posx
-     
         self.move(x,y)
+
 
     def mouseReleaseEvent(self, e):
         del(self.posx)

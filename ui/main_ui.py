@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'workspace/Workload/src-raw/ui/main.ui'
+# Form implementation generated from reading ui file 'main.ui'
 #
-# Created: Wed Oct 29 22:05:56 2014
+# Created: Thu Oct 30 19:39:07 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -15,6 +15,9 @@ class Ui_MainWindow(object):
         MainWindow.resize(190, 320)
         MainWindow.setMinimumSize(QtCore.QSize(190, 320))
         MainWindow.setMaximumSize(QtCore.QSize(300, 600))
+        font = QtGui.QFont()
+        font.setFamily("monofur")
+        MainWindow.setFont(font)
         MainWindow.setWindowOpacity(0.9)
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -26,20 +29,33 @@ class Ui_MainWindow(object):
         self.taskList = QtGui.QTreeWidget(self.centralwidget)
         self.taskList.setEnabled(True)
         self.taskList.setBaseSize(QtCore.QSize(0, 0))
+        font = QtGui.QFont()
+        font.setFamily("monofur")
+        self.taskList.setFont(font)
+        self.taskList.setLineWidth(2)
+        self.taskList.setMidLineWidth(1)
         self.taskList.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.taskList.setAlternatingRowColors(True)
+        self.taskList.setSelectionMode(QtGui.QAbstractItemView.ExtendedSelection)
+        self.taskList.setSelectionBehavior(QtGui.QAbstractItemView.SelectItems)
         self.taskList.setTextElideMode(QtCore.Qt.ElideLeft)
         self.taskList.setAutoExpandDelay(-1)
-        self.taskList.setIndentation(0)
+        self.taskList.setIndentation(10)
         self.taskList.setRootIsDecorated(False)
+        self.taskList.setUniformRowHeights(False)
+        self.taskList.setHeaderHidden(True)
         self.taskList.setColumnCount(2)
         self.taskList.setObjectName("taskList")
         self.taskList.header().setVisible(False)
-        self.taskList.header().setDefaultSectionSize(20)
-        self.taskList.header().setMinimumSectionSize(10)
+        self.taskList.header().setCascadingSectionResizes(False)
+        self.taskList.header().setDefaultSectionSize(26)
+        self.taskList.header().setHighlightSections(False)
+        self.taskList.header().setMinimumSectionSize(15)
+        self.taskList.header().setSortIndicatorShown(False)
         self.verticalLayout.addWidget(self.taskList)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 190, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 190, 20))
         self.menubar.setObjectName("menubar")
         self.menuFile = QtGui.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")

@@ -22,6 +22,11 @@
     <height>600</height>
    </size>
   </property>
+  <property name="font">
+   <font>
+    <family>monofur</family>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>Workload</string>
   </property>
@@ -44,8 +49,28 @@
         <height>0</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <family>monofur</family>
+       </font>
+      </property>
+      <property name="lineWidth">
+       <number>2</number>
+      </property>
+      <property name="midLineWidth">
+       <number>1</number>
+      </property>
       <property name="horizontalScrollBarPolicy">
        <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="alternatingRowColors">
+       <bool>true</bool>
+      </property>
+      <property name="selectionMode">
+       <enum>QAbstractItemView::ExtendedSelection</enum>
+      </property>
+      <property name="selectionBehavior">
+       <enum>QAbstractItemView::SelectItems</enum>
       </property>
       <property name="textElideMode">
        <enum>Qt::ElideLeft</enum>
@@ -54,10 +79,16 @@
        <number>-1</number>
       </property>
       <property name="indentation">
-       <number>0</number>
+       <number>10</number>
       </property>
       <property name="rootIsDecorated">
        <bool>false</bool>
+      </property>
+      <property name="uniformRowHeights">
+       <bool>false</bool>
+      </property>
+      <property name="headerHidden">
+       <bool>true</bool>
       </property>
       <property name="columnCount">
        <number>2</number>
@@ -65,15 +96,27 @@
       <attribute name="headerVisible">
        <bool>false</bool>
       </attribute>
+      <attribute name="headerCascadingSectionResizes">
+       <bool>false</bool>
+      </attribute>
       <attribute name="headerDefaultSectionSize">
-       <number>20</number>
+       <number>26</number>
+      </attribute>
+      <attribute name="headerHighlightSections">
+       <bool>false</bool>
       </attribute>
       <attribute name="headerMinimumSectionSize">
-       <number>10</number>
+       <number>15</number>
+      </attribute>
+      <attribute name="headerShowSortIndicator" stdset="0">
+       <bool>false</bool>
       </attribute>
       <column>
        <property name="text">
         <string>Priority</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignJustify|AlignVCenter</set>
        </property>
       </column>
       <column>
@@ -91,7 +134,7 @@
      <x>0</x>
      <y>0</y>
      <width>190</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
