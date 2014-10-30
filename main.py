@@ -56,8 +56,8 @@ class Workload(QtGui.QMainWindow):
         item.setSizeHint(0, QtCore.QSize(0, 22))
         self.ui.taskList.addTopLevelItem(item)
         # TODO: kolorki do priorytetow
-        backColor = QtGui.QColor("#ff0000")  # kolor tła kolumny
-        item.setBackground(0, backColor)     # (priorytet dla elementu)
+        self.setPriorityColor(item, priority)
+        self.ui.taskList.sortItems(0,QtCore.Qt.AscendingOrder)
 
     def loadTasksList(self, archived=False):
         for i in self.db.getTasks(self.currentContext):
@@ -81,7 +81,17 @@ class Workload(QtGui.QMainWindow):
         item = self.getSelectedItem()
         if item:
             self.db.setTaskPriority(item.data(0, 32),priority)
+            self.setPriorityColor(item, priority)
+            item.setText(0,str(priority))
+            self.ui.taskList.sortItems(0,QtCore.Qt.AscendingOrder)
+            
             # TODO: zmienic priority w itemie - Jasiu do boju!
+    
+    def setPriorityColor(self,item,priority):
+        colors=["#98DCEB","#F21835","#F56056","#FFC582","#FC7168","#8EDB84"]
+        backColor = QtGui.QColor(colors[priority])  # kolor tła kolumny
+        item.setBackground(0, backColor)     # (priorytet dla elementu)
+        
     def openTask(self):
         item = self.getSelectedItem()
         if item:
