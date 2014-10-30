@@ -8,6 +8,7 @@ class DB(object):
         #self.start()
         self.db = sqlite3.connect("workload.db")
         self.c = self.db.cursor()
+        self.checkDB()
 
     def addTask(self, taskname, taskpriority=5, context=1):
         now = datetime.datetime.now().isoformat()
@@ -46,3 +47,27 @@ class DB(object):
             for j in range(0,len(i)):
                 task[columns[j]]=i[j]
             return task
+    
+    def checkDB(self):
+        try:
+            self.c.execute("Select * from tasks limit 1")
+        except sqlite3.OperationalError:
+            self.createDB()
+
+    def createDB(self):
+        query='CREATE TABLE tasks (\
+        "taskname" TEXT NOT NULL,\
+        "taskdescription" TEXT,\
+        "created" TEXT,\
+        "priority" INTEGER,\
+        "due" TEXT,\
+        "closed" TEXT,\
+        "closedat" TEXT,\
+        "context" INTEGER NOT NULL DEFAULT (1)\
+        )'
+        self.c.execute(query)
+        
+        query='CREATE TABLE "contexts" (\
+        "contextname" TEXT)'
+        self.c.execute(query)
+        self.db.commit()
