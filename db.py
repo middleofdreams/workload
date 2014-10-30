@@ -19,5 +19,10 @@ class DB(object):
         t=(context,)
         tasks=[]
         for i in self.c.execute("SELECT rowid,taskname,priority FROM tasks where context=?",t): tasks.append(i)
-        print tasks
         return tasks
+    
+    def deleteTask(self,taskid):
+        t=(taskid,)
+        self.c.execute("Delete from tasks where rowid=?",t)
+        self.db.commit()
+        print(taskid)

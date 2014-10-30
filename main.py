@@ -17,6 +17,8 @@ class Workload(QtGui.QMainWindow):
         self.move(10,(desktop.height()/2)-(self.height()))
         
         self.show()
+        
+        self.ui.taskList.keyReleaseEvent=self.getKeysOnList
         k = QtGui.QShortcut(self)
         k.setKey("Return")
         k.activated.connect(self.addTask)
@@ -31,16 +33,30 @@ class Workload(QtGui.QMainWindow):
         self.loadTasksList()
 
         
-        
+    # TASKS RELATED ACTIONS   
     def addTask(self):
-        t=self.ui.taskInput.text()
+        t=self.ui.taskInput.text().strip()
         self.ui.taskInput.clear()
-        taskid=self.db.addTask(str(t))
-        self.createTaskItem(t, taskid)
+        priority=0
+        try:
+            if t[1]==":":
+                priority=int(t[0])
+                t=t[2:]
+            
+            elif t[-2]==":":
+                priority=int(t[-1])
+                t=t[:-3]
+        except:
+            pass
+        
+        taskid=self.db.addTask(t)
+        self.createTaskItem(t, taskid,priority)
 
         
-    def createTaskItem(self,t,id=None):                 #trzeba rozszerzyc o priorytet
+    def createTaskItem(self,t,taskid=None,priority=0):
+        print(priority)
         item=QtGui.QTreeWidgetItem(["",t])
+        item.setData(0,32,taskid)
         item.setSizeHint(0, QtCore.QSize(0,22))         #zmieniona wysokość wiersza
         self.ui.taskList.addTopLevelItem(item)
         
@@ -62,7 +78,50 @@ class Workload(QtGui.QMainWindow):
             self.createTaskItem(i[1], i[0])
                                                 
                                                 
-                                                
+                                       
+  
+            
+    def deleteSelectedTask(self,force=False):
+        selectedItems=self.ui.taskList.selectedItems()
+        if len(selectedItems)>0:
+            item=self.ui.taskList.selectedItems()[0]
+            if force:self.deleteTask(item)
+            elif self.questionPopup("Delete task","Do you really want to delete task "+item.text(1)+"?"):
+                self.deleteTask(item)
+               
+    
+    def deleteTask(self,item):
+            self.db.deleteTask(item.data(0,32))
+            index=self.ui.taskList.indexOfTopLevelItem(item)
+            self.ui.taskList.takeTopLevelItem(index)
+            
+            
+     
+    # SHORTCUTS AND KEYBOARD EVENTS RELATED ACTIONS
+            
+    def getKeysOnList(self,e):
+        print(e.key())
+        if e.key()==16777223: #delete
+            force=False
+            print(e.modifiers)
+            if (QtCore.Qt.ShiftModifier & e.modifiers()):
+                force=True
+            self.deleteSelectedTask(force)    
+            
+            
+            
+            
+            
+            
+    #ADDITIONAL FUNTIONS     
+            
+            
+    def questionPopup(self,title,msg):
+        resp=QtGui.QMessageBox.question(self,title,msg,buttons=QtGui.QMessageBox.Ok|QtGui.QMessageBox.Cancel)
+        if resp==QtGui.QMessageBox.Ok:
+            return True
+        else:
+            return False
                                                 
 if __name__ == "__main__":
     import sys
