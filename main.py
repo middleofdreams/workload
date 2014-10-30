@@ -17,14 +17,17 @@ class Workload(QtGui.QMainWindow):
                             | QtCore.Qt.WindowStaysOnTopHint)
 
         desktop = QtGui.QApplication.desktop()
-
-        self.move(10, (desktop.height() / 2) - (self.height()))
+        if desktop.height() > 800:
+            self.move(10, (desktop.height() / 2) - (self.height()))
+        else:
+            self.move(10, 10)
 
         self.show()
 
         self.ui.taskList.keyReleaseEvent = self.getKeysOnList
         self.ui.taskInput.keyReleaseEvent= self.getKeysOnInput
         self.ui.taskList.keyPressEvent=self.dummy
+        self.ui.taskList.itemDoubleClicked.connect(self.openTask)
        
         self.ui.taskList.setColumnWidth(0, 20)
         self.currentContext = 1  # tymczasowo
@@ -38,7 +41,6 @@ class Workload(QtGui.QMainWindow):
     def addTask(self):
         t = self.ui.taskInput.text().strip()
         self.ui.taskInput.clear()
-        #self.enteredTasks.append(t)        #nie wiem co to ma robic, ale psuje :/
         priority = 0
         try:
             if t[1] == ":":
