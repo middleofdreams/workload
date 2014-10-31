@@ -31,7 +31,7 @@
    <string>Workload</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../res.qrc">
+   <iconset>
     <normaloff>:/icon/icon.png</normaloff>:/icon/icon.png</iconset>
   </property>
   <property name="windowOpacity">
@@ -77,7 +77,7 @@
        <enum>QAbstractItemView::ContiguousSelection</enum>
       </property>
       <property name="selectionBehavior">
-       <enum>QAbstractItemView::SelectItems</enum>
+       <enum>QAbstractItemView::SelectRows</enum>
       </property>
       <property name="textElideMode">
        <enum>Qt::ElideLeft</enum>
@@ -180,8 +180,6 @@
    </property>
   </action>
  </widget>
- <resources>
-  <include location="../res.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

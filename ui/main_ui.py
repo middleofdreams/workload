@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created: Fri Oct 31 10:04:21 2014
+# Created: Fri Oct 31 13:34:18 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -18,6 +18,9 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setFamily("monofur")
         MainWindow.setFont(font)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/icon/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        MainWindow.setWindowIcon(icon)
         MainWindow.setWindowOpacity(0.9)
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -38,7 +41,7 @@ class Ui_MainWindow(object):
         self.taskList.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.taskList.setAlternatingRowColors(True)
         self.taskList.setSelectionMode(QtGui.QAbstractItemView.ContiguousSelection)
-        self.taskList.setSelectionBehavior(QtGui.QAbstractItemView.SelectColumns)
+        self.taskList.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
         self.taskList.setTextElideMode(QtCore.Qt.ElideLeft)
         self.taskList.setAutoExpandDelay(-1)
         self.taskList.setIndentation(10)

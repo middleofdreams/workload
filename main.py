@@ -138,11 +138,7 @@ class Workload(QtGui.QMainWindow):
             return item
         else:
             return False
-        
-    #def itemSelected(self):
-    #    for item in self.ui.taskList.selectedItems():
-    #        self.ui.taskList.drawRow
-            
+   
 
     # SHORTCUTS AND KEYBOARD EVENTS RELATED ACTIONS
     def getKeysOnList(self, e):
@@ -199,7 +195,7 @@ class Workload(QtGui.QMainWindow):
     def adjustHeight(self,downSize=False):
         print(QtGui.QApplication.desktop().height())
         tasks=self.db.getTasks(self.currentContext)
-        desiredHeight=22*len(tasks)+self.height()-self.ui.taskList.height()+22
+        desiredHeight=22*len(tasks)+self.height()-self.ui.taskList.height()+2
         if ( desiredHeight>self.height() or downSize ) and desiredHeight<QtGui.QApplication.desktop().height():
             self.resize(self.x(),desiredHeight)
             
