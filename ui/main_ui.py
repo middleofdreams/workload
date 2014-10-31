@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created: Fri Oct 31 13:34:18 2014
+# Created: Fri Oct 31 16:31:13 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,7 +12,12 @@ from PySide import QtCore, QtGui
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(190, 320)
+        MainWindow.resize(300, 320)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Ignored, QtGui.QSizePolicy.Ignored)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
+        MainWindow.setSizePolicy(sizePolicy)
         MainWindow.setMinimumSize(QtCore.QSize(190, 320))
         MainWindow.setMaximumSize(QtCore.QSize(300, 600))
         font = QtGui.QFont()
@@ -23,8 +28,11 @@ class Ui_MainWindow(object):
         MainWindow.setWindowIcon(icon)
         MainWindow.setWindowOpacity(0.9)
         self.centralwidget = QtGui.QWidget(MainWindow)
+        self.centralwidget.setAutoFillBackground(False)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtGui.QVBoxLayout(self.centralwidget)
+        self.verticalLayout.setSpacing(3)
+        self.verticalLayout.setContentsMargins(4, 4, 4, 4)
         self.verticalLayout.setObjectName("verticalLayout")
         self.taskInput = QtGui.QLineEdit(self.centralwidget)
         self.taskInput.setObjectName("taskInput")
@@ -60,7 +68,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.taskList)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 190, 19))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 300, 20))
         self.menubar.setObjectName("menubar")
         self.menuFile = QtGui.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")

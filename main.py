@@ -13,18 +13,17 @@ class Workload(QtGui.QMainWindow):
         '''main window init'''
         QtGui.QMainWindow.__init__(self)
         self.tray=Trayicon(self)   
-
+        
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint
                             | QtCore.Qt.WindowStaysOnTopHint)
-
         desktop = QtGui.QApplication.desktop()
         if desktop.height() > 800:
             self.move(10, (desktop.height() / 2) - (self.height()))
         else:
             self.move(10, 10)
-
+        
         self.show()
 
         self.ui.taskList.keyPressEvent = self.getKeysOnList
@@ -35,7 +34,7 @@ class Workload(QtGui.QMainWindow):
         sc = QtGui.QShortcut(self)
         sc.setKey("Escape")
         sc.activated.connect(self.closeEvent)
-       
+        
         self.ui.taskList.setColumnWidth(0, 20)
         self.currentContext = 1  # tymczasowo
         self.taskOpened=False
@@ -193,11 +192,10 @@ class Workload(QtGui.QMainWindow):
             pass
         
     def adjustHeight(self,downSize=False):
-        print(QtGui.QApplication.desktop().height())
         tasks=self.db.getTasks(self.currentContext)
         desiredHeight=22*len(tasks)+self.height()-self.ui.taskList.height()+2
         if ( desiredHeight>self.height() or downSize ) and desiredHeight<QtGui.QApplication.desktop().height():
-            self.resize(self.x(),desiredHeight)
+            self.resize(self.width(),desiredHeight)
             
             
     def closeEvent(self, e=None):
