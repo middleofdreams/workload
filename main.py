@@ -40,6 +40,8 @@ class Workload(QtGui.QMainWindow):
     # TASKS RELATED ACTIONS
     def addTask(self):
         t = self.ui.taskInput.text().strip()
+        if t =="":
+            return False
         self.ui.taskInput.clear()
         priority = 0
         try:
@@ -71,9 +73,11 @@ class Workload(QtGui.QMainWindow):
             self.createTaskItem(i[1], i[0],i[2])
 
 
-    def deleteSelectedTask(self, force=False):
-        item = self.getSelectedItem()
-        if item:
+    def deleteSelectedTasks(self, force=False):
+        selectedItems = self.ui.taskList.selectedItems()
+        tasks=[]
+        deleteTask=False
+        for item in selectedItems:
             if force:
                 self.deleteTask(item)
             elif self.questionPopup("Delete task",
@@ -85,17 +89,15 @@ class Workload(QtGui.QMainWindow):
         self.db.deleteTask(item.data(0, 32))
         index = self.ui.taskList.indexOfTopLevelItem(item)
         self.ui.taskList.takeTopLevelItem(index)
-      
+        
         
     def setTaskPriority(self,priority):
         selectedItems = self.ui.taskList.selectedItems()
-        for i in selectedItems:
-            item = i
-            if item:
-                self.db.setTaskPriority(item.data(0, 32),priority)
-                self.setPriorityColor(item, priority)
-                item.setText(0,str(priority))
-                self.ui.taskList.sortItems(0,QtCore.Qt.AscendingOrder)
+        for item in selectedItems:
+            self.db.setTaskPriority(item.data(0, 32),priority)
+            self.setPriorityColor(item, priority)
+            item.setText(0,str(priority))
+            self.ui.taskList.sortItems(0,QtCore.Qt.AscendingOrder)
                 
     
     def setPriorityColor(self,item,priority):
@@ -124,7 +126,7 @@ class Workload(QtGui.QMainWindow):
             force = False
             if (QtCore.Qt.ShiftModifier & e.modifiers()):
                 force = True
-            self.deleteSelectedTask(force)
+            self.deleteSelectedTasks(force)
         elif e.key()>48 and e.key()<54:
             self.setTaskPriority(e.key()-48)    
         elif e.key()==16777221 or e.key()==16777220:  # enter/return
