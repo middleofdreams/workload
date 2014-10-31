@@ -24,13 +24,14 @@ class Workload(QtGui.QMainWindow):
 
         self.show()
 
-        self.ui.taskList.keyReleaseEvent = self.getKeysOnList
-        self.ui.taskInput.keyReleaseEvent= self.getKeysOnInput
-        self.ui.taskList.keyPressEvent=self.dummy
-        self.ui.taskList.itemDoubleClicked.connect(self.openTask)
+        self.ui.taskList.keyPressEvent = self.getKeysOnList
+        self.ui.taskInput.keyPressEvent= self.getKeysOnInput
+        self.ui.taskList.itemSelectionChanged.connect(self.itemSelected)
+        self.ui.taskList.activated.connect(self.openTask)
        
         self.ui.taskList.setColumnWidth(0, 20)
         self.currentContext = 1  # tymczasowo
+        self.taskOpened=False
         
         self.db = DB(self)
         self.loadTasksList()
@@ -47,15 +48,22 @@ class Workload(QtGui.QMainWindow):
         try:
             if t[1] == ":":
                 priority = int(t[0])
-                t = t[2:]
+                if priority<6:
+                    t = t[2:]
+                else:
+                    priority = 0
 
             elif t[-2] == ":":
                 priority = int(t[-1])
-                t = t[:-2]
+                if priority<6:
+                    t = t[:-2]
+                else:
+                    priority = 0
         except:
             pass
         taskid = self.db.addTask(t,priority,self.currentContext)
         self.createTaskItem(t, taskid, priority)
+        self.adjustHeight()
 
 
     def createTaskItem(self, t, taskid=None, priority=0):
@@ -70,18 +78,21 @@ class Workload(QtGui.QMainWindow):
     def loadTasksList(self, archived=False):
         for i in self.db.getTasks(self.currentContext):
             self.createTaskItem(i[1], i[0],i[2])
-
+        self.adjustHeight()
+            
 
     def deleteSelectedTasks(self, force=False):
         selectedItems = self.ui.taskList.selectedItems()
-        tasks = []
-        for item in selectedItems:
-            tasks.append(item)
-        if force:
-            self.deleteTasks(tasks)
-        elif self.questionPopup("Delete task",
-            "Do you really want to delete selected  task(s) ?"):
-            self.deleteTasks(tasks)
+        if len(selectedItems)>0:
+            tasks = []
+            for item in selectedItems:
+                tasks.append(item)
+            if force:
+                self.deleteTasks(tasks)
+            elif self.questionPopup("Delete task",
+                "Do you really want to delete selected  task(s) ?"):
+                self.deleteTasks(tasks)
+            self.adjustHeight(downSize=True)
 
 
     def deleteTasks(self, tasks):
@@ -107,10 +118,11 @@ class Workload(QtGui.QMainWindow):
         item.setTextAlignment(0,QtCore.Qt.AlignCenter)    
         
     def openTask(self):
-        item = self.getSelectedItem()
-        if item:
-            Task(self,item.data(0, 32))
-        
+        if not self.taskOpened:
+            item = self.getSelectedItem()
+            if item:
+                Task(self,item.data(0, 32))
+            
         
     def getSelectedItem(self):
         selectedItems = self.ui.taskList.selectedItems()
@@ -119,6 +131,11 @@ class Workload(QtGui.QMainWindow):
             return item
         else:
             return False
+        
+    def itemSelected(self):
+        for item in self.ui.taskList.selectedItems():
+            print(item)
+            
 
     # SHORTCUTS AND KEYBOARD EVENTS RELATED ACTIONS
     def getKeysOnList(self, e):
@@ -137,6 +154,8 @@ class Workload(QtGui.QMainWindow):
         print (e.key())
         if e.key()==16777221 or e.key()==16777220:  # enter/return
             self.addTask()
+        else:
+            QtGui.QLineEdit.keyPressEvent(self.ui.taskInput,e)
 
 
     #ADDITIONAL FUNTIONS
@@ -148,10 +167,7 @@ class Workload(QtGui.QMainWindow):
         else:
             return False
         
-        
-    def dummy(self,*args):
-        pass
-            
+
         
     #WINDOWS MOVEMENT
     def mouseMoveEvent(self, e):
@@ -167,8 +183,19 @@ class Workload(QtGui.QMainWindow):
 
 
     def mouseReleaseEvent(self, e):
-        del(self.posx)
-        del(self.posy)
+        try:
+            del(self.posx)
+            del(self.posy)
+        except:
+            pass
+        
+    def adjustHeight(self,downSize=False):
+        print(QtGui.QApplication.desktop().height())
+        tasks=self.db.getTasks(self.currentContext)
+        desiredHeight=22*len(tasks)+self.height()-self.ui.taskList.height()+22
+        if ( desiredHeight>self.height() or downSize ) and desiredHeight<QtGui.QApplication.desktop().height():
+            self.resize(self.x(),desiredHeight)
+  
             
 
 if __name__ == "__main__":

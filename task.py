@@ -7,6 +7,7 @@ class Task(QtGui.QDialog):
 
     def __init__(self,parent,taskid):
         '''main window init'''
+        parent.taskOpened=True
         QtGui.QDialog.__init__(self)
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
@@ -24,13 +25,16 @@ class Task(QtGui.QDialog):
         
         self.move(self.parent.pos())
 
-        self.exec_()
+        r=self.exec_()
+        parent.taskOpened=False
         
     def setPriorityText(self,priority):
         priorities=["Not set!","Now","Next","Later","Someday","Awaiting"]
         self.ui.priorityText.setText(priorities[priority])
         
 
+    def closeEvent(self,e):
+        print(e)
         
     def mouseMoveEvent(self, e):
         try:
@@ -45,6 +49,9 @@ class Task(QtGui.QDialog):
         self.move(x,y)
 
     def mouseReleaseEvent(self, e):
-        del(self.posx)
-        del(self.posy)
-            
+        try:
+            del(self.posx)
+            del(self.posy)
+        except:
+            pass
+                
