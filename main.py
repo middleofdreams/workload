@@ -9,7 +9,7 @@ import os
 
 class Workload(QtGui.QMainWindow):
 
-    def __init__(self):
+    def __init__(self,app):
         '''main window init'''
         QtGui.QMainWindow.__init__(self)
         self.tray=Trayicon(self)   
@@ -33,6 +33,8 @@ class Workload(QtGui.QMainWindow):
         sc = QtGui.QShortcut(self)
         sc.setKey("Escape")
         sc.activated.connect(self.closeEvent)
+        
+        self.ui.actionExit.triggered.connect(app.quit)
         
         self.ui.taskList.setColumnWidth(0, 20)
         self.currentContext = 1  # tymczasowo
@@ -217,7 +219,7 @@ class Trayicon(QtGui.QSystemTrayIcon):
 if __name__ == "__main__":
     import sys
     app = QtGui.QApplication(sys.argv)
-    myapp = Workload()
+    myapp = Workload(app)
 
     res = app.exec_()
     sys.exit()
