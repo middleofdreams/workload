@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created: Fri Oct 31 17:28:33 2014
+# Created: Fri Oct 31 20:24:31 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -45,9 +45,13 @@ class Ui_MainWindow(object):
         self.taskList.setFont(font)
         self.taskList.setAcceptDrops(True)
         self.taskList.setAutoFillBackground(False)
-        self.taskList.setLineWidth(2)
+        self.taskList.setFrameShape(QtGui.QFrame.Panel)
+        self.taskList.setFrameShadow(QtGui.QFrame.Plain)
+        self.taskList.setLineWidth(1)
         self.taskList.setMidLineWidth(1)
         self.taskList.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.taskList.setDragDropMode(QtGui.QAbstractItemView.DropOnly)
+        self.taskList.setDefaultDropAction(QtCore.Qt.IgnoreAction)
         self.taskList.setAlternatingRowColors(True)
         self.taskList.setSelectionMode(QtGui.QAbstractItemView.ContiguousSelection)
         self.taskList.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
@@ -85,7 +89,7 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
         self.actionExit = QtGui.QAction(MainWindow)
-        self.actionExit.setMenuRole(QtGui.QAction.QuitRole)
+        self.actionExit.setMenuRole(QtGui.QAction.NoRole)
         self.actionExit.setObjectName("actionExit")
         self.actionDefault = QtGui.QAction(MainWindow)
         self.actionDefault.setCheckable(True)
@@ -114,6 +118,8 @@ class Ui_MainWindow(object):
         self.actionAdd_New_Context.setObjectName("actionAdd_New_Context")
         self.actionAbout_2 = QtGui.QAction(MainWindow)
         self.actionAbout_2.setObjectName("actionAbout_2")
+        self.actionRemove_Context = QtGui.QAction(MainWindow)
+        self.actionRemove_Context.setObjectName("actionRemove_Context")
         self.menuFile.addAction(self.actionImport_tasklist)
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionExit)
@@ -126,7 +132,9 @@ class Ui_MainWindow(object):
         self.menuContext.addAction(self.actionDefault)
         self.menuContext.addAction(self.actionWork)
         self.menuContext.addAction(self.actionHome)
+        self.menuContext.addSeparator()
         self.menuContext.addAction(self.actionAdd_New_Context)
+        self.menuContext.addAction(self.actionRemove_Context)
         self.menuHelp.addAction(self.actionAbout_2)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuTask.menuAction())
@@ -150,11 +158,12 @@ class Ui_MainWindow(object):
         self.actionImport_tasklist.setText(QtGui.QApplication.translate("MainWindow", "Import tasklist", None, QtGui.QApplication.UnicodeUTF8))
         self.actionAdd_new.setText(QtGui.QApplication.translate("MainWindow", "Add new", None, QtGui.QApplication.UnicodeUTF8))
         self.actionDelete.setText(QtGui.QApplication.translate("MainWindow", "Delete", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionComplete.setText(QtGui.QApplication.translate("MainWindow", "Close", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionComplete.setText(QtGui.QApplication.translate("MainWindow", "Complete", None, QtGui.QApplication.UnicodeUTF8))
         self.actionHistory.setText(QtGui.QApplication.translate("MainWindow", "History", None, QtGui.QApplication.UnicodeUTF8))
         self.actionEdit.setText(QtGui.QApplication.translate("MainWindow", "Edit", None, QtGui.QApplication.UnicodeUTF8))
         self.actionWork.setText(QtGui.QApplication.translate("MainWindow", "Work", None, QtGui.QApplication.UnicodeUTF8))
         self.actionHome.setText(QtGui.QApplication.translate("MainWindow", "Home", None, QtGui.QApplication.UnicodeUTF8))
         self.actionAdd_New_Context.setText(QtGui.QApplication.translate("MainWindow", "Add New Context", None, QtGui.QApplication.UnicodeUTF8))
         self.actionAbout_2.setText(QtGui.QApplication.translate("MainWindow", "About", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionRemove_Context.setText(QtGui.QApplication.translate("MainWindow", "Remove Context", None, QtGui.QApplication.UnicodeUTF8))
 

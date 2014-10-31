@@ -79,14 +79,26 @@
       <property name="autoFillBackground">
        <bool>false</bool>
       </property>
+      <property name="frameShape">
+       <enum>QFrame::Panel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
       <property name="lineWidth">
-       <number>2</number>
+       <number>1</number>
       </property>
       <property name="midLineWidth">
        <number>1</number>
       </property>
       <property name="horizontalScrollBarPolicy">
        <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="dragDropMode">
+       <enum>QAbstractItemView::DropOnly</enum>
+      </property>
+      <property name="defaultDropAction">
+       <enum>Qt::IgnoreAction</enum>
       </property>
       <property name="alternatingRowColors">
        <bool>true</bool>
@@ -194,7 +206,9 @@
     <addaction name="actionDefault"/>
     <addaction name="actionWork"/>
     <addaction name="actionHome"/>
+    <addaction name="separator"/>
     <addaction name="actionAdd_New_Context"/>
+    <addaction name="actionRemove_Context"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -213,7 +227,7 @@
     <string>Exit</string>
    </property>
    <property name="menuRole">
-    <enum>QAction::QuitRole</enum>
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionDefault">
@@ -246,7 +260,7 @@
   </action>
   <action name="actionComplete">
    <property name="text">
-    <string>Close</string>
+    <string>Complete</string>
    </property>
   </action>
   <action name="actionHistory">
@@ -283,6 +297,11 @@
   <action name="actionAbout_2">
    <property name="text">
     <string>About</string>
+   </property>
+  </action>
+  <action name="actionRemove_Context">
+   <property name="text">
+    <string>Remove Context</string>
    </property>
   </action>
  </widget>
