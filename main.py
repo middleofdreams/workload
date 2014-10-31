@@ -63,7 +63,6 @@ class Workload(QtGui.QMainWindow):
         item.setData(0, 32, taskid) 
         item.setSizeHint(0, QtCore.QSize(0, 22))
         self.ui.taskList.addTopLevelItem(item)
-        # TODO: kolorki do priorytetow
         self.setPriorityColor(item, priority)
         self.ui.taskList.sortItems(0,QtCore.Qt.AscendingOrder)
 
@@ -75,20 +74,21 @@ class Workload(QtGui.QMainWindow):
 
     def deleteSelectedTasks(self, force=False):
         selectedItems = self.ui.taskList.selectedItems()
-        tasks=[]
-        deleteTask=False
+        tasks = []
         for item in selectedItems:
-            if force:
-                self.deleteTask(item)
-            elif self.questionPopup("Delete task",
-                "Do you really want to delete task " + item.text(1) + "?"):
-                self.deleteTask(item)
+            tasks.append(item)
+        if force:
+            self.deleteTasks(tasks)
+        elif self.questionPopup("Delete task",
+            "Do you really want to delete selected  task(s) ?"):
+            self.deleteTasks(tasks)
 
 
-    def deleteTask(self, item):
-        self.db.deleteTask(item.data(0, 32))
-        index = self.ui.taskList.indexOfTopLevelItem(item)
-        self.ui.taskList.takeTopLevelItem(index)
+    def deleteTasks(self, tasks):
+        for item in tasks:
+            self.db.deleteTask(item.data(0, 32))
+            index = self.ui.taskList.indexOfTopLevelItem(item)
+            self.ui.taskList.takeTopLevelItem(index)
         
         
     def setTaskPriority(self,priority):
