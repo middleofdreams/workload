@@ -13,7 +13,7 @@ class Workload(QtGui.QMainWindow):
         '''main window init'''
         QtGui.QMainWindow.__init__(self)
         self.tray=Trayicon(self)   
-        
+     
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint
@@ -23,7 +23,6 @@ class Workload(QtGui.QMainWindow):
             self.move(10, (desktop.height() / 2) - (self.height()))
         else:
             self.move(10, 10)
-        
         self.show()
 
         self.ui.taskList.keyPressEvent = self.getKeysOnList
@@ -41,9 +40,7 @@ class Workload(QtGui.QMainWindow):
         
         self.db = DB(self)
         self.loadTasksList()
-      
-        
-        
+
     # TASKS RELATED ACTIONS
     def addTask(self):
         t = self.ui.taskInput.text().strip()
