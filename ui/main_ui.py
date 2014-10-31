@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created: Fri Oct 31 07:11:58 2014
+# Created: Fri Oct 31 10:04:21 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -32,17 +32,19 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setFamily("monofur")
         self.taskList.setFont(font)
+        self.taskList.setAutoFillBackground(False)
         self.taskList.setLineWidth(2)
         self.taskList.setMidLineWidth(1)
         self.taskList.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.taskList.setAlternatingRowColors(True)
         self.taskList.setSelectionMode(QtGui.QAbstractItemView.ContiguousSelection)
-        self.taskList.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
+        self.taskList.setSelectionBehavior(QtGui.QAbstractItemView.SelectColumns)
         self.taskList.setTextElideMode(QtCore.Qt.ElideLeft)
         self.taskList.setAutoExpandDelay(-1)
         self.taskList.setIndentation(10)
         self.taskList.setRootIsDecorated(False)
         self.taskList.setUniformRowHeights(False)
+        self.taskList.setAnimated(True)
         self.taskList.setHeaderHidden(True)
         self.taskList.setColumnCount(2)
         self.taskList.setObjectName("taskList")

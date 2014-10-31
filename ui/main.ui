@@ -30,6 +30,10 @@
   <property name="windowTitle">
    <string>Workload</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../res.qrc">
+    <normaloff>:/icon/icon.png</normaloff>:/icon/icon.png</iconset>
+  </property>
   <property name="windowOpacity">
    <double>0.900000000000000</double>
   </property>
@@ -54,6 +58,9 @@
         <family>monofur</family>
        </font>
       </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
       <property name="lineWidth">
        <number>2</number>
       </property>
@@ -70,7 +77,7 @@
        <enum>QAbstractItemView::ContiguousSelection</enum>
       </property>
       <property name="selectionBehavior">
-       <enum>QAbstractItemView::SelectRows</enum>
+       <enum>QAbstractItemView::SelectItems</enum>
       </property>
       <property name="textElideMode">
        <enum>Qt::ElideLeft</enum>
@@ -86,6 +93,9 @@
       </property>
       <property name="uniformRowHeights">
        <bool>false</bool>
+      </property>
+      <property name="animated">
+       <bool>true</bool>
       </property>
       <property name="headerHidden">
        <bool>true</bool>
@@ -170,6 +180,8 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="../res.qrc"/>
+ </resources>
  <connections/>
 </ui>

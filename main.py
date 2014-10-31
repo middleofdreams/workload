@@ -4,6 +4,7 @@ from PySide import QtGui, QtCore
 from ui.main_ui import Ui_MainWindow
 from db import DB
 from task import Task
+import os
 
 
 class Workload(QtGui.QMainWindow):
@@ -11,6 +12,8 @@ class Workload(QtGui.QMainWindow):
     def __init__(self):
         '''main window init'''
         QtGui.QMainWindow.__init__(self)
+        self.tray=Trayicon(self)   
+
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint
@@ -26,8 +29,12 @@ class Workload(QtGui.QMainWindow):
 
         self.ui.taskList.keyPressEvent = self.getKeysOnList
         self.ui.taskInput.keyPressEvent= self.getKeysOnInput
-        self.ui.taskList.itemSelectionChanged.connect(self.itemSelected)
+        #self.ui.taskList.itemSelectionChanged.connect(self.itemSelected)
         self.ui.taskList.activated.connect(self.openTask)
+        
+        sc = QtGui.QShortcut(self)
+        sc.setKey("Escape")
+        sc.activated.connect(self.closeEvent)
        
         self.ui.taskList.setColumnWidth(0, 20)
         self.currentContext = 1  # tymczasowo
@@ -132,9 +139,9 @@ class Workload(QtGui.QMainWindow):
         else:
             return False
         
-    def itemSelected(self):
-        for item in self.ui.taskList.selectedItems():
-            print(item)
+    #def itemSelected(self):
+    #    for item in self.ui.taskList.selectedItems():
+    #        self.ui.taskList.drawRow
             
 
     # SHORTCUTS AND KEYBOARD EVENTS RELATED ACTIONS
@@ -195,8 +202,26 @@ class Workload(QtGui.QMainWindow):
         desiredHeight=22*len(tasks)+self.height()-self.ui.taskList.height()+22
         if ( desiredHeight>self.height() or downSize ) and desiredHeight<QtGui.QApplication.desktop().height():
             self.resize(self.x(),desiredHeight)
-  
             
+            
+    def closeEvent(self, e=None):
+        self.hide()
+        if e:
+            e.ignore()
+  
+class Trayicon(QtGui.QSystemTrayIcon):
+    def __init__(self,parent=None):
+        QtGui.QSystemTrayIcon.__init__(self,parent)
+        self.parent=parent
+        icon=QtGui.QIcon(os.path.realpath("icon.png"))
+        self.setIcon(icon)
+        self.show()
+        self.activated.connect(self.showApp)
+    def showApp(self):
+        if self.parent.isVisible():
+            self.parent.hide()
+        else:
+            self.parent.show()
 
 if __name__ == "__main__":
     import sys
