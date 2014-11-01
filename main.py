@@ -3,6 +3,7 @@ from PySide import QtGui, QtCore
 from ui.main_ui import Ui_MainWindow
 from db import DB
 from task import Task
+from tray import Trayicon
 import os
 
 
@@ -14,6 +15,8 @@ class Workload(QtGui.QMainWindow):
         self.tray=Trayicon(self)   
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        
+        #GUI setting
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint
                             | QtCore.Qt.WindowStaysOnTopHint)
         desktop = QtGui.QApplication.desktop()
@@ -21,8 +24,10 @@ class Workload(QtGui.QMainWindow):
             self.move(10, (desktop.height() / 2) - (self.height()))
         else:
             self.move(10, 10)
-        self.show()
-
+            
+        self.ui.taskList.setColumnWidth(0, 20)
+                
+#CONNECT SIGNALS
         self.ui.taskList.keyPressEvent = self.getKeysOnList
         self.ui.taskInput.keyPressEvent= self.getKeysOnInput
         self.ui.taskList.activated.connect(self.openTask)
@@ -30,14 +35,7 @@ class Workload(QtGui.QMainWindow):
         sc.setKey("Escape")
         sc.activated.connect(self.closeEvent)
         
-        self.ui.actionExit.triggered.connect(app.quit)
         
-        self.ui.taskList.setColumnWidth(0, 20)
-        self.currentContext = 1  # tymczasowo
-        self.taskOpened=False
-        
-        self.db = DB(self)
-        self.loadTasksList()
 #CONNECT MENU ITEMS       
         self.ui.actionExit.triggered.connect(self.exit)
         self.ui.actionImport_tasklist.triggered.connect(self.importTasklist)
@@ -53,6 +51,19 @@ class Workload(QtGui.QMainWindow):
         self.ui.actionAdd_New_Context.triggered.connect(self.addContext)
         self.ui.actionRemove_Context.triggered.connect(self.removeContext)
         
+        
+# SET VARIABLES AND CONNECT TO DB: 
+        
+        self.currentContext = 1  # TODO: read contexts from db, set current one, fill menu
+        self.taskOpened = False
+        self.app = app
+        
+        self.db = DB(self)
+        self.loadTasksList()
+        
+        #finally - show the window:
+        self.show()
+
         
         
 # TASKS RELATED ACTIONS      
@@ -78,6 +89,7 @@ class Workload(QtGui.QMainWindow):
                     priority = 0
         except:
             pass
+        #TODO: create new function to handle input (regexp etc)
         taskid = self.db.addTask(t,priority,self.currentContext)
         self.createTaskItem(t, taskid, priority)
         self.adjustHeight()
@@ -215,35 +227,39 @@ class Workload(QtGui.QMainWindow):
 
     def importTasklist(self):
         dialog=QtGui.QFileDialog(self, "Open", "", "CSV File (*.csv)")
-        if dialog.exec():
+        if dialog.exec_():
             filename=dialog.selectedFiles()
+            #TODO: function for importing csv's
             print("ok, that's all, we have filename and now it needs to be opened and processed")
             print("idea is to import tasks from CSV file or something in more readable format")
             print("imported tasks will be placed under current context")
             print("import should contain priority;task name;due date;description")
                
     def about(self):
+        #TODO: about popup
         print("some 'About' bullshit popup")
                   
     def exit(self):
         if self.questionPopup("Exit", "Are you sure?"):
-            sys.exit()
-        else:
-            pass           
+            self.app.exit()  # cleaner than sys.exit - allows Qt loop to end        
         
     def createTask(self):
+        #TODO: handle new task window and it's response
         print("should open new empty dialog(same as for task edit) after OK, new task is created")
 
     def completeTasks(self):
+        #TODO: create function in db.py and connect it from here +remove from list
         print("> take all selected task from list and change state to 'completed'")
         print("> all completed tasks should be removed from list, but kept in History")
     
     def showHistory(self):
+        #TODO: Create new window, similar to main one with search instead of input
         print("> gather all completed tasks and show in window with search feature")
         print("> when history entry is opened, normal task edit dialog is shown")
         print("> history is shown for all contexts")
     
     def manageContexts(self):
+        #TODO: context management
         print("> if one of existing contexts is checked, switch list and uncheck previous context")
         print("> contexts should be stored in list in order to manage them later")
         print("> maybe we should separate context management..")
@@ -255,27 +271,14 @@ class Workload(QtGui.QMainWindow):
         print("> add new context information to context list")
         print("> names from list will be used as names in context menu")
         print("> if list entry is present, update context list")
-    
+        print("> kuba:")
+        print("> actually we can simply add new action and connect to signal")
+        print("> also we can connect those to same function by using 'lambda'")
     def removeContext(self):
         print("> open input dialog where context name is entered")
         print("> context is removed from context list")
         print("> update context list, items without label should be hidden")
       
-    
-  
-class Trayicon(QtGui.QSystemTrayIcon):
-    def __init__(self,parent=None):
-        QtGui.QSystemTrayIcon.__init__(self,parent)
-        self.parent=parent
-        icon=QtGui.QIcon(os.path.realpath("icon.png"))
-        self.setIcon(icon)
-        self.show()
-        self.activated.connect(self.showApp)
-    def showApp(self):
-        if self.parent.isVisible():
-            self.parent.hide()
-        else:
-            self.parent.show()
 
 if __name__ == "__main__":
     import sys
