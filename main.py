@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from PySide import QtGui, QtCore
+from PySide import QtGui,QtCore
 from ui.main_ui import Ui_MainWindow
 from db import DB
 from task import Task
@@ -90,10 +90,10 @@ class Workload(QtGui.QMainWindow):
         except:
             pass
         #TODO: create new function to handle input (regexp etc)
+        
         taskid = self.db.addTask(t,priority,self.currentContext)
         self.createTaskItem(t, taskid, priority)
         self.adjustHeight()
-
 
     def createTaskItem(self, t, taskid=None, priority=0):
         item = QtGui.QTreeWidgetItem([str(priority), t])
@@ -138,7 +138,7 @@ class Workload(QtGui.QMainWindow):
             self.setPriorityColor(item, priority)
             item.setText(0,str(priority))
             self.ui.taskList.sortItems(0,QtCore.Qt.AscendingOrder)
-                
+        
     
     def setPriorityColor(self,item,priority):
         colors=["#98DCEB","#BD1515","#ED1B0C","#F2920C","#F2E63D","#8EDB84"]
@@ -176,7 +176,7 @@ class Workload(QtGui.QMainWindow):
             
             
     def getKeysOnInput(self, e):
-        print (e.key())
+       # print (e.key())
         if e.key()==16777221 or e.key()==16777220:  # enter/return
             self.addTask()
         else:
@@ -244,9 +244,10 @@ class Workload(QtGui.QMainWindow):
             self.app.exit()  # cleaner than sys.exit - allows Qt loop to end        
         
     def createTask(self):
-        #TODO: handle new task window and it's response
-        print("should open new empty dialog(same as for task edit) after OK, new task is created")
-
+        #TODO: handle new task window and it's response [WORK IN PROGRESS - //Jasiu ]
+        print("should open new empty dialog(same as for task edit) after OK, new task is created |WORK IN PROGRESS!!")
+        Task(self,taskid=0)
+        
     def completeTasks(self):
         #TODO: create function in db.py and connect it from here +remove from list
         print("> take all selected task from list and change state to 'completed'")

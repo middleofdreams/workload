@@ -10,10 +10,10 @@ class DB(object):
         self.c = self.db.cursor()
         self.checkDB()
 
-    def addTask(self, taskname, taskpriority=5, context=1):
+    def addTask(self, taskname, priority, context=1):
         now = datetime.datetime.now().isoformat()
-        t = (taskname, taskpriority, context, now)
-        self.c.execute("INSERT into tasks ('taskname', 'priority','context',\
+        t = (taskname, priority, context, now)
+        self.c.execute("INSERT into tasks ('taskname','priority','context',\
             'created','closed') values (?,?,?,?,0)", t)
         self.db.commit()
         for i in self.c.execute("SELECT last_insert_rowid()"):
@@ -37,19 +37,23 @@ class DB(object):
         
     def setTaskPriority(self,taskid,priority):
         t = (priority, taskid)
-        print(t)
         self.c.execute("Update tasks set priority=? where rowid=?", t)
         self.db.commit()
      
     def getTaskDetails(self,taskid):
         t = (taskid,)
         for i in self.c.execute("SELECT * from tasks where rowid=?", t):
-            columns=["name","description","created","priority","due","closed","closedat","context"]
+            columns=["name","taskdescription","created","priority","due","closed","closedat","context"]
             task={}
             for j in range(0,len(i)):
                 task[columns[j]]=i[j]
             return task
     
+    def setTaskDetails(self,taskid,description,priority,taskname,duedate):
+        t = (description,duedate,priority,taskname,taskid)
+        self.c.execute("Update tasks set taskdescription=?,due=?,priority=?,taskname=? where rowid=?", t)
+        self.db.commit()
+
     def checkDB(self):
         try:
             self.c.execute("Select * from tasks limit 1")
