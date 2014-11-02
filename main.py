@@ -48,7 +48,7 @@ class Workload(QtGui.QMainWindow):
         self.ui.actionHome.triggered.connect(self.manageContexts)
         self.ui.actionAdd_New_Context.triggered.connect(self.addContext)
         self.ui.actionRemove_Context.triggered.connect(self.removeContext)
-
+        self.ui.taskInput.dropEvent = self.dropTask
 
 # SET VARIABLES AND CONNECT TO DB:
 
@@ -58,10 +58,13 @@ class Workload(QtGui.QMainWindow):
         self.db = DB(self)
         self.loadTasksList()
 
-        #finally - show the window:
+#finally - show the window:
         self.show()
-
-
+        
+    def dropTask(self,e):
+        print("dropnelo sie!",e)
+        e.accept()
+        #self.ui.taskInput.setText()
 
 # TASKS RELATED ACTIONS
     def addTask(self):
