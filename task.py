@@ -20,7 +20,7 @@ class Task(QtGui.QDialog):
         
         self.ui.priority.valueChanged.connect(self.setPriorityText)
         self.task=self.parent.db.getTaskDetails(taskid)
-        if self.task:
+        if taskid!=0:
             self.setWindowTitle(self.task["name"])
             self.ui.taskName.setText(self.task["name"])
             self.ui.priority.setValue(self.task["priority"])
@@ -29,20 +29,20 @@ class Task(QtGui.QDialog):
             self.ui.taskDescription.setText(self.task["taskdescription"])
             self.ui.closeDate.setText(self.task["closedat"])
             self.ui.dueDate.setDate(self.task["closedat"])
-            #DD,MM,YY=self.task["due"].split(".")
-            #YYYY,HHmm=YY.split(" ")
-            #HH,mm=HHmm.split(":")
-            #self.ui.dueDate.setDateTime(QtCore.QDateTime(int(YYYY),int(MM),int(DD),int(HH),int(mm),0,0))
-        
+            try:
+                DD,MM,YY=self.task["due"].split(".")
+                YYYY,HHmm=YY.split(" ")
+                HH,mm=HHmm.split(":")
+                self.ui.dueDate.setDateTime(QtCore.QDateTime(int(YYYY),int(MM),int(DD),int(HH),int(mm),0,0))
+            except:
+                self.ui.dueDate.setDateTime(QtCore.QDateTime(QtCore.QDate.currentDate().addDays(14)))
+            
         else:
             self.setWindowTitle("Create New Task")
             self.ui.taskName.setText("Enter task name here")
             self.setPriorityText(0)
-            #print(QtCore.QDateTime(QtCore.QDate.currentDate()))
-            self.ui.dueDate.setDateTime(QtCore.QDateTime(QtCore.QDate.currentDate()))
-#TODO Automatically set dueDate to: today+2 weeks
+            self.ui.dueDate.setDateTime(QtCore.QDateTime(QtCore.QDate.currentDate().addDays(14)))
         self.move(self.parent.pos())
-
         r=self.exec_()
         parent.taskOpened=False
         
@@ -82,8 +82,8 @@ class Task(QtGui.QDialog):
       
     def accept(self):
         taskid=self.taskid
-        if self.taskid!=0:    
-            print ("save task details",taskid)
+        if taskid!=0:    
+            #print ("save task details")
             taskDescription=self.ui.taskDescription.toPlainText()
             priority=int(self.ui.priority.text())
             taskname=self.ui.taskName.text()
@@ -93,11 +93,13 @@ class Task(QtGui.QDialog):
             self.close()
             
         else:
-            print ("create new task")
+           #print ("create new task")
             t=self.ui.taskName.text()
-            priority=int(self.ui.priority.text())
+            taskpriority=int(self.ui.priority.text())
             taskDescription=self.ui.taskDescription.toPlainText()
-            self.parent.createTaskItem(t, taskid, priority)
+            duedate=self.ui.dueDate.text()
+            taskid = self.parent.db.addTask(t,taskpriority,self.parent.currentContext)
+            self.parent.createTaskItem(t, taskid, taskpriority)
+            self.parent.db.setTaskDetails(taskid,taskDescription,taskpriority,t,duedate)
             self.parent.adjustHeight()
-            taskid = self.parent.db.addTask(t,priority,self.parent.currentContext)
             self.close()

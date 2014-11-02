@@ -10,9 +10,9 @@ class DB(object):
         self.c = self.db.cursor()
         self.checkDB()
 
-    def addTask(self, taskname, priority, context=1):
+    def addTask(self, taskname, taskpriority=5, context=1):
         now = datetime.datetime.now().isoformat()
-        t = (taskname, priority, context, now)
+        t = (taskname, taskpriority, context, now)
         self.c.execute("INSERT into tasks ('taskname','priority','context',\
             'created','closed') values (?,?,?,?,0)", t)
         self.db.commit()

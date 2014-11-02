@@ -35,7 +35,6 @@ class Workload(QtGui.QMainWindow):
         sc.setKey("Escape")
         sc.activated.connect(self.closeEvent)
         
-        
 #CONNECT MENU ITEMS       
         self.ui.actionExit.triggered.connect(self.exit)
         self.ui.actionImport_tasklist.triggered.connect(self.importTasklist)
@@ -90,7 +89,6 @@ class Workload(QtGui.QMainWindow):
         except:
             pass
         #TODO: create new function to handle input (regexp etc)
-        
         taskid = self.db.addTask(t,priority,self.currentContext)
         self.createTaskItem(t, taskid, priority)
         self.adjustHeight()
@@ -151,7 +149,7 @@ class Workload(QtGui.QMainWindow):
             item = self.getSelectedItem()
             if item:
                 Task(self,item.data(0, 32))
-                print(item.data(0,32))
+                #print(item.data(0,32))
         
     def getSelectedItem(self):
         selectedItems = self.ui.taskList.selectedItems()
@@ -245,7 +243,7 @@ class Workload(QtGui.QMainWindow):
         
     def createTask(self):
         #TODO: handle new task window and it's response [WORK IN PROGRESS - //Jasiu ]
-        print("should open new empty dialog(same as for task edit) after OK, new task is created |WORK IN PROGRESS!!")
+        #print("should open new empty dialog(same as for task edit) after OK, new task is created |WORK IN PROGRESS!!")
         Task(self,taskid=0)
         
     def completeTasks(self):
