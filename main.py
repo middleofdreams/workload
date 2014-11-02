@@ -24,7 +24,6 @@ class Workload(QtGui.QMainWindow):
             self.move(10, (desktop.height() / 2) - (self.height()))
         else:
             self.move(10, 10)
-            
         self.ui.taskList.setColumnWidth(0, 20)
                 
 #CONNECT SIGNALS
@@ -56,10 +55,9 @@ class Workload(QtGui.QMainWindow):
         self.currentContext = 1  # TODO: read contexts from db, set current one, fill menu
         self.taskOpened = False
         self.app = app
-        
         self.db = DB(self)
         self.loadTasksList()
-        
+
         #finally - show the window:
         self.show()
 
@@ -88,7 +86,7 @@ class Workload(QtGui.QMainWindow):
                     priority = 0
         except:
             pass
-        #TODO: create new function to handle input (regexp etc)
+#TODO: create new function to handle input (regexp etc)
         taskid = self.db.addTask(t,priority,self.currentContext)
         self.createTaskItem(t, taskid, priority)
         self.adjustHeight()
@@ -153,7 +151,7 @@ class Workload(QtGui.QMainWindow):
         
     def getSelectedItem(self):
         selectedItems = self.ui.taskList.selectedItems()
-        if len(selectedItems) > 0:
+        if len(selectedItems) == 1:
             item = self.ui.taskList.selectedItems()[0]
             return item
         else:
@@ -239,11 +237,9 @@ class Workload(QtGui.QMainWindow):
                   
     def exit(self):
         if self.questionPopup("Exit", "Are you sure?"):
-            self.app.exit()  # cleaner than sys.exit - allows Qt loop to end        
+            self.app.exit()  # cleaner than sys.exit allows Qt loop to end        
         
     def createTask(self):
-        #TODO: handle new task window and it's response [WORK IN PROGRESS - //Jasiu ]
-        #print("should open new empty dialog(same as for task edit) after OK, new task is created |WORK IN PROGRESS!!")
         Task(self,taskid=0)
         
     def completeTasks(self):

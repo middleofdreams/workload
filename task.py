@@ -2,7 +2,6 @@ from PySide import QtGui, QtCore
 from ui.task_ui import Ui_Dialog
 from _datetime import datetime
 
-
 class Task(QtGui.QDialog):
 
     def __init__(self,parent,taskid):
@@ -15,12 +14,10 @@ class Task(QtGui.QDialog):
                             | QtCore.Qt.WindowStaysOnTopHint)
         self.parent=parent
         self.taskid=taskid
-        self.moveIt=False
-        #priority=self.ui.priority.text()
-        
+        self.moveIt=False        
         self.ui.priority.valueChanged.connect(self.setPriorityText)
         self.task=self.parent.db.getTaskDetails(taskid)
-        if taskid!=0:
+        if self.taskid:
             self.setWindowTitle(self.task["name"])
             self.ui.taskName.setText(self.task["name"])
             self.ui.priority.setValue(self.task["priority"])
@@ -29,14 +26,13 @@ class Task(QtGui.QDialog):
             self.ui.taskDescription.setText(self.task["taskdescription"])
             self.ui.closeDate.setText(self.task["closedat"])
             self.ui.dueDate.setDate(self.task["closedat"])
-            try:
+            if self.task["due"] is not None:
                 DD,MM,YY=self.task["due"].split(".")
                 YYYY,HHmm=YY.split(" ")
                 HH,mm=HHmm.split(":")
                 self.ui.dueDate.setDateTime(QtCore.QDateTime(int(YYYY),int(MM),int(DD),int(HH),int(mm),0,0))
-            except:
+            else:
                 self.ui.dueDate.setDateTime(QtCore.QDateTime(QtCore.QDate.currentDate().addDays(14)))
-            
         else:
             self.setWindowTitle("Create New Task")
             self.ui.taskName.setText("Enter task name here")
@@ -52,7 +48,8 @@ class Task(QtGui.QDialog):
         
 
     def closeEvent(self,e):
-        print(e)
+        #print(e)
+        pass
         
     def mouseMoveEvent(self, e):
         try:
@@ -83,7 +80,7 @@ class Task(QtGui.QDialog):
     def accept(self):
         taskid=self.taskid
         if taskid!=0:    
-            #print ("save task details")
+            #save task details
             taskDescription=self.ui.taskDescription.toPlainText()
             priority=int(self.ui.priority.text())
             taskname=self.ui.taskName.text()
@@ -93,7 +90,7 @@ class Task(QtGui.QDialog):
             self.close()
             
         else:
-           #print ("create new task")
+           #create new task
             t=self.ui.taskName.text()
             taskpriority=int(self.ui.priority.text())
             taskDescription=self.ui.taskDescription.toPlainText()
