@@ -4,7 +4,7 @@ from ui.main_ui import Ui_MainWindow
 from db import DB
 from task import Task
 from tray import Trayicon
-import os
+import os,sys
 
 
 class Workload(QtGui.QMainWindow):
@@ -12,10 +12,10 @@ class Workload(QtGui.QMainWindow):
     def __init__(self,app):
         '''main window init'''
         QtGui.QMainWindow.__init__(self)
-        self.tray=Trayicon(self)   
+        self.tray=Trayicon(self)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        
+
         #GUI setting
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint
                             | QtCore.Qt.WindowStaysOnTopHint)
@@ -25,7 +25,7 @@ class Workload(QtGui.QMainWindow):
         else:
             self.move(10, 10)
         self.ui.taskList.setColumnWidth(0, 20)
-                
+
 #CONNECT SIGNALS
         self.ui.taskList.keyPressEvent = self.getKeysOnList
         self.ui.taskInput.keyPressEvent= self.getKeysOnInput
@@ -33,8 +33,8 @@ class Workload(QtGui.QMainWindow):
         sc = QtGui.QShortcut(self)
         sc.setKey("Escape")
         sc.activated.connect(self.closeEvent)
-        
-#CONNECT MENU ITEMS       
+
+#CONNECT MENU ITEMS
         self.ui.actionExit.triggered.connect(self.exit)
         self.ui.actionImport_tasklist.triggered.connect(self.importTasklist)
         self.ui.actionAbout_2.triggered.connect(self.about)
@@ -48,10 +48,10 @@ class Workload(QtGui.QMainWindow):
         self.ui.actionHome.triggered.connect(self.manageContexts)
         self.ui.actionAdd_New_Context.triggered.connect(self.addContext)
         self.ui.actionRemove_Context.triggered.connect(self.removeContext)
-        
-        
-# SET VARIABLES AND CONNECT TO DB: 
-        
+
+
+# SET VARIABLES AND CONNECT TO DB:
+
         self.currentContext = 1  # TODO: read contexts from db, set current one, fill menu
         self.taskOpened = False
         self.app = app
@@ -61,9 +61,9 @@ class Workload(QtGui.QMainWindow):
         #finally - show the window:
         self.show()
 
-        
-        
-# TASKS RELATED ACTIONS      
+
+
+# TASKS RELATED ACTIONS
     def addTask(self):
         t = self.ui.taskInput.text().strip()
         if t =="":
@@ -87,13 +87,15 @@ class Workload(QtGui.QMainWindow):
         except:
             pass
 #TODO: create new function to handle input (regexp etc)
-        taskid = self.db.addTask(t,priority,self.currentContext)
+        duedate=None
+        taskDescription=None
+        taskid = self.db.addTask(t,priority,taskDescription,duedate, self.currentContext)
         self.createTaskItem(t, taskid, priority)
         self.adjustHeight()
 
     def createTaskItem(self, t, taskid=None, priority=0):
         item = QtGui.QTreeWidgetItem([str(priority), t])
-        item.setData(0, 32, taskid) 
+        item.setData(0, 32, taskid)
         item.setSizeHint(0, QtCore.QSize(0, 22))
         self.ui.taskList.addTopLevelItem(item)
         self.setPriorityColor(item, priority)
@@ -104,7 +106,7 @@ class Workload(QtGui.QMainWindow):
         for i in self.db.getTasks(self.currentContext):
             self.createTaskItem(i[1], i[0],i[2])
         self.adjustHeight()
-            
+
 
     def deleteSelectedTasks(self, force=False):
         selectedItems = self.ui.taskList.selectedItems()
@@ -125,8 +127,8 @@ class Workload(QtGui.QMainWindow):
             self.db.deleteTask(item.data(0, 32))
             index = self.ui.taskList.indexOfTopLevelItem(item)
             self.ui.taskList.takeTopLevelItem(index)
-        
-        
+
+
     def setTaskPriority(self,priority):
         selectedItems = self.ui.taskList.selectedItems()
         for item in selectedItems:
@@ -134,21 +136,21 @@ class Workload(QtGui.QMainWindow):
             self.setPriorityColor(item, priority)
             item.setText(0,str(priority))
             self.ui.taskList.sortItems(0,QtCore.Qt.AscendingOrder)
-        
-    
+
+
     def setPriorityColor(self,item,priority):
         colors=["#98DCEB","#BD1515","#ED1B0C","#F2920C","#F2E63D","#8EDB84"]
         backColor = QtGui.QColor(colors[priority])  # kolor tła kolumny
         item.setBackground(0, backColor)     # (priorytet dla elementu)
-        item.setTextAlignment(0,QtCore.Qt.AlignCenter)    
-        
+        item.setTextAlignment(0,QtCore.Qt.AlignCenter)
+
     def openTask(self):
         if not self.taskOpened:
             item = self.getSelectedItem()
             if item:
                 Task(self,item.data(0, 32))
                 #print(item.data(0,32))
-        
+
     def getSelectedItem(self):
         selectedItems = self.ui.taskList.selectedItems()
         if len(selectedItems) == 1:
@@ -156,7 +158,7 @@ class Workload(QtGui.QMainWindow):
             return item
         else:
             return False
-   
+
 
     # SHORTCUTS AND KEYBOARD EVENTS RELATED ACTIONS
     def getKeysOnList(self, e):
@@ -166,11 +168,11 @@ class Workload(QtGui.QMainWindow):
                 force = True
             self.deleteSelectedTasks(force)
         elif e.key()>48 and e.key()<54:
-            self.setTaskPriority(e.key()-48)    
+            self.setTaskPriority(e.key()-48)
         elif e.key()==16777221 or e.key()==16777220:  # enter/return
             self.openTask()
-            
-            
+
+
     def getKeysOnInput(self, e):
        # print (e.key())
         if e.key()==16777221 or e.key()==16777220:  # enter/return
@@ -187,7 +189,7 @@ class Workload(QtGui.QMainWindow):
             return True
         else:
             return False
-        
+
     #WINDOWS MOVEMENT
     def mouseMoveEvent(self, e):
         try:
@@ -207,18 +209,18 @@ class Workload(QtGui.QMainWindow):
             del(self.posy)
         except:
             pass
-        
+
     def adjustHeight(self,downSize=False):
         tasks=self.db.getTasks(self.currentContext)
         desiredHeight=22*len(tasks)+self.height()-self.ui.taskList.height()+2
         if ( desiredHeight>self.height() or downSize ) and desiredHeight<QtGui.QApplication.desktop().height():
             self.resize(self.width(),desiredHeight)
-   
+
     def closeEvent(self, e=None):
         self.hide()
         if e:
             e.ignore()
-                
+
 ###### MENU FUNCTIONS
 
     def importTasklist(self):
@@ -230,35 +232,39 @@ class Workload(QtGui.QMainWindow):
             print("idea is to import tasks from CSV file or something in more readable format")
             print("imported tasks will be placed under current context")
             print("import should contain priority;task name;due date;description")
-               
+
     def about(self):
-        #TODO: about popup
+        f=open("about")
+        text=f.read()
+        f.close()
+        about = QtGui.QMessageBox.information(self, "About", text,
+        buttons=QtGui.QMessageBox.Ok )
         print("some 'About' bullshit popup")
-                  
+
     def exit(self):
         if self.questionPopup("Exit", "Are you sure?"):
-            self.app.exit()  # cleaner than sys.exit allows Qt loop to end        
-        
+            self.app.exit()  # cleaner than sys.exit allows Qt loop to end
+
     def createTask(self):
         Task(self,taskid=0)
-        
+
     def completeTasks(self):
         #TODO: create function in db.py and connect it from here +remove from list
         print("> take all selected task from list and change state to 'completed'")
         print("> all completed tasks should be removed from list, but kept in History")
-    
+
     def showHistory(self):
         #TODO: Create new window, similar to main one with search instead of input
         print("> gather all completed tasks and show in window with search feature")
         print("> when history entry is opened, normal task edit dialog is shown")
         print("> history is shown for all contexts")
-    
+
     def manageContexts(self):
         #TODO: context management
         print("> if one of existing contexts is checked, switch list and uncheck previous context")
         print("> contexts should be stored in list in order to manage them later")
         print("> maybe we should separate context management..")
-    
+
     def addContext(self):
         print("> open input dialog where context name is entered")
         print("> create new item in menu and connects action(?) how simple is that...")
@@ -273,7 +279,7 @@ class Workload(QtGui.QMainWindow):
         print("> open input dialog where context name is entered")
         print("> context is removed from context list")
         print("> update context list, items without label should be hidden")
-      
+
 
 if __name__ == "__main__":
     import sys

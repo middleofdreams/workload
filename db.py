@@ -10,11 +10,11 @@ class DB(object):
         self.c = self.db.cursor()
         self.checkDB()
 
-    def addTask(self, taskname, taskpriority=5, context=1):
+    def addTask(self, taskname, priority, taskDescription, duedate, context=1):
         now = datetime.datetime.now().isoformat()
-        t = (taskname, taskpriority, context, now)
-        self.c.execute("INSERT into tasks ('taskname','priority','context',\
-            'created','closed') values (?,?,?,?,0)", t)
+        t = (taskname, priority, taskDescription, duedate, context, now)
+        self.c.execute("INSERT into tasks ('taskname','priority','taskdescription','due','context',\
+            'created','closed') values (?,?,?,?,?,?,0)", t)
         self.db.commit()
         for i in self.c.execute("SELECT last_insert_rowid()"):
             return i[0]

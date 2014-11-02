@@ -92,11 +92,12 @@ class Task(QtGui.QDialog):
         else:
            #create new task
             t=self.ui.taskName.text()
-            taskpriority=int(self.ui.priority.text())
+            priority=int(self.ui.priority.text())
             taskDescription=self.ui.taskDescription.toPlainText()
             duedate=self.ui.dueDate.text()
-            taskid = self.parent.db.addTask(t,taskpriority,self.parent.currentContext)
-            self.parent.createTaskItem(t, taskid, taskpriority)
-            self.parent.db.setTaskDetails(taskid,taskDescription,taskpriority,t,duedate)
+            print (duedate)
+            taskid = self.parent.db.addTask(t,priority,taskDescription, duedate, self.parent.currentContext)
+            self.parent.createTaskItem(t, taskid, priority)
+            #self.parent.db.setTaskDetails(taskid,taskDescription,priority,t,duedate)
             self.parent.adjustHeight()
             self.close()
