@@ -36,6 +36,12 @@
       </item>
       <item row="1" column="1">
        <widget class="QDateTimeEdit" name="dueDate">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>0</height>
+         </size>
+        </property>
         <property name="calendarPopup">
          <bool>true</bool>
         </property>
@@ -76,6 +82,18 @@
       </item>
       <item row="0" column="1">
        <widget class="QLabel" name="createDate">
+        <property name="minimumSize">
+         <size>
+          <width>150</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -255,7 +273,14 @@
     </widget>
    </item>
    <item>
-    <widget class="QTextEdit" name="taskDescription"/>
+    <widget class="QTextEdit" name="taskDescription">
+     <property name="minimumSize">
+      <size>
+       <width>100</width>
+       <height>0</height>
+      </size>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">

@@ -1,0 +1,30 @@
+	>>> Workload <<<
+						
+This program was created to help 
+with task organization and prioritizing them.
+Current features:
+
+  + create task from input box
+when you use format number:taskname or taskname:number 
+new task will be created with priority set in 'number'
+(priorities are numbers from 0-5)
+
+  + edit task name and description
+(it's not checking if tasks have same name, 
+will check in some time..)
+	
+  + set task end date 
+(does just that.. )
+	
+  + drag and drop
+(now it partially works, 
+you can drop task title and description separately,
+planned to do this automatically)
+	
+Planned features:
+
+  + manage tasks in different contexts 
+(work, home, shopping, etc..)
+  + synchronize tasks with Android App
+  + import/export tasks to file
+  +...

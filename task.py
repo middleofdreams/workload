@@ -29,15 +29,20 @@ class Task(QtGui.QDialog):
             if self.task["due"] is not None:
                 timestamp=int(self.task["due"].split(".")[0])
                 date=datetime.datetime.fromtimestamp(timestamp)
-                self.ui.dueDate.setDateTime(QtCore.QDateTime(date.year,date.month,date.day,date.hour,date.minute,date.second,0))
+                self.ui.dueDate.setDateTime(QtCore.QDateTime(date.year,date.month,date.day,date.hour,date.minute,0,0))
             else:
-                self.ui.dueDate.setDateTime(QtCore.QDateTime(QtCore.QDate.currentDate().addDays(14)))
+                date=datetime.datetime.now()
+                delta=datetime.timedelta(hours=24)
+                date=date+delta
+                self.ui.dueDate.setDateTime(QtCore.QDateTime(date.year,date.month,date.day,date.hour,date.minute,0,0))
         else:
             self.setWindowTitle("Create New Task")
             self.ui.taskName.setText("Enter task name here")
             self.setPriorityText(0)
-            self.ui.dueDate.setDateTime(QtCore.QDateTime(QtCore.QDate.currentDateTime().addDays(14)))
-            #TODO: instead of add 14 days, add 24 hours only
+            date=datetime.datetime.now()
+            delta=datetime.timedelta(hours=24)
+            date=date+delta
+            self.ui.dueDate.setDateTime(QtCore.QDateTime(date.year,date.month,date.day,date.hour,date.minute,0,0))
         self.move(self.parent.pos())
         r=self.exec_()
         parent.taskOpened=False
@@ -69,6 +74,7 @@ class Task(QtGui.QDialog):
             del(self.posy)
         except:
             pass
+        
     def updateItem(self,taskname,priority):
         selectedItems = self.parent.ui.taskList.selectedItems()
         for item in selectedItems:
@@ -90,13 +96,12 @@ class Task(QtGui.QDialog):
             self.close()
             
         else:
-           #create new task
+            #create new task
             t=self.ui.taskName.text()
             priority=int(self.ui.priority.text())
             taskDescription=self.ui.taskDescription.toPlainText()
             duedate=self.ui.dueDate.dateTime().toPython().timestamp()
             taskid = self.parent.db.addTask(t,priority,taskDescription, duedate, self.parent.currentContext)
             self.parent.createTaskItem(t, taskid, priority)
-            #self.parent.db.setTaskDetails(taskid,taskDescription,priority,t,duedate)
             self.parent.adjustHeight()
             self.close()

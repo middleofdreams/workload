@@ -75,7 +75,6 @@ class Workload(QtGui.QMainWindow):
             taskDescription=newdata
             self.ui.taskInput.setText(taskname)
             self.addTask(taskDescription)
-        #self.ui.taskInput.setText()
 
 # TASKS RELATED ACTIONS
     def addTask(self,taskDescription):
@@ -267,7 +266,7 @@ class Workload(QtGui.QMainWindow):
 
     def exit(self):
         if self.questionPopup("Exit", "Are you sure?"):
-            self.app.exit()  # cleaner than sys.exit allows Qt loop to end
+            self.app.exit()
 
     def createTask(self):
         Task(self,taskid=0)
@@ -301,7 +300,7 @@ class Workload(QtGui.QMainWindow):
     def removeContext(self):
         if self.currentContext==1:
             QtGui.QMessageBox.critical(self,"Error","Removal of first context is not possible atm. TBD later")
-            #TODO: some settings table with saved last opened context
+#TODO: some settings table with saved last opened context
         else:
             if self.questionPopup("Remove context", "Do you really want to remove active context?"):
                 self.db.deleteContext(self.currentContext)

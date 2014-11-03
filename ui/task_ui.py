@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'task.ui'
 #
-# Created: Mon Nov  3 14:07:22 2014
+# Created: Mon Nov  3 19:43:35 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -27,6 +27,7 @@ class Ui_Dialog(object):
         self.label.setObjectName("label")
         self.gridLayout.addWidget(self.label, 1, 0, 1, 1)
         self.dueDate = QtGui.QDateTimeEdit(self.groupBox_2)
+        self.dueDate.setMinimumSize(QtCore.QSize(100, 0))
         self.dueDate.setCalendarPopup(True)
         self.dueDate.setObjectName("dueDate")
         self.gridLayout.addWidget(self.dueDate, 1, 1, 1, 1)
@@ -43,6 +44,8 @@ class Ui_Dialog(object):
         self.label_4.setObjectName("label_4")
         self.gridLayout.addWidget(self.label_4, 0, 0, 1, 1)
         self.createDate = QtGui.QLabel(self.groupBox_2)
+        self.createDate.setMinimumSize(QtCore.QSize(150, 0))
+        self.createDate.setMaximumSize(QtCore.QSize(200, 16777215))
         self.createDate.setText("")
         self.createDate.setObjectName("createDate")
         self.gridLayout.addWidget(self.createDate, 0, 1, 1, 1)
@@ -110,6 +113,7 @@ class Ui_Dialog(object):
         self.gridLayout_4.addItem(spacerItem1, 0, 6, 1, 1)
         self.verticalLayout.addWidget(self.frame)
         self.taskDescription = QtGui.QTextEdit(Dialog)
+        self.taskDescription.setMinimumSize(QtCore.QSize(100, 0))
         self.taskDescription.setObjectName("taskDescription")
         self.verticalLayout.addWidget(self.taskDescription)
         self.buttonBox = QtGui.QDialogButtonBox(Dialog)
