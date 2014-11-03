@@ -59,22 +59,8 @@ class Workload(QtGui.QMainWindow):
         self.loadTasksList(init=True)
         self.loadContexts()
 
-#finally - show the window:
-        
     def dropTask(self,e):
-        fulldata=e.mimeData().text()
-        if len(fulldata) > 20:
-            newdata=[]
-            textFound=False
-            for i in fulldata.splitlines():
-                if i.strip()!="" or textFound: 
-                    newdata.append(i)
-                    textFound=True
-            newdata="\n".join(newdata)
-            taskname=newdata[:17].strip()+"..."
-            taskDescription=newdata
-            self.ui.taskInput.setText(taskname)
-            self.addTask(taskDescription)
+        Task.dropTask(self, e)
 
 # TASKS RELATED ACTIONS
     def addTask(self,taskDescription):

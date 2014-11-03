@@ -17,6 +17,7 @@ class Task(QtGui.QDialog):
         self.moveIt=False        
         self.ui.priority.valueChanged.connect(self.setPriorityText)
         self.task=self.parent.db.getTaskDetails(taskid)
+        
         if self.taskid:
             self.ui.dueDate.setDisplayFormat("dd-MM-yyyy HH:mm")
             self.setWindowTitle(self.task["name"])
@@ -105,3 +106,18 @@ class Task(QtGui.QDialog):
             self.parent.createTaskItem(t, taskid, priority)
             self.parent.adjustHeight()
             self.close()
+            
+    def dropTask(self,e):
+            fulldata=e.mimeData().text()
+            if len(fulldata) > 20:
+                newdata=[]
+                textFound=False
+                for i in fulldata.splitlines():
+                    if i.strip()!="" or textFound: 
+                        newdata.append(i)
+                        textFound=True
+                newdata="\n".join(newdata)
+                taskname=newdata[:25].strip()+"..."
+                taskDescription=newdata
+                self.ui.taskInput.setText(taskname)
+                self.addTask(taskDescription)

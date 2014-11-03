@@ -27,7 +27,6 @@ class DB(object):
         for i in self.c.execute("SELECT rowid,taskname,priority \
             FROM tasks where context=? and closed=?", t):
             tasks.append(i)
-        print(tasks)
         return tasks
 
     def deleteTask(self, taskid):
