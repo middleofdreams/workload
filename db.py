@@ -54,9 +54,14 @@ class DB(object):
         self.c.execute("Update tasks set taskdescription=?,due=?,priority=?,taskname=? where rowid=?", t)
         self.db.commit()
         
+    def completeTask(self,taskid):
+        t = (datetime.datetime.now().timestamp(),taskid)
+        self.c.execute("Update tasks set closed=1,closedat=? where rowid=?", t)
+        self.db.commit()
+        
     def addContext(self,contextname):
         t = (contextname, )
-        self.c.execute("INSERT into contexts ('contextname', values (?)", t)
+        self.c.execute("INSERT into contexts ('contextname') values (?)", t)
         self.db.commit()
         for i in self.c.execute("SELECT last_insert_rowid()"):
             return i[0]
@@ -67,10 +72,8 @@ class DB(object):
         self.db.commit()
         
     def getContexts(self):
-        contexts = {}
-        for i in self.c.execute("SELECT rowid,contextname from contexts"):
-            contexts[i[1]]=i[0]
-        return contexts
+        return self.c.execute("SELECT rowid,contextname from contexts order by rowid ASC")
+
 
     def checkDB(self):
         try:
@@ -93,5 +96,7 @@ class DB(object):
         
         query='CREATE TABLE "contexts" (\
         "contextname" TEXT)'
+        self.c.execute(query)
+        query="INSERT INTO 'contexts' VALUES ('Default');"
         self.c.execute(query)
         self.db.commit()
