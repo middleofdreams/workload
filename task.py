@@ -18,7 +18,7 @@ class Task(QtGui.QDialog):
         self.ui.priority.valueChanged.connect(self.setPriorityText)
         self.task=self.parent.db.getTaskDetails(taskid)
         if self.taskid:
-            self.ui.dueDate.setDisplayFormat("yyyy-MM-dd HH:mm")
+            self.ui.dueDate.setDisplayFormat("dd-MM-yyyy HH:mm")
             self.setWindowTitle(self.task["name"])
             self.ui.taskName.setText(self.task["name"])
             self.ui.priority.setValue(self.task["priority"])
@@ -36,7 +36,8 @@ class Task(QtGui.QDialog):
             self.setWindowTitle("Create New Task")
             self.ui.taskName.setText("Enter task name here")
             self.setPriorityText(0)
-            self.ui.dueDate.setDateTime(QtCore.QDateTime(QtCore.QDate.currentDate().addDays(14)))
+            self.ui.dueDate.setDateTime(QtCore.QDateTime(QtCore.QDate.currentDateTime().addDays(14)))
+            #TODO: instead of add 14 days, add 24 hours only
         self.move(self.parent.pos())
         r=self.exec_()
         parent.taskOpened=False
