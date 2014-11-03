@@ -27,10 +27,9 @@ class Task(QtGui.QDialog):
             self.ui.closeDate.setText(self.task["closedat"])
             self.ui.dueDate.setDate(self.task["closedat"])
             if self.task["due"] is not None:
-                DD,MM,YY=self.task["due"].split(".")
-                YYYY,HHmm=YY.split(" ")
-                HH,mm=HHmm.split(":")
-                self.ui.dueDate.setDateTime(QtCore.QDateTime(int(YYYY),int(MM),int(DD),int(HH),int(mm),0,0))
+                print (self.task["due"])
+                
+                #self.ui.dueDate.setDateTime(QtCore.QDateTime(int(YYYY),int(MM),int(DD),int(HH),int(mm),0,0))
             else:
                 self.ui.dueDate.setDateTime(QtCore.QDateTime(QtCore.QDate.currentDate().addDays(14)))
         else:

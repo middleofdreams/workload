@@ -53,7 +53,7 @@ class Workload(QtGui.QMainWindow):
         self.ui.actionAdd_New_Context.triggered.connect(self.addContext)
         self.ui.actionRemove_Context.triggered.connect(self.removeContext)
         self.ui.taskInput.dropEvent = self.dropTask
-
+        
 # SET VARIABLES AND CONNECT TO DB:
 
         self.currentContext = 1  # TODO: read contexts from db, set current one, fill menu
@@ -68,13 +68,23 @@ class Workload(QtGui.QMainWindow):
 #finally - show the window:
         
     def dropTask(self,e):
-        print("dropnelo sie!",e)
-        print(e.mimeData().text())
-        e.accept()
+        fulldata=e.mimeData().text()
+        if len(fulldata) > 20:
+            newdata=[]
+            textFound=False
+            for i in fulldata.splitlines():
+                if i.strip()!="" or textFound: 
+                    newdata.append(i)
+                    textFound=True
+            newdata="\n".join(newdata)
+            taskname=newdata[:17].strip()+"..."
+            taskDescription=newdata
+            self.ui.taskInput.setText(taskname)
+            self.addTask(taskDescription)
         #self.ui.taskInput.setText()
 
 # TASKS RELATED ACTIONS
-    def addTask(self):
+    def addTask(self,taskDescription):
         t = self.ui.taskInput.text().strip()
         if t =="":
             return False
@@ -98,8 +108,7 @@ class Workload(QtGui.QMainWindow):
             pass
 #TODO: create new function to handle input (regexp etc)
         duedate=None
-        taskDescription=None
-        taskid = self.db.addTask(t,priority,taskDescription,duedate, self.currentContext)
+        taskid = self.db.addTask(t,priority, taskDescription, duedate, self.currentContext)
         self.createTaskItem(t, taskid, priority)
         self.adjustHeight()
 
@@ -186,7 +195,7 @@ class Workload(QtGui.QMainWindow):
     def getKeysOnInput(self, e):
        # print (e.key())
         if e.key()==16777221 or e.key()==16777220:  # enter/return
-            self.addTask()
+            self.addTask(taskDescription=None)
         else:
             QtGui.QLineEdit.keyPressEvent(self.ui.taskInput,e)
 
