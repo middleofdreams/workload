@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created: Sun Nov  2 21:11:09 2014
+# Created: Mon Nov  3 07:45:10 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,7 +12,7 @@ from PySide import QtCore, QtGui
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(206, 367)
+        MainWindow.resize(190, 320)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Ignored, QtGui.QSizePolicy.Ignored)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -73,7 +73,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.taskList)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 206, 20))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 190, 19))
         self.menubar.setDefaultUp(False)
         self.menubar.setObjectName("menubar")
         self.menuFile = QtGui.QMenu(self.menubar)
@@ -82,8 +82,6 @@ class Ui_MainWindow(object):
         self.menuTask.setObjectName("menuTask")
         self.menuContext = QtGui.QMenu(self.menubar)
         self.menuContext.setObjectName("menuContext")
-        self.menuHelp = QtGui.QMenu(self.menubar)
-        self.menuHelp.setObjectName("menuHelp")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtGui.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -122,6 +120,7 @@ class Ui_MainWindow(object):
         self.actionRemove_Context.setObjectName("actionRemove_Context")
         self.menuFile.addAction(self.actionImport_tasklist)
         self.menuFile.addSeparator()
+        self.menuFile.addAction(self.actionAbout_2)
         self.menuFile.addAction(self.actionExit)
         self.menuTask.addAction(self.actionAdd_new)
         self.menuTask.addAction(self.actionEdit)
@@ -135,11 +134,9 @@ class Ui_MainWindow(object):
         self.menuContext.addSeparator()
         self.menuContext.addAction(self.actionAdd_New_Context)
         self.menuContext.addAction(self.actionRemove_Context)
-        self.menuHelp.addAction(self.actionAbout_2)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuTask.menuAction())
         self.menubar.addAction(self.menuContext.menuAction())
-        self.menubar.addAction(self.menuHelp.menuAction())
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -151,7 +148,6 @@ class Ui_MainWindow(object):
         self.menuFile.setTitle(QtGui.QApplication.translate("MainWindow", "File", None, QtGui.QApplication.UnicodeUTF8))
         self.menuTask.setTitle(QtGui.QApplication.translate("MainWindow", "Task", None, QtGui.QApplication.UnicodeUTF8))
         self.menuContext.setTitle(QtGui.QApplication.translate("MainWindow", "Context", None, QtGui.QApplication.UnicodeUTF8))
-        self.menuHelp.setTitle(QtGui.QApplication.translate("MainWindow", "Help", None, QtGui.QApplication.UnicodeUTF8))
         self.actionExit.setText(QtGui.QApplication.translate("MainWindow", "Exit", None, QtGui.QApplication.UnicodeUTF8))
         self.actionDefault.setText(QtGui.QApplication.translate("MainWindow", "Default", None, QtGui.QApplication.UnicodeUTF8))
         self.actionAbout.setText(QtGui.QApplication.translate("MainWindow", "About", None, QtGui.QApplication.UnicodeUTF8))

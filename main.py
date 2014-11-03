@@ -33,6 +33,10 @@ class Workload(QtGui.QMainWindow):
         sc = QtGui.QShortcut(self)
         sc.setKey("Escape")
         sc.activated.connect(self.closeEvent)
+        
+        sc = QtGui.QShortcut(self)
+        sc.setKey("Ctrl+R")
+        sc.activated.connect(self.adjustHeight)
 
 #CONNECT MENU ITEMS
         self.ui.actionExit.triggered.connect(self.exit)
@@ -56,13 +60,15 @@ class Workload(QtGui.QMainWindow):
         self.taskOpened = False
         self.app = app
         self.db = DB(self)
-        self.loadTasksList()
+        self.show()
+
+        self.loadTasksList(init=True)
 
 #finally - show the window:
-        self.show()
         
     def dropTask(self,e):
         print("dropnelo sie!",e)
+        print(e.mimeData().text())
         e.accept()
         #self.ui.taskInput.setText()
 
@@ -105,10 +111,10 @@ class Workload(QtGui.QMainWindow):
         self.ui.taskList.sortItems(0,QtCore.Qt.AscendingOrder)
 
 
-    def loadTasksList(self, archived=False):
+    def loadTasksList(self, archived=False,init=False):
         for i in self.db.getTasks(self.currentContext):
             self.createTaskItem(i[1], i[0],i[2])
-        self.adjustHeight()
+        self.adjustHeight(init=init)
 
 
     def deleteSelectedTasks(self, force=False):
@@ -213,9 +219,16 @@ class Workload(QtGui.QMainWindow):
         except:
             pass
 
-    def adjustHeight(self,downSize=False):
+    def adjustHeight(self,downSize=False,init=False):
         tasks=self.db.getTasks(self.currentContext)
-        desiredHeight=22*len(tasks)+self.height()-self.ui.taskList.height()+2
+        print(len(tasks))
+        if init:
+            winheight=320
+            listheight=252
+        else:
+            winheight=self.height()
+            listheight=self.ui.taskList.height()
+        desiredHeight=22*len(tasks)+winheight-listheight+2
         if ( desiredHeight>self.height() or downSize ) and desiredHeight<QtGui.QApplication.desktop().height():
             self.resize(self.width(),desiredHeight)
 
