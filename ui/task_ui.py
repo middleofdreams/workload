@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'task.ui'
 #
-# Created: Sun Nov  2 21:10:38 2014
+# Created: Mon Nov  3 14:07:22 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -27,6 +27,7 @@ class Ui_Dialog(object):
         self.label.setObjectName("label")
         self.gridLayout.addWidget(self.label, 1, 0, 1, 1)
         self.dueDate = QtGui.QDateTimeEdit(self.groupBox_2)
+        self.dueDate.setCalendarPopup(True)
         self.dueDate.setObjectName("dueDate")
         self.gridLayout.addWidget(self.dueDate, 1, 1, 1, 1)
         self.label_2 = QtGui.QLabel(self.groupBox_2)
