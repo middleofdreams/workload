@@ -6,7 +6,6 @@ from task import Task
 from tray import Trayicon
 import os,sys
 
-
 class Workload(QtGui.QMainWindow):
 
     def __init__(self,app):
