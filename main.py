@@ -63,6 +63,7 @@ class Workload(QtGui.QMainWindow):
         self.show()
 
         self.loadTasksList(init=True)
+        self.loadContexts()
 
 #finally - show the window:
         
@@ -296,6 +297,27 @@ class Workload(QtGui.QMainWindow):
         print("> context is removed from context list")
         print("> update context list, items without label should be hidden")
 
+# CONTEXT MANAGEMENT:
+
+    def loadContexts(self):
+        self.contexts=self.db.getContexts()
+        self.ui.menuContext.clear()
+        for i in self.contexts.keys():
+            item=QtGui.QAction(self.ui.menuContext)
+            item.setText(i)
+            item.setCheckable(True)
+            item.triggered.connect(lambda context=item: self.switchContext(context))
+            #item.triggered.connect(self.switchContext)
+            self.ui.menuContext.addAction(item)
+            
+    def switchContext(self,item):
+        if item.isChecked():
+            for i in self.ui.menuContext.children():
+                if i!=item and i!=self.ui.menuContext.children()[0]:
+                    i.setChecked(False)
+        else:
+            item.setChecked(True)
+            
 
 if __name__ == "__main__":
     import sys

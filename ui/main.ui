@@ -213,12 +213,7 @@
     <property name="title">
      <string>Context</string>
     </property>
-    <addaction name="actionDefault"/>
-    <addaction name="actionWork"/>
-    <addaction name="actionHome"/>
     <addaction name="separator"/>
-    <addaction name="actionAdd_New_Context"/>
-    <addaction name="actionRemove_Context"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuTask"/>

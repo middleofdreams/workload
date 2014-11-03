@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created: Mon Nov  3 07:45:10 2014
+# Created: Mon Nov  3 11:21:58 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -128,12 +128,7 @@ class Ui_MainWindow(object):
         self.menuTask.addAction(self.actionDelete)
         self.menuTask.addSeparator()
         self.menuTask.addAction(self.actionHistory)
-        self.menuContext.addAction(self.actionDefault)
-        self.menuContext.addAction(self.actionWork)
-        self.menuContext.addAction(self.actionHome)
         self.menuContext.addSeparator()
-        self.menuContext.addAction(self.actionAdd_New_Context)
-        self.menuContext.addAction(self.actionRemove_Context)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuTask.menuAction())
         self.menubar.addAction(self.menuContext.menuAction())
