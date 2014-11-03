@@ -184,7 +184,10 @@ class Workload(QtGui.QMainWindow):
         elif e.key()>48 and e.key()<54:
             self.setTaskPriority(e.key()-48)
         elif e.key()==16777221 or e.key()==16777220:  # enter/return
-            self.openTask()
+            if(QtCore.Qt.ControlModifier & e.modifiers()):
+                self.completeTasks()
+            else:
+                self.openTask()
 
 
     def getKeysOnInput(self, e):
@@ -270,9 +273,11 @@ class Workload(QtGui.QMainWindow):
         Task(self,taskid=0)
 
     def completeTasks(self):
-        #TODO: create function in db.py and connect it from here +remove from list
-        print("> take all selected task from list and change state to 'completed'")
-        print("> all completed tasks should be removed from list, but kept in History")
+        tasks=self.ui.taskList.selectedItems()
+        for i in tasks:
+            self.db.completeTask(i.data(0,32))
+            index = self.ui.taskList.indexOfTopLevelItem(i)
+            self.ui.taskList.takeTopLevelItem(index)
 
     def showHistory(self):
         #TODO: Create new window, similar to main one with search instead of input
