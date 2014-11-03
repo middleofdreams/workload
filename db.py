@@ -11,7 +11,7 @@ class DB(object):
         self.checkDB()
 
     def addTask(self, taskname, priority, taskDescription, duedate, context=1):
-        now = datetime.datetime.now().isoformat()
+        now = datetime.datetime.now().timestamp()
         t = (taskname, priority, taskDescription, duedate, context, now)
         self.c.execute("INSERT into tasks ('taskname','priority','taskdescription','due','context',\
             'created','closed') values (?,?,?,?,?,?,0)", t)
@@ -53,6 +53,24 @@ class DB(object):
         t = (description,duedate,priority,taskname,taskid)
         self.c.execute("Update tasks set taskdescription=?,due=?,priority=?,taskname=? where rowid=?", t)
         self.db.commit()
+        
+    def addContext(self,contextname):
+        t = (contextname, )
+        self.c.execute("INSERT into contexts ('contextname', values (?)", t)
+        self.db.commit()
+        for i in self.c.execute("SELECT last_insert_rowid()"):
+            return i[0]
+        
+    def deleteContext(self,contextid):
+        t = (contextid, )
+        self.c.execute("Delete from contexts where rowid=?", t)
+        self.db.commit()
+        
+    def getContexts(self):
+        contexts = {}
+        for i in self.c.execute("SELECT rowid,contextname from contexts"):
+            contexts[i[1]]=i[0]
+        return contexts
 
     def checkDB(self):
         try:
