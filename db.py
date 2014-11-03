@@ -56,7 +56,7 @@ class DB(object):
         
     def addContext(self,contextname):
         t = (contextname, )
-        self.c.execute("INSERT into contexts ('contextname', values (?)", t)
+        self.c.execute("INSERT into contexts ('contextname') values (?)", t)
         self.db.commit()
         for i in self.c.execute("SELECT last_insert_rowid()"):
             return i[0]
@@ -67,10 +67,8 @@ class DB(object):
         self.db.commit()
         
     def getContexts(self):
-        contexts = {}
-        for i in self.c.execute("SELECT rowid,contextname from contexts"):
-            contexts[i[1]]=i[0]
-        return contexts
+        return self.c.execute("SELECT rowid,contextname from contexts order by rowid ASC")
+
 
     def checkDB(self):
         try:
