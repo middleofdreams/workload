@@ -195,6 +195,7 @@
     </property>
     <addaction name="actionImport_tasklist"/>
     <addaction name="separator"/>
+    <addaction name="actionSettings"/>
     <addaction name="actionAbout_2"/>
     <addaction name="actionExit"/>
    </widget>
@@ -300,6 +301,11 @@
   <action name="actionRemove_Context">
    <property name="text">
     <string>Remove Context</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="text">
+    <string>Settings</string>
    </property>
   </action>
  </widget>

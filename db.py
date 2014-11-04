@@ -72,6 +72,23 @@ class DB(object):
         
     def getContexts(self):
         return self.c.execute("SELECT rowid,contextname from contexts order by rowid ASC")
+    
+    def getSetting(self,key):
+        t=(str(key),)
+        r= self.c.execute("SELECT value from settings WHERE key=?",t)
+        r=r.fetchone()
+        if r is None: return None
+        else:
+            return r[0]
+    
+    def setSetting(self,key,value):
+        t = (value,key)
+        
+        if self.getSetting(key) is None:
+            self.c.execute("INSERT into settings ('value','key') values (?,?)", t)
+        else:
+            self.c.execute("Update settings set value=? where key=?", t)
+        self.db.commit()    
 
 
     def checkDB(self):
@@ -97,5 +114,7 @@ class DB(object):
         "contextname" TEXT)'
         self.c.execute(query)
         query="INSERT INTO 'contexts' VALUES ('Default');"
+        self.c.execute(query)
+        query='CREATE TABLE "settings" ("key" VARCHAR, "value" VARCHAR)'
         self.c.execute(query)
         self.db.commit()

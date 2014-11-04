@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created: Mon Nov  3 11:21:58 2014
+# Created: Tue Nov  4 13:05:30 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -118,8 +118,11 @@ class Ui_MainWindow(object):
         self.actionAbout_2.setObjectName("actionAbout_2")
         self.actionRemove_Context = QtGui.QAction(MainWindow)
         self.actionRemove_Context.setObjectName("actionRemove_Context")
+        self.actionSettings = QtGui.QAction(MainWindow)
+        self.actionSettings.setObjectName("actionSettings")
         self.menuFile.addAction(self.actionImport_tasklist)
         self.menuFile.addSeparator()
+        self.menuFile.addAction(self.actionSettings)
         self.menuFile.addAction(self.actionAbout_2)
         self.menuFile.addAction(self.actionExit)
         self.menuTask.addAction(self.actionAdd_new)
@@ -157,4 +160,5 @@ class Ui_MainWindow(object):
         self.actionAdd_New_Context.setText(QtGui.QApplication.translate("MainWindow", "Add New Context", None, QtGui.QApplication.UnicodeUTF8))
         self.actionAbout_2.setText(QtGui.QApplication.translate("MainWindow", "About", None, QtGui.QApplication.UnicodeUTF8))
         self.actionRemove_Context.setText(QtGui.QApplication.translate("MainWindow", "Remove Context", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionSettings.setText(QtGui.QApplication.translate("MainWindow", "Settings", None, QtGui.QApplication.UnicodeUTF8))
 

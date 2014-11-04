@@ -4,7 +4,9 @@ from ui.main_ui import Ui_MainWindow
 from db import DB
 from task import Task
 from tray import Trayicon
-import os,sys
+from settingsWindow import SettingsWindow
+from settings import Settings
+from contexts import loadContexts,addContext,selectCurrentContext
 
 class Workload(QtGui.QMainWindow):
 
@@ -14,6 +16,7 @@ class Workload(QtGui.QMainWindow):
         self.tray=Trayicon(self)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        
 
         #GUI setting
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint
@@ -46,18 +49,25 @@ class Workload(QtGui.QMainWindow):
         self.ui.actionDelete.triggered.connect(self.deleteSelectedTasks)
         self.ui.actionComplete.triggered.connect(self.completeTasks)
         self.ui.actionHistory.triggered.connect(self.showHistory)
+        self.ui.actionSettings.triggered.connect(lambda s=self:SettingsWindow(s))
         self.ui.taskInput.dropEvent = self.dropTask
         
 # SET VARIABLES AND CONNECT TO DB:
 
-        self.currentContext = 1  # TODO: read contexts from db, set current one, fill menu
         self.taskOpened = False
         self.app = app
         self.db = DB(self)
+        self.settings=Settings(self)
+        loadContexts(self)
+
+        
+        self.currentContext = self.settings.getInitContext()
+        selectCurrentContext(self)
         self.show()
+        
+        #self.addContext=addContext
 
         self.loadTasksList(init=True)
-        self.loadContexts()
 
     def dropTask(self,e):
         Task.dropTask(self, e)
@@ -176,7 +186,7 @@ class Workload(QtGui.QMainWindow):
 
 
     def getKeysOnInput(self, e):
-       # print (e.key())
+        # print (e.key())
         if e.key()==16777221 or e.key()==16777220:  # enter/return
             self.addTask(taskDescription=None)
         else:
@@ -276,61 +286,9 @@ class Workload(QtGui.QMainWindow):
         print("> contexts should be stored in list in order to manage them later")
         print("> maybe we should separate context management..")
 
-    def addContext(self):
-        ok=False
-        dialog=QtGui.QInputDialog.getText(self,"New Context","Please enter new context name",QtGui.QLineEdit.Normal,"",ok)
-        if dialog[0] and dialog[1]:
-            self.db.addContext(str(dialog[0]))
-            self.loadContexts()
-        
-    def removeContext(self):
-        if self.currentContext==1:
-            QtGui.QMessageBox.critical(self,"Error","Removal of first context is not possible atm. TBD later")
-#TODO: some settings table with saved last opened context
-        else:
-            if self.questionPopup("Remove context", "Do you really want to remove active context?"):
-                self.db.deleteContext(self.currentContext)
-                self.currentContext=1 #TODO: change it to first available
-                self.loadTasksList()
-                self.loadContexts()
+   
 
 
-# CONTEXT MANAGEMENT:
-
-    def loadContexts(self):
-        self.contexts={}
-        self.ui.menuContext.clear()
-        
-        for i in self.db.getContexts():
-            item=QtGui.QAction(self.ui.menuContext)
-            item.setText(i[1])
-            item.setCheckable(True)
-            item.triggered.connect(lambda item=item: self.switchContext(item))
-            item.setData(i[0])
-            self.contexts[i[1]]=i[0]
-            #item.triggered.connect(self.switchContext)
-            self.ui.menuContext.addAction(item)
-        self.ui.menuContext.addSeparator()
-        newContext = QtGui.QAction(self.ui.menuContext)
-        newContext.setText("Create new context")
-        newContext.triggered.connect(self.addContext)
-        self.ui.menuContext.addAction(newContext)
-        removeContext = QtGui.QAction(self.ui.menuContext)
-        removeContext.setText("Remove current context")
-        removeContext.triggered.connect(self.removeContext)
-        self.ui.menuContext.addAction(removeContext)
-        self.ui.menuContext.children()[self.currentContext].setChecked(True)
-        
-    def switchContext(self,item):
-        if item.isChecked():
-            for i in self.ui.menuContext.children():
-                if i!=item and i!=self.ui.menuContext.children()[0]:
-                    i.setChecked(False)
-            self.currentContext=self.contexts[str(item.text())]
-            self.loadTasksList()
-        else:
-            item.setChecked(True)
-            
 
 if __name__ == "__main__":
     import sys
