@@ -158,7 +158,7 @@ class Workload(QtGui.QMainWindow):
             item = self.getSelectedItem()
             if item:
                 Task(self,item.data(0, 32))
-                #print(item.data(0,32))
+            
 
     def getSelectedItem(self):
         selectedItems = self.ui.taskList.selectedItems()
@@ -243,15 +243,11 @@ class Workload(QtGui.QMainWindow):
 ###### MENU FUNCTIONS
 
     def importTasklist(self):
+        
         dialog=QtGui.QFileDialog(self, "Open", "", "CSV File (*.csv)")
         if dialog.exec_():
             filename=dialog.selectedFiles()
-            #TODO: function for importing csv's
-            print("ok, that's all, we have filename and now it needs to be opened and processed")
-            print("idea is to import tasks from CSV file or something in more readable format")
-            print("imported tasks will be placed under current context")
-            print("import should contain priority;task name;due date;description")
-
+            
     def about(self):
         f=open("about.html")
         text=f.read()
