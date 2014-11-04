@@ -320,7 +320,7 @@ class Workload(QtGui.QMainWindow):
             item=QtGui.QAction(self.ui.menuContext)
             item.setText(i[1])
             item.setCheckable(True)
-            item.triggered.connect(lambda context=item: self.switchContext(context))
+            item.triggered.connect(lambda item=item: self.switchContext(item))
             item.setData(i[0])
             self.contexts[i[1]]=i[0]
             #item.triggered.connect(self.switchContext)
