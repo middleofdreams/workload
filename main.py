@@ -253,12 +253,10 @@ class Workload(QtGui.QMainWindow):
             print("import should contain priority;task name;due date;description")
 
     def about(self):
-        f=open("about")
+        f=open("about.html")
         text=f.read()
         f.close()
-        about = QtGui.QMessageBox.information(self, "About", text,
-        buttons=QtGui.QMessageBox.Ok )
-        print("some 'About' bullshit popup")
+        about = QtGui.QMessageBox.information(self, "About", text, buttons=QtGui.QMessageBox.Ok )
 
     def exit(self):
         if self.questionPopup("Exit", "Are you sure?"):
