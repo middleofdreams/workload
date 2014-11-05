@@ -113,7 +113,7 @@ class DB(object):
         query='CREATE TABLE "contexts" (\
         "contextname" TEXT)'
         self.c.execute(query)
-        query="INSERT INTO 'contexts' VALUES ('Default');"
+        query="INSERT INTO 'contexts' VALUES ('Default context');"
         self.c.execute(query)
         query='CREATE TABLE "settings" ("key" VARCHAR, "value" VARCHAR)'
         self.c.execute(query)

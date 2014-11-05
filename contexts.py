@@ -31,6 +31,7 @@ def switchContext(self,item):
         self.currentContext=self.contexts[str(item.text())]
         self.db.setSetting("lastContext",self.currentContext)
         self.loadTasksList()
+        self.ui.menuContext.setTitle(item.text())
     else:
         item.setChecked(True)
         
@@ -60,4 +61,6 @@ def selectCurrentContext(self):
     for i in self.ui.menuContext.children():
         if i.data()==self.currentContext:
             i.setChecked(True)
+            self.ui.menuContext.setTitle(i.text())
+            
         

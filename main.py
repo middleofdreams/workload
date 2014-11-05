@@ -209,7 +209,6 @@ class Workload(QtGui.QMainWindow):
 
     #WINDOWS MOVEMENT
     def mouseMoveEvent(self, e):
-        print(e.pos())
         if e.buttons() & QtCore.Qt.LeftButton:
             try:
                 self.posx
@@ -232,7 +231,6 @@ class Workload(QtGui.QMainWindow):
         
     def adjustHeight(self,downSize=False,init=False):
         tasks=self.db.getTasks(self.currentContext)
-        print(len(tasks))
         if init:
             winheight=320
             listheight=252
