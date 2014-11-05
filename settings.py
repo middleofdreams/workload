@@ -9,7 +9,6 @@ class Settings(object):
             c =self.db.getSetting("lastContext")
         if c not in self.parent.contexts.values():
             c=list(self.parent.contexts.values())[0]
-        print (c)
         return c
         
     def setLastContext(self,context):
