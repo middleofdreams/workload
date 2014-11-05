@@ -9,9 +9,28 @@ class Trayicon(QtGui.QSystemTrayIcon):
         self.setIcon(icon)
         self.show()
         self.activated.connect(self.showApp)
+        self.iconMenu = QtGui.QMenu(parent)
+        self.setContextMenu(self.iconMenu)
+        add=self.iconMenu.addAction("Create task")
+        add.triggered.connect(self.createTask)
+        context=self.iconMenu.addMenu("Switch context")
         
-    def showApp(self):
-        if self.parent.isVisible():
-            self.parent.hide()
-        else:
-            self.parent.show()
+        self.iconMenu.addSeparator()
+        exit=self.iconMenu.addAction("Exit")
+        exit.triggered.connect(self.exit)
+       
+        
+    def showApp(self,reason):
+        if reason==QtGui.QSystemTrayIcon.ActivationReason.Trigger:
+            if self.parent.isVisible():
+                self.parent.hide()
+            else:
+                self.parent.show()
+                
+    def createTask(self):
+        self.parent.createTask()
+        self.show()
+        
+    def exit(self):
+        self.parent.show()
+        self.parent.exit()
