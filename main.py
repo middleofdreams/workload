@@ -40,6 +40,8 @@ class Workload(QtGui.QMainWindow):
         sc.setKey("Ctrl+R")
         sc.activated.connect(self.adjustHeight)
 
+
+
 #CONNECT MENU ITEMS
         self.ui.actionExit.triggered.connect(self.exit)
         self.ui.actionImport_tasklist.triggered.connect(self.importTasklist)
@@ -68,7 +70,10 @@ class Workload(QtGui.QMainWindow):
         #self.addContext=addContext
 
         self.loadTasksList(init=True)
+        
 
+    
+        
     def dropTask(self,e):
         Task.dropTask(self, e)
 
@@ -204,15 +209,18 @@ class Workload(QtGui.QMainWindow):
 
     #WINDOWS MOVEMENT
     def mouseMoveEvent(self, e):
-        try:
-            self.posx
-            self.posy
-        except:
-            self.posx=e.x()
-            self.posy=e.y()
-        y=e.globalY()-self.posy
-        x=e.globalX()-self.posx
-        self.move(x,y)
+        print(e.pos())
+        if e.buttons() & QtCore.Qt.LeftButton:
+            try:
+                self.posx
+                self.posy
+            except:
+                self.posx=e.x()
+                self.posy=e.y()
+            y=e.globalY()-self.posy
+            x=e.globalX()-self.posx
+            self.move(x,y)
+            #e.accept()
 
 
     def mouseReleaseEvent(self, e):
@@ -221,7 +229,7 @@ class Workload(QtGui.QMainWindow):
             del(self.posy)
         except:
             pass
-
+        
     def adjustHeight(self,downSize=False,init=False):
         tasks=self.db.getTasks(self.currentContext)
         print(len(tasks))
