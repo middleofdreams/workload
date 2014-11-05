@@ -3,6 +3,7 @@
 # Form implementation generated from reading ui file 'main.ui'
 #
 # Created: Wed Nov  5 13:20:31 2014
+
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -73,12 +74,8 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.taskList)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 190, 19))
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.menubar.sizePolicy().hasHeightForWidth())
-        self.menubar.setSizePolicy(sizePolicy)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 190, 20))
+
         self.menubar.setDefaultUp(False)
         self.menubar.setObjectName("menubar")
         self.menuFile = QtGui.QMenu(self.menubar)
@@ -125,7 +122,10 @@ class Ui_MainWindow(object):
         self.actionRemove_Context.setObjectName("actionRemove_Context")
         self.actionSettings = QtGui.QAction(MainWindow)
         self.actionSettings.setObjectName("actionSettings")
+        self.actionExport_tasklist = QtGui.QAction(MainWindow)
+        self.actionExport_tasklist.setObjectName("actionExport_tasklist")
         self.menuFile.addAction(self.actionImport_tasklist)
+        self.menuFile.addAction(self.actionExport_tasklist)
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionSettings)
         self.menuFile.addAction(self.actionAbout_2)
@@ -166,4 +166,5 @@ class Ui_MainWindow(object):
         self.actionAbout_2.setText(QtGui.QApplication.translate("MainWindow", "About", None, QtGui.QApplication.UnicodeUTF8))
         self.actionRemove_Context.setText(QtGui.QApplication.translate("MainWindow", "Remove Context", None, QtGui.QApplication.UnicodeUTF8))
         self.actionSettings.setText(QtGui.QApplication.translate("MainWindow", "Settings", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionExport_tasklist.setText(QtGui.QApplication.translate("MainWindow", "Export tasklist", None, QtGui.QApplication.UnicodeUTF8))
 

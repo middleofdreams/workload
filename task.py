@@ -108,8 +108,9 @@ class Task(QtGui.QDialog):
             self.close()
             
     def dropTask(self,e):
-            fulldata=e.mimeData().text()
+            fulldata=e.mimeData().text()               
             if len(fulldata) > 20:
+                print(fulldata.split(" ")[:3])
                 newdata=[]
                 textFound=False
                 for i in fulldata.splitlines():
@@ -117,7 +118,14 @@ class Task(QtGui.QDialog):
                         newdata.append(i)
                         textFound=True
                 newdata="\n".join(newdata)
-                taskname=newdata[:25].strip()+"..."
+                taskname=newdata[:20].strip()+"..."
                 taskDescription=newdata
                 self.ui.taskInput.setText(taskname)
                 self.addTask(taskDescription)
+            else:
+                taskname=fulldata
+                taskDescription=""
+                self.ui.taskInput.setText(taskname)
+                self.addTask(taskDescription)
+                
+            
