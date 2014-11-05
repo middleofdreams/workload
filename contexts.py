@@ -31,6 +31,7 @@ def switchContext(self,item):
         self.currentContext=self.contexts[str(item.text())]
         self.db.setSetting("lastContext",self.currentContext)
         self.loadTasksList()
+        self.ui.menuContext.setTitle(item.text())
     else:
         item.setChecked(True)
         
@@ -43,8 +44,8 @@ def addContext(self):
         loadContexts(self)
         
 def removeContext(self):
-    if self.currentContext==1:
-        QtGui.QMessageBox.critical(self,"Error","Removal of first context is not possible atm. TBD later")
+    if len(self.contexts)==1:
+        QtGui.QMessageBox.critical(self,"Error","Can't remove last context")
 #TODO: some settings table with saved last opened context
     else:
         if len(self.db.getTasks(self.currentContext))>0:
@@ -60,4 +61,6 @@ def selectCurrentContext(self):
     for i in self.ui.menuContext.children():
         if i.data()==self.currentContext:
             i.setChecked(True)
+            self.ui.menuContext.setTitle(i.text())
+            
         
