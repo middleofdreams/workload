@@ -6,8 +6,11 @@ class Settings(object):
     def getInitContext(self):
         contexts=list(self.parent.contexts.values())
         c=self.db.getSetting("loadContext")
-        if c=="last" or c==None:
-            c =int(self.db.getSetting("lastContext"))
+        if c=="last" or c is None:
+            try:
+                c=int(self.db.getSetting("lastContext"))
+            except TypeError:
+                c=-1
         else:
             c=int(c)
         if int(c) not in contexts:
