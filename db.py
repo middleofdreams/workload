@@ -19,13 +19,18 @@ class DB(object):
         for i in self.c.execute("SELECT last_insert_rowid()"):
             return i[0]
 
-    def getTasks(self, context,archive=False):
-        if archive: archive=1
-        else:archive=0
-        t = (context,archive)
+    def getTasks(self, context):
+        t = (context,)
         tasks = []
         for i in self.c.execute("SELECT rowid,taskname,priority \
-            FROM tasks where context=? and closed=?", t):
+            FROM tasks where context=? and closed=0", t):
+            tasks.append(i)
+        return tasks
+    
+    def getArchive(self):
+        tasks = []
+        for i in self.c.execute("SELECT rowid,taskname,context,created,closedat \
+            FROM tasks where closed=1"):
             tasks.append(i)
         return tasks
 

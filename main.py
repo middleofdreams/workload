@@ -7,6 +7,7 @@ from tray import Trayicon
 from settingsWindow import SettingsWindow
 from settings import Settings
 from contexts import loadContexts,addContext,selectCurrentContext
+from archive import ArchiveWindow
 
 class Workload(QtGui.QMainWindow):
 
@@ -278,10 +279,7 @@ class Workload(QtGui.QMainWindow):
             self.ui.taskList.takeTopLevelItem(index)
 
     def showHistory(self):
-        #TODO: Create new window, similar to main one with search instead of input
-        print("> gather all completed tasks and show in window with search feature")
-        print("> when history entry is opened, normal task edit dialog is shown")
-        print("> history is shown for all contexts")
+        ArchiveWindow(self)
 
 
 if __name__ == "__main__":
