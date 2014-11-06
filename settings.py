@@ -18,3 +18,5 @@ class Settings(object):
         self.db.setSetting("lastContext",context)
     def setLoadContext(self,context):
         self.db.setSetting("loadContext", context)
+    def setCurrentContextAsLast(self):
+        self.setLastContext(self.parent.currentContext)

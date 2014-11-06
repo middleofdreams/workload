@@ -262,6 +262,7 @@ class Workload(QtGui.QMainWindow):
 
     def exit(self):
         if self.questionPopup("Exit", "Are you sure?"):
+            self.settings.setCurrentContextAsLast()
             self.app.exit()
 
     def createTask(self):
@@ -279,15 +280,6 @@ class Workload(QtGui.QMainWindow):
         print("> gather all completed tasks and show in window with search feature")
         print("> when history entry is opened, normal task edit dialog is shown")
         print("> history is shown for all contexts")
-
-    def manageContexts(self):
-        #TODO: context management
-        print("> if one of existing contexts is checked, switch list and uncheck previous context")
-        print("> contexts should be stored in list in order to manage them later")
-        print("> maybe we should separate context management..")
-
-   
-
 
 
 if __name__ == "__main__":

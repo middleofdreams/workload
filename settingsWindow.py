@@ -4,7 +4,7 @@ from ui.settings_ui import Ui_Dialog
 class SettingsWindow(QtGui.QDialog):
 
     def __init__(self,parent):
-        '''main window init'''
+        '''settings window init'''
         self.parent=parent
         QtGui.QDialog.__init__(self)
         self.ui = Ui_Dialog()
@@ -23,9 +23,13 @@ class SettingsWindow(QtGui.QDialog):
                 pass
             
         if self.exec_():
+            #save load context values
             r=self.ui.startupContext.currentIndex()
             if r==0:
                 self.parent.settings.setLoadContext("last")
             else:
                 context=self.ui.startupContext.itemData(r)
                 self.parent.settings.setLoadContext(context)
+            #save current context in db (just in case)
+            self.parent.settings.setCurrentContextAsLast()
+            

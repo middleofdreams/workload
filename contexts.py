@@ -29,7 +29,6 @@ def switchContext(self,item):
             if i!=item and i!=self.ui.menuContext.children()[0]:
                 i.setChecked(False)
         self.currentContext=self.contexts[str(item.text())]
-        self.db.setSetting("lastContext",self.currentContext)
         self.loadTasksList()
         self.ui.menuContext.setTitle(item.text())
     else:
