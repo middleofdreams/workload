@@ -247,12 +247,15 @@
        </widget>
       </item>
       <item row="0" column="5">
-       <widget class="QFontComboBox" name="fontComboBox">
+       <widget class="QFontComboBox" name="editorFont">
         <property name="maximumSize">
          <size>
           <width>16777215</width>
           <height>20</height>
          </size>
+        </property>
+        <property name="fontFilters">
+         <set>QFontComboBox::MonospacedFonts|QFontComboBox::ProportionalFonts</set>
         </property>
        </widget>
       </item>

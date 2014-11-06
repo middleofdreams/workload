@@ -17,7 +17,6 @@ class Task(QtGui.QDialog):
         self.moveIt=False        
         self.ui.priority.valueChanged.connect(self.setPriorityText)
 #Edytor
-        self.ui.editorFont.setFontFilters(QtGui.QFontComboBox.MonospacedFonts)
         self.ui.editorFont.currentFontChanged.connect(self.setFont)
         self.ui.taskDescription.cursorPositionChanged.connect(self.toggleFont)
         

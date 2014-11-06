@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'task.ui'
 #
-# Created: Mon Nov  3 19:43:35 2014
+# Created: Thu Nov  6 22:09:00 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -105,10 +105,11 @@ class Ui_Dialog(object):
         self.pushButton_4.setMaximumSize(QtCore.QSize(55, 20))
         self.pushButton_4.setObjectName("pushButton_4")
         self.gridLayout_4.addWidget(self.pushButton_4, 0, 3, 1, 1)
-        self.fontComboBox = QtGui.QFontComboBox(self.frame)
-        self.fontComboBox.setMaximumSize(QtCore.QSize(16777215, 20))
-        self.fontComboBox.setObjectName("fontComboBox")
-        self.gridLayout_4.addWidget(self.fontComboBox, 0, 5, 1, 1)
+        self.editorFont = QtGui.QFontComboBox(self.frame)
+        self.editorFont.setMaximumSize(QtCore.QSize(16777215, 20))
+        self.editorFont.setFontFilters(QtGui.QFontComboBox.MonospacedFonts|QtGui.QFontComboBox.ProportionalFonts)
+        self.editorFont.setObjectName("editorFont")
+        self.gridLayout_4.addWidget(self.editorFont, 0, 5, 1, 1)
         spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.gridLayout_4.addItem(spacerItem1, 0, 6, 1, 1)
         self.verticalLayout.addWidget(self.frame)
