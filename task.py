@@ -24,9 +24,18 @@ class Task(QtGui.QDialog):
             self.ui.taskName.setText(self.task["name"])
             self.ui.priority.setValue(self.task["priority"])
             self.setPriorityText(self.task["priority"])
-            self.ui.createDate.setText(self.task["created"])
             self.ui.taskDescription.setText(self.task["taskdescription"])
-            self.ui.closeDate.setText(self.task["closedat"])
+            
+            createdTimestamp=int(self.task["created"].split(".")[0])
+            createdDate=str(datetime.datetime.fromtimestamp(createdTimestamp))
+            self.ui.createDate.setText(createdDate)
+            self.ui.label_6.hide()
+            if self.task["closedat"] is not None:
+                self.ui.label_6.show()
+                closeTimestamp=int(self.task["closedat"].split(".")[0])
+                closeDate==str(datetime.datetime.fromtimestamp(closeTimestamp))
+                self.ui.closeDate.setText(closeDate)
+            
             if self.task["due"] is not None:
                 timestamp=int(self.task["due"].split(".")[0])
                 date=datetime.datetime.fromtimestamp(timestamp)
