@@ -16,8 +16,12 @@ class Task(QtGui.QDialog):
         self.taskid=taskid
         self.moveIt=False        
         self.ui.priority.valueChanged.connect(self.setPriorityText)
-        self.task=self.parent.db.getTaskDetails(taskid)
+#Edytor
+        self.ui.editorFont.setFontFilters(QtGui.QFontComboBox.MonospacedFonts)
+        self.ui.editorFont.currentFontChanged.connect(self.setFont)
+        self.ui.taskDescription.cursorPositionChanged.connect(self.toggleFont)
         
+        self.task=self.parent.db.getTaskDetails(taskid)
         if self.taskid:
             self.ui.label_6.hide()  #Hide closed date label
             self.ui.dueDate.setDisplayFormat("dd-MM-yyyy HH:mm")
@@ -28,14 +32,15 @@ class Task(QtGui.QDialog):
             self.ui.taskDescription.setText(self.task["taskdescription"])
             
             createdTimestamp=int(self.task["created"].split(".")[0])
-            createdDate=createdTimestamp.strftime("%d-%m-%Y %H:%M")
+            createdDate=datetime.datetime.fromtimestamp(createdTimestamp)
+            createdDate=createdDate.strftime("%d-%m-%Y %H:%M")
             self.ui.createDate.setText(createdDate)
-            
             
             if self.task["closedat"] is not None:
                 self.ui.label_6.show()
                 closeTimestamp=int(self.task["closedat"].split(".")[0])
-                closeDate=closeTimestamp.strftime("%d-%m-%Y %H:%M")
+                closeDate=datetime.datetime.fromtimestamp(closeTimestamp)
+                closeDate=closeDate.strftime("%d-%m-%Y %H:%M")
                 self.ui.closeDate.setText(closeDate)
             
             if self.task["due"] is not None:
@@ -102,7 +107,7 @@ class Task(QtGui.QDialog):
         taskid=self.taskid
         if taskid!=0:    
             #save task details
-            taskDescription=self.ui.taskDescription.toPlainText()
+            taskDescription=self.ui.taskDescription.toHtml()
             priority=int(self.ui.priority.text())
             taskname=self.ui.taskName.text()
             duedate=self.ui.dueDate.dateTime().toPython().timestamp()
@@ -114,7 +119,7 @@ class Task(QtGui.QDialog):
             #create new task
             t=self.ui.taskName.text()
             priority=int(self.ui.priority.text())
-            taskDescription=self.ui.taskDescription.toPlainText()
+            taskDescription=self.ui.taskDescription.toHtml()
             duedate=self.ui.dueDate.dateTime().toPython().timestamp()
             taskid = self.parent.db.addTask(t,priority,taskDescription, duedate, self.parent.currentContext)
             self.parent.createTaskItem(t, taskid, priority)
@@ -145,5 +150,21 @@ class Task(QtGui.QDialog):
                 taskDescription=""
                 self.ui.taskInput.setText(taskname)
                 self.addTask(taskDescription)
-                
+    
+    def toggleFont(self):
+        current=self.ui.taskDescription.currentFont()
+        if not self.ui.taskDescription.textCursor().hasSelection():
+            self.ui.editorFont.setCurrentFont(current)
             
+    def setFont(self,e):
+        Edytor=self.ui.taskDescription
+        font=e.family()
+        selection=Edytor.textCursor()
+        if selection.hasSelection():
+            text=selection.selectedText()
+            Edytor.setCurrentFont(font)
+            Edytor.setFocus()
+        else:
+            pos=selection.selectionEnd()
+            Edytor.setCurrentFont(font)
+      
