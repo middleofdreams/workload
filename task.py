@@ -19,6 +19,7 @@ class Task(QtGui.QDialog):
         self.task=self.parent.db.getTaskDetails(taskid)
         
         if self.taskid:
+            self.ui.label_6.hide()  #Hide closed date label
             self.ui.dueDate.setDisplayFormat("dd-MM-yyyy HH:mm")
             self.setWindowTitle(self.task["name"])
             self.ui.taskName.setText(self.task["name"])
@@ -27,13 +28,14 @@ class Task(QtGui.QDialog):
             self.ui.taskDescription.setText(self.task["taskdescription"])
             
             createdTimestamp=int(self.task["created"].split(".")[0])
-            createdDate=str(datetime.datetime.fromtimestamp(createdTimestamp))
+            createdDate=createdTimestamp.strftime("%d-%m-%Y %H:%M")
             self.ui.createDate.setText(createdDate)
-            self.ui.label_6.hide()
+            
+            
             if self.task["closedat"] is not None:
                 self.ui.label_6.show()
                 closeTimestamp=int(self.task["closedat"].split(".")[0])
-                closeDate=str(datetime.datetime.fromtimestamp(closeTimestamp))
+                closeDate=closeTimestamp.strftime("%d-%m-%Y %H:%M")
                 self.ui.closeDate.setText(closeDate)
             
             if self.task["due"] is not None:
@@ -46,6 +48,9 @@ class Task(QtGui.QDialog):
                 date=date+delta
                 self.ui.dueDate.setDateTime(QtCore.QDateTime(date.year,date.month,date.day,date.hour,date.minute,0,0))
         else:
+            self.ui.label_4.hide()  #Hide created date label
+            self.ui.label_6.hide()  #Hide closed date label
+            
             self.setWindowTitle("Create New Task")
             self.ui.taskName.setText("Enter task name here")
             self.setPriorityText(0)
