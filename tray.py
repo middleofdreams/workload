@@ -13,11 +13,10 @@ class Trayicon(QtGui.QSystemTrayIcon):
         self.setContextMenu(self.iconMenu)
         add=self.iconMenu.addAction("Create task")
         add.triggered.connect(self.createTask)
-        context=self.iconMenu.addMenu("Switch context")
-        
+      
         self.iconMenu.addSeparator()
-        exit=self.iconMenu.addAction("Exit")
-        exit.triggered.connect(self.exit)
+        exitAction=self.iconMenu.addAction("Exit")
+        exitAction.triggered.connect(self.exit)
        
         
     def showApp(self,reason):
@@ -34,3 +33,5 @@ class Trayicon(QtGui.QSystemTrayIcon):
     def exit(self):
         self.parent.show()
         self.parent.exit()
+
+ 
