@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'task.ui'
 #
-# Created: Thu Nov  6 22:09:00 2014
+# Created: Fri Nov  7 22:18:55 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -13,6 +13,9 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.resize(517, 523)
+        font = QtGui.QFont()
+        font.setFamily("monofur")
+        Dialog.setFont(font)
         self.verticalLayout = QtGui.QVBoxLayout(Dialog)
         self.verticalLayout.setObjectName("verticalLayout")
         self.groupBox_2 = QtGui.QGroupBox(Dialog)
@@ -82,6 +85,7 @@ class Ui_Dialog(object):
         self.editorItalic = QtGui.QPushButton(self.frame)
         self.editorItalic.setMaximumSize(QtCore.QSize(20, 20))
         font = QtGui.QFont()
+        font.setFamily("Monospace")
         font.setItalic(True)
         self.editorItalic.setFont(font)
         self.editorItalic.setObjectName("editorItalic")
@@ -89,12 +93,18 @@ class Ui_Dialog(object):
         self.editorUnderline = QtGui.QPushButton(self.frame)
         self.editorUnderline.setMaximumSize(QtCore.QSize(20, 20))
         font = QtGui.QFont()
+        font.setFamily("Monospace")
         font.setUnderline(True)
         self.editorUnderline.setFont(font)
         self.editorUnderline.setObjectName("editorUnderline")
         self.gridLayout_4.addWidget(self.editorUnderline, 0, 2, 1, 1)
         self.editorBold = QtGui.QPushButton(self.frame)
         self.editorBold.setMaximumSize(QtCore.QSize(20, 20))
+        font = QtGui.QFont()
+        font.setFamily("Monospace")
+        font.setWeight(75)
+        font.setBold(True)
+        self.editorBold.setFont(font)
         self.editorBold.setObjectName("editorBold")
         self.gridLayout_4.addWidget(self.editorBold, 0, 0, 1, 1)
         self.pushButton_5 = QtGui.QPushButton(self.frame)
@@ -105,13 +115,19 @@ class Ui_Dialog(object):
         self.pushButton_4.setMaximumSize(QtCore.QSize(55, 20))
         self.pushButton_4.setObjectName("pushButton_4")
         self.gridLayout_4.addWidget(self.pushButton_4, 0, 3, 1, 1)
-        self.editorFont = QtGui.QFontComboBox(self.frame)
-        self.editorFont.setMaximumSize(QtCore.QSize(16777215, 20))
-        self.editorFont.setFontFilters(QtGui.QFontComboBox.MonospacedFonts|QtGui.QFontComboBox.ProportionalFonts)
-        self.editorFont.setObjectName("editorFont")
-        self.gridLayout_4.addWidget(self.editorFont, 0, 5, 1, 1)
         spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.gridLayout_4.addItem(spacerItem1, 0, 6, 1, 1)
+        self.gridLayout_4.addItem(spacerItem1, 0, 7, 1, 1)
+        self.fontComboBox = QtGui.QComboBox(self.frame)
+        self.fontComboBox.setMinimumSize(QtCore.QSize(120, 0))
+        self.fontComboBox.setObjectName("fontComboBox")
+        self.gridLayout_4.addWidget(self.fontComboBox, 0, 5, 1, 1)
+        self.fontSize = QtGui.QSpinBox(self.frame)
+        self.fontSize.setButtonSymbols(QtGui.QAbstractSpinBox.PlusMinus)
+        self.fontSize.setMinimum(8)
+        self.fontSize.setMaximum(72)
+        self.fontSize.setProperty("value", 12)
+        self.fontSize.setObjectName("fontSize")
+        self.gridLayout_4.addWidget(self.fontSize, 0, 6, 1, 1)
         self.verticalLayout.addWidget(self.frame)
         self.taskDescription = QtGui.QTextEdit(Dialog)
         self.taskDescription.setMinimumSize(QtCore.QSize(100, 0))

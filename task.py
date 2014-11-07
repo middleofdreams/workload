@@ -17,8 +17,14 @@ class Task(QtGui.QDialog):
         self.moveIt=False        
         self.ui.priority.valueChanged.connect(self.setPriorityText)
 #Edytor
-        self.ui.editorFont.currentFontChanged.connect(self.setFont)
+        fontlist=["monofur","Times New Roman","Arial","DejaVu Serif"]  #TODO: read font settings from database
+        fontlist.sort()
+        for i in fontlist:
+            self.ui.fontComboBox.addItem(i,None)
         self.ui.taskDescription.cursorPositionChanged.connect(self.toggleFont)
+        self.ui.fontComboBox.activated.connect(self.setEditorFont)
+        self.ui.fontSize.valueChanged.connect(self.setEditorFont)
+        self.ui.editorBold.pressed.connect(self.setFontBold)
         
         self.task=self.parent.db.getTaskDetails(taskid)
         if self.taskid:
@@ -151,19 +157,30 @@ class Task(QtGui.QDialog):
                 self.addTask(taskDescription)
     
     def toggleFont(self):
-        current=self.ui.taskDescription.currentFont()
+        currentFont=self.ui.taskDescription.currentFont().family()
+        currentSize=self.ui.taskDescription.currentFont().pointSize()
+        currentIndex=self.ui.fontComboBox.findText(currentFont)
         if not self.ui.taskDescription.textCursor().hasSelection():
-            self.ui.editorFont.setCurrentFont(current)
+            if currentIndex is not None:
+                self.ui.fontComboBox.setCurrentIndex(currentIndex)
+            self.ui.fontSize.setValue(currentSize)
             
-    def setFont(self,e):
-        Edytor=self.ui.taskDescription
-        font=e.family()
-        selection=Edytor.textCursor()
+    def setEditorFont(self):
+        Editor=self.ui.taskDescription
+        fontName=self.ui.fontComboBox.currentText()
+        fontSize=int(self.ui.fontSize.text())
+        f=QtGui.QFont()
+        f.setFamily(fontName)
+        f.setPointSize(fontSize)
+        
+        selection=Editor.textCursor()
         if selection.hasSelection():
-            text=selection.selectedText()
-            Edytor.setCurrentFont(font)
-            Edytor.setFocus()
+           # text=selection.selectedText()
+            Editor.setCurrentFont(f)
+            Editor.setFocus()
         else:
-            pos=selection.selectionEnd()
-            Edytor.setCurrentFont(font)
+            #pos=selection.selectionEnd()
+            Editor.setCurrentFont(f)
       
+    def setFontBold(self,bold=False):
+        print("set font bold")
