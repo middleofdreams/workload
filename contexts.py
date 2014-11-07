@@ -39,8 +39,11 @@ def addContext(self):
     ok=False
     dialog=QtGui.QInputDialog.getText(self,"New Context","Please enter new context name",QtGui.QLineEdit.Normal,"",ok)
     if dialog[0] and dialog[1]:
-        self.db.addContext(str(dialog[0]))
+        newid=self.db.addContext(str(dialog[0]))
+        self.currentContext=newid
+        self.loadTasksList()
         loadContexts(self)
+        selectCurrentContext(self)
         
 def removeContext(self):
     if len(self.contexts)==1:
@@ -55,6 +58,7 @@ def removeContext(self):
             self.currentContext=1 #TODO: change it to first available
             self.loadTasksList()
             loadContexts(self)
+            selectCurrentContext(self)
             
 def selectCurrentContext(self):
     for i in self.ui.menuContext.children():

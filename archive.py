@@ -34,6 +34,10 @@ class ArchiveWindow(QtGui.QDialog):
         self.ui.closeFilter.textChanged.connect(self.filter)
         
         self.ui.treeWidget.setFocus()
+        self.questionPopup=self.parent.questionPopup
+        sc = QtGui.QShortcut(self)
+        sc.setKey("Delete")
+        sc.activated.connect(self.removeTasks)
 
         self.exec_()
         
@@ -68,6 +72,26 @@ class ArchiveWindow(QtGui.QDialog):
                 for item in allitems:
                     item.setHidden(True)
                     
+    def removeTasks(self, force=False):
+        selectedItems = self.ui.treeWidget.selectedItems()
+        if len(selectedItems)>0:
+            tasks = []
+            for item in selectedItems:
+                tasks.append(item)
+            if force:
+                self.removeTask(tasks)
+            elif self.questionPopup("Delete task",
+                "Do you really want to delete selected  task(s) ?"):
+                self.removeTask(tasks)
+
+
+    def removeTask(self, tasks):
+        for item in tasks:
+            self.parent.db.deleteTask(item.data(0, 32))
+            index = self.ui.treeWidget.indexOfTopLevelItem(item)
+            self.ui.treeWidget.takeTopLevelItem(index)
+                    
+    
             
                     
         

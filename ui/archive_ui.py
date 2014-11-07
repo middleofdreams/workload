@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'archive.ui'
 #
-# Created: Thu Nov  6 11:02:10 2014
-#      by: pyside-uic 0.2.15 running on PySide 1.2.1
+# Created: Fri Nov  7 11:01:07 2014
+#      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -33,6 +33,7 @@ class Ui_Dialog(object):
         self.treeWidget = QtGui.QTreeWidget(Dialog)
         self.treeWidget.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
         self.treeWidget.setAlternatingRowColors(True)
+        self.treeWidget.setSelectionMode(QtGui.QAbstractItemView.ExtendedSelection)
         self.treeWidget.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
         self.treeWidget.setItemsExpandable(False)
         self.treeWidget.setAnimated(True)

@@ -72,8 +72,18 @@ class DB(object):
         
     def deleteContext(self,contextid):
         t = (contextid, )
+        context=""
+        for i in self.getContexts():
+            if i[0]==contextid:
+                context=i[1]
+        
         self.c.execute("Delete from contexts where rowid=?", t)
+        
         self.db.commit()
+        t=(context,contextid)
+        self.c.execute("Update tasks set context=? where context=?", t)
+        self.db.commit()
+        
         
     def getContexts(self):
         return self.c.execute("SELECT rowid,contextname from contexts order by rowid ASC")
