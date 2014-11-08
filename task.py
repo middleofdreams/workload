@@ -24,7 +24,9 @@ class Task(QtGui.QDialog):
         self.ui.taskDescription.cursorPositionChanged.connect(self.toggleFont)
         self.ui.fontComboBox.activated.connect(self.setEditorFont)
         self.ui.fontSize.valueChanged.connect(self.setEditorFont)
-        self.ui.editorBold.pressed.connect(self.setFontBold)
+        self.ui.editorBold.clicked.connect(self.setFontBold)
+        self.ui.editorItalic.clicked.connect(self.setFontItalic)
+        self.ui.editorUnderline.clicked.connect(self.setFontUnderline)
         
         self.task=self.parent.db.getTaskDetails(taskid)
         if self.taskid:
@@ -165,22 +167,54 @@ class Task(QtGui.QDialog):
                 self.ui.fontComboBox.setCurrentIndex(currentIndex)
             self.ui.fontSize.setValue(currentSize)
             
-    def setEditorFont(self):
+    def setEditorFont(self,Bold=False,Italic=False,Underline=False):
         Editor=self.ui.taskDescription
+        selection=Editor.textCursor()
         fontName=self.ui.fontComboBox.currentText()
         fontSize=int(self.ui.fontSize.text())
+        
         f=QtGui.QFont()
         f.setFamily(fontName)
         f.setPointSize(fontSize)
-        
-        selection=Editor.textCursor()
+        if Bold==True or self.ui.editorBold.isFlat():
+            f.setBold(True)
+        else:
+            f.setBold(False)
+        if Italic==True or self.ui.editorItalic.isFlat():
+            f.setItalic(True)
+        else:
+            f.setItalic(False)
+        if Underline==True or self.ui.editorUnderline.isFlat():
+            f.setUnderline(True)
+        else:
+            f.setUnderline(False)
+            
         if selection.hasSelection():
-           # text=selection.selectedText()
             Editor.setCurrentFont(f)
             Editor.setFocus()
         else:
-            #pos=selection.selectionEnd()
             Editor.setCurrentFont(f)
       
-    def setFontBold(self,bold=False):
-        print("set font bold")
+    def setFontBold(self):
+        if not self.ui.editorBold.isFlat():
+            self.ui.editorBold.setFlat(True)
+            self.setEditorFont(Bold=True)
+        else:
+            self.ui.editorBold.setFlat(False)
+            self.setEditorFont()
+   
+    def setFontItalic(self):
+        if not self.ui.editorItalic.isFlat():
+            self.ui.editorItalic.setFlat(True)
+            self.setEditorFont(Italic=True)
+        else:
+            self.ui.editorItalic.setFlat(False)
+            self.setEditorFont()
+            
+    def setFontUnderline(self):
+        if not self.ui.editorUnderline.isFlat():
+            self.ui.editorUnderline.setFlat(True)
+            self.setEditorFont(Underline=True)
+        else:
+            self.ui.editorUnderline.setFlat(False)
+            self.setEditorFont()

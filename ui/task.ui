@@ -232,6 +232,9 @@
         <property name="text">
          <string>B</string>
         </property>
+        <property name="flat">
+         <bool>false</bool>
+        </property>
        </widget>
       </item>
       <item row="0" column="4">
