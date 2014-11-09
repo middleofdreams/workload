@@ -121,7 +121,7 @@ class Task(QtGui.QDialog):
             taskDescription=self.ui.taskDescription.toHtml()
             priority=int(self.ui.priority.text())
             taskname=self.ui.taskName.text()
-            duedate=self.ui.dueDate.dateTime().toPython().timestamp()
+            duedate=self.parent.db._timestamp(self.ui.dueDate.dateTime().toPython())
             self.parent.db.setTaskDetails(taskid,taskDescription,priority,taskname,duedate)
             self.updateItem(taskname, priority)
             self.close()

@@ -52,6 +52,7 @@ class Workload(QtGui.QMainWindow):
         self.ui.actionComplete.triggered.connect(self.completeTasks)
         self.ui.actionHistory.triggered.connect(self.showHistory)
         self.ui.actionSettings.triggered.connect(lambda s=self:SettingsWindow(s))
+        self.ui.actionExport_tasklist.triggered.connect(self.exportTaskList)
         self.ui.taskInput.dropEvent = self.dropTask
         
 # SET VARIABLES AND CONNECT TO DB:
@@ -250,6 +251,14 @@ class Workload(QtGui.QMainWindow):
         dialog=QtGui.QFileDialog(self, "Open", "", "CSV File (*.csv)")
         if dialog.exec_():
             filename=dialog.selectedFiles()
+            
+    def exportTaskList(self):
+        fname=QtGui.QFileDialog.getSaveFileName()#"Select file to save task list")
+        if fname:
+            includeArchive=self.questionPopup("Exporting tasks", "Do you want to include completedTasks?")
+            tasks=self.db.exportTasks(self.currentContext, includeArchive)
+            from lib import importexport
+            importexport.export(tasks, fname[0])
             
     def about(self):
         f=open("about.html")

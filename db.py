@@ -1,5 +1,6 @@
 import sqlite3
 import datetime
+import sys
 
 
 class DB(object):
@@ -11,7 +12,7 @@ class DB(object):
         self.checkDB()
 
     def addTask(self, taskname, priority, taskDescription, duedate, context=1):
-        now = datetime.datetime.now().timestamp()
+        now = self._timestamp(datetime.datetime.now())
         t = (taskname, priority, taskDescription, duedate, context, now)
         self.c.execute("INSERT into tasks ('taskname','priority','taskdescription','due','context',\
             'created','closed') values (?,?,?,?,?,?,0)", t)
@@ -24,6 +25,16 @@ class DB(object):
         tasks = []
         for i in self.c.execute("SELECT rowid,taskname,priority \
             FROM tasks where context=? and closed=0", t):
+            tasks.append(i)
+        return tasks
+    
+    def exportTasks(self,context,includeArchive=False):
+        t = (context,)
+        tasks = []
+        query="SELECT * FROM tasks where context=?"
+        if not includeArchive:
+            query+=" and closed=0"
+        for i in self.c.execute(query, t):
             tasks.append(i)
         return tasks
     
@@ -59,7 +70,7 @@ class DB(object):
         self.db.commit()
         
     def completeTask(self,taskid):
-        t = (datetime.datetime.now().timestamp(),taskid)
+        t = (self._timestamp(datetime.datetime.now()),taskid)
         self.c.execute("Update tasks set closed=1,closedat=? where rowid=?", t)
         self.db.commit()
         
@@ -133,3 +144,12 @@ class DB(object):
         query='CREATE TABLE "settings" ("key" VARCHAR, "value" VARCHAR)'
         self.c.execute(query)
         self.db.commit()
+        
+    def _timestamp(self,dateobject):
+        '''for python 2 compatibility'''
+        try:
+            timestamp = dateobject.timestamp()
+        except AttributeError:
+            timestamp = (dateobject - datetime.datetime(1970, 1, 1)).total_seconds()
+            
+        return timestamp
