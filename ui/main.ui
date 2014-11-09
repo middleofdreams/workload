@@ -37,7 +37,7 @@
    <string>Workload</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="../res.qrc">
     <normaloff>:/icon/icon.png</normaloff>:/icon/icon.png</iconset>
   </property>
   <property name="windowOpacity">
@@ -312,6 +312,8 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="../res.qrc"/>
+ </resources>
  <connections/>
 </ui>
