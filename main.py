@@ -96,8 +96,11 @@ class Workload(QtGui.QMainWindow):
             pass
 #TODO: create new function to handle input (regexp etc)
         duedate=None
-        taskid = self.db.addTask(t,priority, taskDescription, duedate, self.currentContext)
-        self.createTaskItem(t, taskid, priority)
+        if len(t)>20:
+            taskName=t[:20]+"..."
+            taskDescription=t
+        taskid = self.db.addTask(taskName,priority, taskDescription, duedate, self.currentContext)
+        self.createTaskItem(taskName, taskid, priority)
         self.adjustHeight()
 
     def createTaskItem(self, t, taskid=None, priority=0):

@@ -508,6 +508,9 @@
        </disabled>
       </palette>
      </property>
+     <property name="autoFormatting">
+      <set>QTextEdit::AutoNone</set>
+     </property>
     </widget>
    </item>
    <item>

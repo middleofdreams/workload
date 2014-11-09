@@ -1,6 +1,6 @@
 from PySide import QtGui, QtCore
 from ui.task_ui import Ui_Dialog
-import datetime
+import datetime,unicodedata
 
 class Task(QtGui.QDialog):
 
@@ -32,6 +32,7 @@ class Task(QtGui.QDialog):
         self.ui.currentBGcolor.clicked.connect(self.setCurrentBGcolor)
         self.ui.currentTextColor.clicked.connect(self.setCurrentTextColor)
         self.task=self.parent.db.getTaskDetails(taskid)
+       
         if self.taskid:
             self.ui.label_6.hide()  #Hide closed date label
             self.ui.dueDate.setDisplayFormat("dd-MM-yyyy HH:mm")
@@ -137,7 +138,7 @@ class Task(QtGui.QDialog):
             self.close()
             
     def dropTask(self,e):
-            fulldata=e.mimeData().text()               
+            fulldata=e.mimeData().text()             
             if len(fulldata) > 20:
                 newdata=[]
                 textFound=False
@@ -160,7 +161,7 @@ class Task(QtGui.QDialog):
                 taskDescription=""
                 self.ui.taskInput.setText(taskname)
                 self.addTask(taskDescription)
-
+            
 #Editor Functions 
     def toggleFont(self):
         currentFont=self.ui.taskDescription.currentFont().family()

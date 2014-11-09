@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'task.ui'
 #
-# Created: Sun Nov  9 09:23:27 2014
+# Created: Sun Nov  9 12:10:06 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -145,6 +145,12 @@ class Ui_Dialog(object):
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Button, brush)
         self.currentBGcolor.setPalette(palette)
+        font = QtGui.QFont()
+        font.setFamily("Monospace")
+        font.setWeight(75)
+        font.setItalic(False)
+        font.setBold(True)
+        self.currentBGcolor.setFont(font)
         self.currentBGcolor.setAutoFillBackground(True)
         self.currentBGcolor.setText("")
         self.currentBGcolor.setCheckable(False)
@@ -194,6 +200,7 @@ class Ui_Dialog(object):
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Button, brush)
         self.taskDescription.setPalette(palette)
+        self.taskDescription.setAutoFormatting(QtGui.QTextEdit.AutoNone)
         self.taskDescription.setObjectName("taskDescription")
         self.verticalLayout.addWidget(self.taskDescription)
         self.buttonBox = QtGui.QDialogButtonBox(Dialog)
