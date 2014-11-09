@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from PySide import QtGui, QtCore
 from ui.task_ui import Ui_Dialog
 import datetime,unicodedata
@@ -138,7 +139,12 @@ class Task(QtGui.QDialog):
             self.close()
             
     def dropTask(self,e):
-            fulldata=e.mimeData().text()             
+            fulldata=e.mimeData().text()    
+            date=datetime.datetime.now()
+            delta=datetime.timedelta(hours=24)
+            duedate=date+delta
+            duedate=duedate.timestamp()
+            priority=0   
             if len(fulldata) > 20:
                 newdata=[]
                 textFound=False
@@ -154,13 +160,14 @@ class Task(QtGui.QDialog):
                 taskname=taskname.replace("  ","")
                 taskname=taskname[:20]+"..."
                 taskDescription=newdata
-                self.ui.taskInput.setText(taskname)
-                self.addTask(taskDescription)
+                taskid = self.db.addTask(taskname,priority, taskDescription, duedate, self.currentContext)
+                self.createTaskItem(taskname, taskid, priority=0)
+                
             else:
                 taskname=fulldata
                 taskDescription=""
-                self.ui.taskInput.setText(taskname)
-                self.addTask(taskDescription)
+                taskid = self.db.addTask(taskname,priority, taskDescription, duedate, self.currentContext)
+                self.createTaskItem(taskname, taskid, priority=0)
             
 #Editor Functions 
     def toggleFont(self):

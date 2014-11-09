@@ -73,7 +73,7 @@ class Workload(QtGui.QMainWindow):
         Task.dropTask(self, e)
 
 # TASKS RELATED ACTIONS
-    def addTask(self,taskDescription):
+    def addTask(self):
         t = self.ui.taskInput.text().strip()
         if t =="":
             return False
@@ -98,10 +98,13 @@ class Workload(QtGui.QMainWindow):
 #TODO: create new function to handle input (regexp etc)
         duedate=None
         if len(t)>20:
-            taskName=t[:20]+"..."
+            taskname=t[:20]+"..."
             taskDescription=t
-        taskid = self.db.addTask(taskName,priority, taskDescription, duedate, self.currentContext)
-        self.createTaskItem(taskName, taskid, priority)
+        else:
+            taskname=t
+            taskDescription=""
+        taskid = self.db.addTask(taskname,priority, taskDescription, duedate, self.currentContext)
+        self.createTaskItem(taskname, taskid, priority)
         self.adjustHeight()
 
     def createTaskItem(self, t, taskid=None, priority=0):
@@ -191,7 +194,7 @@ class Workload(QtGui.QMainWindow):
     def getKeysOnInput(self, e):
         # print (e.key())
         if e.key()==16777221 or e.key()==16777220:  # enter/return
-            self.addTask(taskDescription=None)
+            self.addTask()
         else:
             QtGui.QLineEdit.keyPressEvent(self.ui.taskInput,e)
 
