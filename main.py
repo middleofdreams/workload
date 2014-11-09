@@ -25,7 +25,7 @@ class Workload(QtGui.QMainWindow):
         if desktop.height() > 800:
             self.move(10, (desktop.height() / 2) - (self.height()))
         else:
-            self.move(10, 10)
+            self.move(15, 150)
         self.ui.taskList.setColumnWidth(0, 20)
 
 #CONNECT SIGNALS
@@ -61,21 +61,13 @@ class Workload(QtGui.QMainWindow):
         self.db = DB(self)
         self.settings=Settings(self)
         loadContexts(self)
-
-        
         self.currentContext = self.settings.getInitContext()
         selectCurrentContext(self)
-        
-
         self.loadTasksList(init=True)  
-        
         self.tray=Trayicon(self)
-
         self.show()
 
 
-    
-        
     def dropTask(self,e):
         Task.dropTask(self, e)
 
