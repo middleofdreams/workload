@@ -28,6 +28,16 @@ class DB(object):
             tasks.append(i)
         return tasks
     
+    def exportTasks(self,context,includeArchive=False):
+        t = (context,)
+        tasks = []
+        query="SELECT * FROM tasks where context=?"
+        if not includeArchive:
+            query+=" and closed=0"
+        for i in self.c.execute(query, t):
+            tasks.append(i)
+        return tasks
+    
     def getArchive(self):
         tasks = []
         for i in self.c.execute("SELECT rowid,taskname,context,created,closedat \
