@@ -2,7 +2,6 @@
 from PySide import QtGui, QtCore
 from ui.task_ui import Ui_Dialog
 import datetime,unicodedata
-
 class Task(QtGui.QDialog):
 
     def __init__(self,parent,taskid):
@@ -41,7 +40,7 @@ class Task(QtGui.QDialog):
             self.ui.taskName.setText(self.task["name"])
             self.ui.priority.setValue(self.task["priority"])
             self.setPriorityText(self.task["priority"])
-            self.ui.taskDescription.setText(self.task["taskdescription"])
+            self.ui.taskDescription.append(self.task["taskdescription"])
             
             createdTimestamp=int(self.task["created"].split(".")[0])
             createdDate=datetime.datetime.fromtimestamp(createdTimestamp)
@@ -119,25 +118,31 @@ class Task(QtGui.QDialog):
         taskid=self.taskid
         if taskid!=0:    
             #save task details
-            taskDescription=self.ui.taskDescription.toHtml()
-            priority=int(self.ui.priority.text())
             taskname=self.ui.taskName.text()
-            duedate=self.parent.db._timestamp(self.ui.dueDate.dateTime().toPython())
-            self.parent.db.setTaskDetails(taskid,taskDescription,priority,taskname,duedate)
-            self.updateItem(taskname, priority)
-            self.close()
+            if taskname==self.task["name"] or self.parent.checkIfExist(taskname) is not True:
+                taskDescription=self.ui.taskDescription.toHtml()
+                priority=int(self.ui.priority.text())
+                duedate=self.parent.db._timestamp(self.ui.dueDate.dateTime().toPython())
+                self.parent.db.setTaskDetails(taskid,taskDescription,priority,taskname,duedate)
+                self.updateItem(taskname, priority)
+                self.close()
+            else:
+                self.parent.taskAlreadyExistMsg(parent=self)
             
         else:
             #create new task
-            t=self.ui.taskName.text()
-            priority=int(self.ui.priority.text())
-            taskDescription=self.ui.taskDescription.toHtml()
-            duedate=self.ui.dueDate.dateTime().toPython().timestamp()
-            taskid = self.parent.db.addTask(t,priority,taskDescription, duedate, self.parent.currentContext)
-            self.parent.createTaskItem(t, taskid, priority)
-            self.parent.adjustHeight()
-            self.close()
-            
+            taskname=self.ui.taskName.text()
+            if self.parent.checkIfExist(taskname) is not True:
+                priority=int(self.ui.priority.text())
+                taskDescription=self.ui.taskDescription.toHtml()
+                duedate=self.ui.dueDate.dateTime().toPython().timestamp()
+                taskid = self.parent.db.addTask(taskname,priority,taskDescription, duedate, self.parent.currentContext)
+                self.parent.createTaskItem(taskname, taskid, priority)
+                self.parent.adjustHeight()
+                self.close()
+            else:
+                self.parent.taskAlreadyExistMsg(parent=self)
+
     def dropTask(self,e):
             fulldata=e.mimeData().text()    
             date=datetime.datetime.now()
@@ -179,7 +184,7 @@ class Task(QtGui.QDialog):
             if currentIndex is not None:
                 self.ui.fontComboBox.setCurrentIndex(currentIndex)
         self.ui.fontSize.setValue(currentSize)
-            
+           
             
     def setEditorFont(self):
         Editor=self.ui.taskDescription

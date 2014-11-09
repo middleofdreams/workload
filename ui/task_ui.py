@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'task.ui'
 #
-# Created: Sun Nov  9 12:10:06 2014
+# Created: Sun Nov  9 13:50:32 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,7 +12,7 @@ from PySide import QtCore, QtGui
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(517, 523)
+        Dialog.resize(626, 532)
         font = QtGui.QFont()
         font.setFamily("monofur")
         Dialog.setFont(font)
@@ -182,6 +182,7 @@ class Ui_Dialog(object):
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Button, brush)
         self.currentTextColor.setPalette(palette)
         self.currentTextColor.setAutoFillBackground(True)
+        self.currentTextColor.setText("")
         self.currentTextColor.setFlat(True)
         self.currentTextColor.setObjectName("currentTextColor")
         self.horizontalLayout_2.addWidget(self.currentTextColor)
@@ -229,5 +230,9 @@ class Ui_Dialog(object):
         self.editorBold.setText(QtGui.QApplication.translate("Dialog", "B", None, QtGui.QApplication.UnicodeUTF8))
         self.editorBGcolor.setText(QtGui.QApplication.translate("Dialog", "BGcolor", None, QtGui.QApplication.UnicodeUTF8))
         self.editorTextColor.setText(QtGui.QApplication.translate("Dialog", "Text color", None, QtGui.QApplication.UnicodeUTF8))
-        self.currentTextColor.setText(QtGui.QApplication.translate("Dialog", " ", None, QtGui.QApplication.UnicodeUTF8))
+        self.taskDescription.setHtml(QtGui.QApplication.translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'monofur\'; font-size:8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
 

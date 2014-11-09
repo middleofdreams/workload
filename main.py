@@ -103,10 +103,14 @@ class Workload(QtGui.QMainWindow):
         else:
             taskname=t
             taskDescription=""
-        taskid = self.db.addTask(taskname,priority, taskDescription, duedate, self.currentContext)
-        self.createTaskItem(taskname, taskid, priority)
-        self.adjustHeight()
-
+        if self.checkIfExist(taskname) is not True:  
+            taskid = self.db.addTask(taskname,priority, taskDescription, duedate, self.currentContext)
+            self.createTaskItem(taskname, taskid, priority)
+            self.adjustHeight()
+        else:
+            self.ui.taskInput.setText(taskname)
+            self.taskAlreadyExistMsg(self)
+            
     def createTaskItem(self, t, taskid=None, priority=0):
         item = QtGui.QTreeWidgetItem([str(priority), t])
         item.setData(0, 32, taskid)
@@ -114,7 +118,15 @@ class Workload(QtGui.QMainWindow):
         self.ui.taskList.addTopLevelItem(item)
         self.setPriorityColor(item, priority)
         self.ui.taskList.sortItems(0,QtCore.Qt.AscendingOrder)
-
+        
+        
+    def checkIfExist(self,t):
+        if len(self.ui.taskList.findItems(t,QtCore.Qt.MatchFlags(QtCore.Qt.MatchExactly),1))>0:
+            return True
+            
+    def taskAlreadyExistMsg(self,parent):
+        text="Task with same name already exist, choose another"
+        msg = QtGui.QMessageBox.information(parent, "About", text, buttons=QtGui.QMessageBox.Ok )
 
     def loadTasksList(self, archived=False,init=False):
         self.ui.taskList.clear()
