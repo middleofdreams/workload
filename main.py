@@ -270,7 +270,7 @@ class Workload(QtGui.QMainWindow):
     def exportTaskList(self):
         fname=QtGui.QFileDialog.getSaveFileName()#"Select file to save task list")
         if fname:
-            includeArchive=self.questionPopup("Exporting tasks", "Do you want to include completedTasks?")
+            includeArchive=self.questionPopup("Exporting tasks", "Do you want to include completed tasks?")
             tasks=self.db.exportTasks(self.currentContext, includeArchive)
             from lib import importexport
             importexport.export(tasks, fname[0])
