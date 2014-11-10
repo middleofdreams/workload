@@ -255,7 +255,7 @@
          </size>
         </property>
         <property name="fontFilters">
-         <set>QFontComboBox::MonospacedFonts|QFontComboBox::ProportionalFonts</set>
+         <set>QFontComboBox::MonospacedFonts|QFontComboBox::ScalableFonts</set>
         </property>
        </widget>
       </item>

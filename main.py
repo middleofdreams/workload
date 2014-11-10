@@ -6,7 +6,7 @@ from task import Task
 from tray import Trayicon
 from settingsWindow import SettingsWindow
 from settings import Settings
-from contexts import loadContexts,addContext,selectCurrentContext
+from contexts import loadContexts,selectCurrentContext
 from archive import ArchiveWindow
 
 class Workload(QtGui.QMainWindow):
@@ -17,6 +17,7 @@ class Workload(QtGui.QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         
+
         #GUI setting
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint
                             | QtCore.Qt.WindowStaysOnTopHint)
@@ -279,6 +280,7 @@ class Workload(QtGui.QMainWindow):
 
     def showHistory(self):
         ArchiveWindow(self)
+                
 
 
 if __name__ == "__main__":
