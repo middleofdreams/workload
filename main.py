@@ -8,8 +8,6 @@ from settingsWindow import SettingsWindow
 from settings import Settings
 from contexts import loadContexts,selectCurrentContext
 from archive import ArchiveWindow
-import res_rc
-
 class Workload(QtGui.QMainWindow):
 
     def __init__(self,app):
@@ -17,8 +15,28 @@ class Workload(QtGui.QMainWindow):
         QtGui.QMainWindow.__init__(self)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.setStyleSheet('ui/style.qss')
+#         WindowStyle="QMainWindow{border:2px solid rgba(85, 170, 255,150);  border-radius: 2px; background-color:rgba(225,225,255,250)}"
+#         StatusbarStyle="QStatusBar{background-color:transparent;border-top: 0px transparent; border-radius:2px;\
+#         border-bottom: 3px solid rgba(85, 170, 255,150);border-left: 2px solid rgba(85, 170, 255,150);border-right: 2px solid rgba(85, 170, 255,150)}"
+#         MenubarStyle="QMenuBar{padding:2px 2px;background-color:transparent;border-top: 3px solid rgba(85, 170, 255,150);\
+#         border-left:2px solid rgba(85, 170, 255,150);border-right: 2px solid rgba(85, 170, 255,150);border-radius: 2px}\
+#         QMenuBar::item{padding: 2px 2px;background-color:transparent;color:rgb(55, 55, 55);border-radius:3px}"
+#         MenuStyle="QMenu{background-color:rgba(219,237,255,200);color:black;border:1px solid rgba(85, 170, 255,80);\
+#         border-left:3px solid rgba(85, 170, 255,80);border-radius:3px} \
+#         QMenu::item{padding: 2px 20px;background-color:rgba(219,237,255,100);color:rgb(55, 55, 55)}\
+#         QMenu::item::selected{background-color:rgba(245,245,220,200);color:rgb(55, 55, 55);border:1px solid rgba(85, 170, 255,150);\
+#         border-radius:3px}"
+#         TaskList="QTreeWidget{background-color:rgba(219,237,255,100);alternate-background-color:rgba(85, 170, 255,80)}"
         
-
+#         self.ui.taskList.setStyleSheet(TaskList)
+#         self.ui.menubar.setStyleSheet(MenubarStyle)
+#         self.ui.menuFile.setStyleSheet(MenuStyle)
+#         self.ui.menuTask.setStyleSheet(MenuStyle)
+#         self.ui.menuContext.setStyleSheet(MenuStyle)
+#         self.ui.statusbar.setStyleSheet(StatusbarStyle)
+#         self.setStyleSheet(WindowStyle)
+        
         #GUI setting
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint
                             | QtCore.Qt.WindowStaysOnTopHint)
@@ -29,7 +47,7 @@ class Workload(QtGui.QMainWindow):
         else:
             self.move(15, 150)
         self.ui.taskList.setColumnWidth(0, 20)
-
+        
 #CONNECT SIGNALS
         self.ui.taskList.keyPressEvent = self.getKeysOnList
         self.ui.taskInput.keyPressEvent= self.getKeysOnInput
@@ -69,8 +87,9 @@ class Workload(QtGui.QMainWindow):
         self.loadTasksList(init=True)  
         self.tray=Trayicon(self)
         self.show()
-        self.ui.statusbar.showMessage("Hello! Ready to work ;-)",3600)
 
+        self.adjustHeight(downSize=True, init=False)
+        self.ui.statusbar.showMessage("Hello! Ready to work ;-)",3600)
     def dropTask(self,e):
         Task.dropTask(self, e)
 

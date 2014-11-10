@@ -24,6 +24,9 @@ class Task(QtGui.QDialog):
             if i in FontDB.families() or i=='Monospace' or 'Times New Roman':
                 self.ui.fontComboBox.addItem(i,None)
         
+        WindowStyle="QDialog{border: 2px solid rgba(55, 55, 55,222);  border-radius: 6px; background-color:rgba(255,255,220,250)}"
+        self.setStyleSheet(WindowStyle)
+
         self.ui.taskDescription.cursorPositionChanged.connect(self.toggleFont)
         self.ui.fontComboBox.activated.connect(self.setEditorFont)
         self.ui.fontSize.valueChanged.connect(self.setEditorFont)
@@ -91,7 +94,7 @@ class Task(QtGui.QDialog):
         self.ui.priorityText.setText(priorities[priority])
         
     def setStylesForButtons(self,setButton,color):
-        styleSheet="QPushButton[Button=color] {height: 15px; border: 1px solid rgba(0, 0, 0,190);  border-radius: 2px; background-color:rgba"+str(color)+"}"
+        styleSheet="QPushButton[Button=color] {height: 15px; border: 1px solid rgba(0, 0, 0,190);  border-radius: 2px;border-style: outset; background-color:rgba"+str(color)+"}"
         setButton.setStyleSheet(styleSheet)
         setButton.setProperty('Button','color')
         
