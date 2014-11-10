@@ -5,7 +5,7 @@ class Trayicon(QtGui.QSystemTrayIcon):
     def __init__(self,parent=None):
         QtGui.QSystemTrayIcon.__init__(self,parent)
         self.parent=parent
-        icon=QtGui.QIcon(os.path.realpath("icon.png"))
+        icon=QtGui.QIcon(':/icon/icon.png')
         self.setIcon(icon)
         self.show()
         self.activated.connect(self.showApp)

@@ -8,6 +8,7 @@ from settingsWindow import SettingsWindow
 from settings import Settings
 from contexts import loadContexts,selectCurrentContext
 from archive import ArchiveWindow
+import res_rc
 
 class Workload(QtGui.QMainWindow):
 
@@ -165,12 +166,8 @@ class Workload(QtGui.QMainWindow):
             item.setText(0,str(priority))
             self.ui.taskList.sortItems(0,QtCore.Qt.AscendingOrder)
 
-
     def setPriorityColor(self,item,priority):
-        colors=["#98DCEB","#BD1515","#ED1B0C","#F2920C","#F2E63D","#8EDB84"]
-        backColor = QtGui.QColor(colors[priority])  # kolor tła kolumny
-        icon=QtGui.QIcon('status/0.png')
-        #item.setBackground(0, backColor)     # (priorytet dla elementu)
+        icon=QtGui.QIcon(':priority/status/'+str(priority)+'.png')
         item.setIcon(0,icon)
         item.setTextAlignment(0,QtCore.Qt.AlignCenter)
 
