@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created: Sun Nov  9 22:25:55 2014
-#      by: pyside-uic 0.2.15 running on PySide 1.2.1
+# Created: Mon Nov 10 09:44:30 2014
+#      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -171,3 +171,4 @@ class Ui_MainWindow(object):
         self.actionSettings.setText(QtGui.QApplication.translate("MainWindow", "Settings", None, QtGui.QApplication.UnicodeUTF8))
         self.actionExport_tasklist.setText(QtGui.QApplication.translate("MainWindow", "Export tasklist", None, QtGui.QApplication.UnicodeUTF8))
 
+import res_rc
