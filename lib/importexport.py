@@ -3,7 +3,6 @@ def export(tasks,filename,dateformat):
     out="taskname,taskdescription,created,priority,due,closed,closedat"
     for i in tasks:
         ln=""
-        print i
         for attr in i:
             index=i.index(attr)
             if attr is None:
@@ -17,7 +16,6 @@ def export(tasks,filename,dateformat):
             attr=attr.replace("\n","%newline%")
             attr=attr.replace("\r\n","%newline")
             ln+=attr+","
-            print ln
         out+=os.linesep.encode('utf-8')+ln[:-1]
     f=open(filename,'wb')
     f.write(out)
