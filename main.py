@@ -69,7 +69,7 @@ class Workload(QtGui.QMainWindow):
         self.loadTasksList(init=True)  
         self.tray=Trayicon(self)
         self.show()
-
+        self.ui.statusbar.showMessage("Hello! Ready to work ;-)",3600)
 
     def dropTask(self,e):
         Task.dropTask(self, e)
@@ -109,6 +109,7 @@ class Workload(QtGui.QMainWindow):
             taskid = self.db.addTask(taskname,priority, taskDescription, duedate, self.currentContext)
             self.createTaskItem(taskname, taskid, priority)
             self.adjustHeight()
+            self.ui.statusbar.showMessage("New task created.",3300)
         else:
             self.ui.taskInput.setText(taskname)
             self.taskAlreadyExistMsg(self)
@@ -125,6 +126,7 @@ class Workload(QtGui.QMainWindow):
     def checkIfExist(self,t):
         if len(self.ui.taskList.findItems(t,QtCore.Qt.MatchFlags(QtCore.Qt.MatchExactly),1))>0:
             return True
+            
             
     def taskAlreadyExistMsg(self,parent):
         text="Task with same name already exist, choose another"
@@ -149,6 +151,7 @@ class Workload(QtGui.QMainWindow):
                 "Do you really want to delete selected  task(s) ?"):
                 self.deleteTasks(tasks)
             self.adjustHeight(downSize=True)
+            
 
 
     def deleteTasks(self, tasks):
@@ -156,6 +159,7 @@ class Workload(QtGui.QMainWindow):
             self.db.deleteTask(item.data(0, 32))
             index = self.ui.taskList.indexOfTopLevelItem(item)
             self.ui.taskList.takeTopLevelItem(index)
+            self.ui.statusbar.showMessage("Task removed.",3300)
 
 
     def setTaskPriority(self,priority):
@@ -165,6 +169,7 @@ class Workload(QtGui.QMainWindow):
             self.setPriorityColor(item, priority)
             item.setText(0,str(priority))
             self.ui.taskList.sortItems(0,QtCore.Qt.AscendingOrder)
+            self.ui.statusbar.showMessage("Priority updated.",3300)
 
     def setPriorityColor(self,item,priority):
         icon=QtGui.QIcon(':priority/status/'+str(priority)+'.png')
@@ -295,6 +300,7 @@ class Workload(QtGui.QMainWindow):
             self.db.completeTask(i.data(0,32))
             index = self.ui.taskList.indexOfTopLevelItem(i)
             self.ui.taskList.takeTopLevelItem(index)
+            self.ui.statusbar.showMessage("Task completed.",3300)
 
     def showHistory(self):
         ArchiveWindow(self)

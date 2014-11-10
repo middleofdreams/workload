@@ -21,7 +21,7 @@ class Task(QtGui.QDialog):
         FontDB=QtGui.QFontDatabase()
         fontlist.sort()
         for i in fontlist:
-            if i in FontDB.families() or i=='Monospace':
+            if i in FontDB.families() or i=='Monospace' or 'Times New Roman':
                 self.ui.fontComboBox.addItem(i,None)
         
         self.ui.taskDescription.cursorPositionChanged.connect(self.toggleFont)
@@ -37,7 +37,7 @@ class Task(QtGui.QDialog):
         self.setStylesForButtons(self.ui.currentBGcolor, "(255,255,255,255)")
         self.setStylesForButtons(self.ui.currentTextColor, "(0,0,0,255)")
         self.ui.editorResetColor.clicked.connect(self.resetColors)
-        
+        self.ui.taskDescription.anchorClicked.connect(self.openHyperlink)
         
         self.task=self.parent.db.getTaskDetails(taskid)
         if self.taskid:
@@ -125,7 +125,10 @@ class Task(QtGui.QDialog):
             item.setText(0,str(priority))
             item.setText(1,str(taskname))
             self.parent.ui.taskList.sortItems(0,QtCore.Qt.AscendingOrder)
-      
+    
+    def openHyperlink(self,e):
+        QtGui.QDesktopServices.openUrl(e)
+        
     def accept(self):
         taskid=self.taskid
         if taskid!=0:    
@@ -138,6 +141,7 @@ class Task(QtGui.QDialog):
                 self.parent.db.setTaskDetails(taskid,taskDescription,priority,taskname,duedate)
                 self.updateItem(taskname, priority)
                 self.close()
+                self.parent.ui.statusbar.showMessage("Task updated",3300)
             else:
                 self.parent.taskAlreadyExistMsg(parent=self)
             
@@ -152,11 +156,13 @@ class Task(QtGui.QDialog):
                 self.parent.createTaskItem(taskname, taskid, priority)
                 self.parent.adjustHeight()
                 self.close()
+                self.parent.ui.statusbar.showMessage("New task created.",3300)
             else:
                 self.parent.taskAlreadyExistMsg(parent=self)
 
     def dropTask(self,e):
             fulldata=e.mimeData().text()    
+            self.ui.statusbar.showMessage("New task created.",3300)
             date=datetime.datetime.now()
             delta=datetime.timedelta(hours=24)
             duedate=date+delta

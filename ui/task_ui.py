@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'task.ui'
 #
-# Created: Mon Nov 10 14:12:36 2014
-#      by: pyside-uic 0.2.15 running on PySide 1.2.2
+# Created: Mon Nov 10 16:46:52 2014
+#      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,7 +12,7 @@ from PySide import QtCore, QtGui
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(626, 532)
+        Dialog.resize(626, 542)
         font = QtGui.QFont()
         font.setFamily("monofur")
         Dialog.setFont(font)
@@ -184,7 +184,7 @@ class Ui_Dialog(object):
         self.editorResetColor.setObjectName("editorResetColor")
         self.gridLayout_4.addWidget(self.editorResetColor, 0, 6, 1, 1)
         self.verticalLayout.addWidget(self.frame)
-        self.taskDescription = QtGui.QTextEdit(Dialog)
+        self.taskDescription = QtGui.QTextBrowser(Dialog)
         self.taskDescription.setMinimumSize(QtCore.QSize(100, 0))
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(0, 85, 0))
@@ -200,7 +200,19 @@ class Ui_Dialog(object):
         font = QtGui.QFont()
         font.setPointSize(10)
         self.taskDescription.setFont(font)
+        self.taskDescription.setFocusPolicy(QtCore.Qt.ClickFocus)
+        self.taskDescription.setLocale(QtCore.QLocale(QtCore.QLocale.English, QtCore.QLocale.UnitedKingdom))
         self.taskDescription.setAutoFormatting(QtGui.QTextEdit.AutoNone)
+        self.taskDescription.setUndoRedoEnabled(True)
+        self.taskDescription.setReadOnly(False)
+        self.taskDescription.setHtml("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'monofur\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>")
+        self.taskDescription.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByKeyboard|QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextBrowserInteraction|QtCore.Qt.TextEditable|QtCore.Qt.TextEditorInteraction|QtCore.Qt.TextSelectableByKeyboard|QtCore.Qt.TextSelectableByMouse)
+        self.taskDescription.setOpenExternalLinks(False)
+        self.taskDescription.setOpenLinks(False)
         self.taskDescription.setObjectName("taskDescription")
         self.verticalLayout.addWidget(self.taskDescription)
         self.buttonBox = QtGui.QDialogButtonBox(Dialog)
@@ -231,9 +243,4 @@ class Ui_Dialog(object):
         self.editorItalic.setText(QtGui.QApplication.translate("Dialog", "I", None, QtGui.QApplication.UnicodeUTF8))
         self.editorUnderline.setText(QtGui.QApplication.translate("Dialog", "U", None, QtGui.QApplication.UnicodeUTF8))
         self.editorResetColor.setText(QtGui.QApplication.translate("Dialog", "reset", None, QtGui.QApplication.UnicodeUTF8))
-        self.taskDescription.setHtml(QtGui.QApplication.translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'monofur\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;\"><br /></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
 
