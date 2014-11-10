@@ -23,3 +23,9 @@ class Settings(object):
         self.db.setSetting("loadContext", context)
     def setCurrentContextAsLast(self):
         self.setLastContext(self.parent.currentContext)
+        
+    def getDateFormat(self):
+        df=self.db.getSetting("dateFormat")
+        if df==None:
+            df="%d-%m-%Y %H:%M"
+        return df
