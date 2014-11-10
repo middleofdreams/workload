@@ -19,12 +19,11 @@ class Task(QtGui.QDialog):
 #Text Editor
         fontlist=['monofur','Century Schoolbook','Arial','Courier New','Times New Roman','Monospace']  #TODO: read font settings from database
         FontDB=QtGui.QFontDatabase()
-        print (FontDB.families())
         fontlist.sort()
         for i in fontlist:
             if i in FontDB.families() or i=='Monospace':
                 self.ui.fontComboBox.addItem(i,None)
-                print(i)
+                
         self.ui.taskDescription.cursorPositionChanged.connect(self.toggleFont)
         self.ui.fontComboBox.activated.connect(self.setEditorFont)
         self.ui.fontSize.valueChanged.connect(self.setEditorFont)
