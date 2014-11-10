@@ -17,10 +17,14 @@ class Task(QtGui.QDialog):
         self.moveIt=False        
         self.ui.priority.valueChanged.connect(self.setPriorityText)
 #Text Editor
-        fontlist=["monofur","Times New Roman","Arial","DejaVu Serif"]  #TODO: read font settings from database
+        fontlist=['monofur','Century Schoolbook','Arial','Courier New','Times New Roman','Monospace']  #TODO: read font settings from database
+        FontDB=QtGui.QFontDatabase()
+        print (FontDB.families())
         fontlist.sort()
         for i in fontlist:
-            self.ui.fontComboBox.addItem(i,None)
+            if i in FontDB.families() or i=='Monospace':
+                self.ui.fontComboBox.addItem(i,None)
+                print(i)
         self.ui.taskDescription.cursorPositionChanged.connect(self.toggleFont)
         self.ui.fontComboBox.activated.connect(self.setEditorFont)
         self.ui.fontSize.valueChanged.connect(self.setEditorFont)

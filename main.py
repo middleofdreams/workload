@@ -125,7 +125,7 @@ class Workload(QtGui.QMainWindow):
             
     def taskAlreadyExistMsg(self,parent):
         text="Task with same name already exist, choose another"
-        msg = QtGui.QMessageBox.information(parent, "About", text, buttons=QtGui.QMessageBox.Ok )
+        msg = QtGui.QMessageBox.information(parent, "Task name already exist", text, buttons=QtGui.QMessageBox.Ok )
 
     def loadTasksList(self, archived=False,init=False):
         self.ui.taskList.clear()
