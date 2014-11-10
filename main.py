@@ -297,7 +297,7 @@ class Workload(QtGui.QMainWindow):
             includeArchive=self.questionPopup("Exporting tasks", "Do you want to include completed tasks?")
             tasks=self.db.exportTasks(self.currentContext, includeArchive)
             from lib import importexport
-            importexport.export(tasks, fname[0])
+            importexport.export(tasks, fname[0],self.settings.getDateFormat())
             
     def about(self):
         f=open("about.html")
