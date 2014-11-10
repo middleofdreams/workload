@@ -2,4 +2,12 @@
   <qresource prefix="icon">
     <file>icon.png</file>
   </qresource>
+  <qresource prefix="priority">
+    <file>status/0.png</file>
+    <file>status/1.png</file>
+    <file>status/2.png</file>
+    <file>status/3.png</file>
+    <file>status/4.png</file>
+    <file>status/5.png</file>
+  </qresource>
 </RCC>

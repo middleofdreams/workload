@@ -8,7 +8,6 @@ from settingsWindow import SettingsWindow
 from settings import Settings
 from contexts import loadContexts,selectCurrentContext
 from archive import ArchiveWindow
-
 class Workload(QtGui.QMainWindow):
 
     def __init__(self,app):
@@ -26,7 +25,7 @@ class Workload(QtGui.QMainWindow):
         if desktop.height() > 800:
             self.move(10, (desktop.height() / 2) - (self.height()))
         else:
-            self.move(10, 10)
+            self.move(15, 150)
         self.ui.taskList.setColumnWidth(0, 20)
 
 #CONNECT SIGNALS
@@ -53,6 +52,7 @@ class Workload(QtGui.QMainWindow):
         self.ui.actionComplete.triggered.connect(self.completeTasks)
         self.ui.actionHistory.triggered.connect(self.showHistory)
         self.ui.actionSettings.triggered.connect(lambda s=self:SettingsWindow(s))
+        self.ui.actionExport_tasklist.triggered.connect(self.exportTaskList)
         self.ui.taskInput.dropEvent = self.dropTask
         
 # SET VARIABLES AND CONNECT TO DB:
@@ -62,26 +62,18 @@ class Workload(QtGui.QMainWindow):
         self.db = DB(self)
         self.settings=Settings(self)
         loadContexts(self)
-
-        
         self.currentContext = self.settings.getInitContext()
         selectCurrentContext(self)
-        
-
         self.loadTasksList(init=True)  
-        
         self.tray=Trayicon(self)
-
         self.show()
 
 
-    
-        
     def dropTask(self,e):
         Task.dropTask(self, e)
 
 # TASKS RELATED ACTIONS
-    def addTask(self,taskDescription):
+    def addTask(self):
         t = self.ui.taskInput.text().strip()
         if t =="":
             return False
@@ -105,10 +97,20 @@ class Workload(QtGui.QMainWindow):
             pass
 #TODO: create new function to handle input (regexp etc)
         duedate=None
-        taskid = self.db.addTask(t,priority, taskDescription, duedate, self.currentContext)
-        self.createTaskItem(t, taskid, priority)
-        self.adjustHeight()
-
+        if len(t)>20:
+            taskname=t[:20]+"..."
+            taskDescription=t
+        else:
+            taskname=t
+            taskDescription=""
+        if self.checkIfExist(taskname) is not True:  
+            taskid = self.db.addTask(taskname,priority, taskDescription, duedate, self.currentContext)
+            self.createTaskItem(taskname, taskid, priority)
+            self.adjustHeight()
+        else:
+            self.ui.taskInput.setText(taskname)
+            self.taskAlreadyExistMsg(self)
+            
     def createTaskItem(self, t, taskid=None, priority=0):
         item = QtGui.QTreeWidgetItem([str(priority), t])
         item.setData(0, 32, taskid)
@@ -116,7 +118,15 @@ class Workload(QtGui.QMainWindow):
         self.ui.taskList.addTopLevelItem(item)
         self.setPriorityColor(item, priority)
         self.ui.taskList.sortItems(0,QtCore.Qt.AscendingOrder)
-
+        
+        
+    def checkIfExist(self,t):
+        if len(self.ui.taskList.findItems(t,QtCore.Qt.MatchFlags(QtCore.Qt.MatchExactly),1))>0:
+            return True
+            
+    def taskAlreadyExistMsg(self,parent):
+        text="Task with same name already exist, choose another"
+        msg = QtGui.QMessageBox.information(parent, "Task name already exist", text, buttons=QtGui.QMessageBox.Ok )
 
     def loadTasksList(self, archived=False,init=False):
         self.ui.taskList.clear()
@@ -158,7 +168,9 @@ class Workload(QtGui.QMainWindow):
     def setPriorityColor(self,item,priority):
         colors=["#98DCEB","#BD1515","#ED1B0C","#F2920C","#F2E63D","#8EDB84"]
         backColor = QtGui.QColor(colors[priority])  # kolor tła kolumny
+        icon=QtGui.QIcon("res/priority/0.png")
         item.setBackground(0, backColor)     # (priorytet dla elementu)
+        item.setIcon(0,icon)
         item.setTextAlignment(0,QtCore.Qt.AlignCenter)
 
     def openTask(self):
@@ -196,7 +208,7 @@ class Workload(QtGui.QMainWindow):
     def getKeysOnInput(self, e):
         # print (e.key())
         if e.key()==16777221 or e.key()==16777220:  # enter/return
-            self.addTask(taskDescription=None)
+            self.addTask()
         else:
             QtGui.QLineEdit.keyPressEvent(self.ui.taskInput,e)
 
@@ -256,6 +268,14 @@ class Workload(QtGui.QMainWindow):
         dialog=QtGui.QFileDialog(self, "Open", "", "CSV File (*.csv)")
         if dialog.exec_():
             filename=dialog.selectedFiles()
+            
+    def exportTaskList(self):
+        fname=QtGui.QFileDialog.getSaveFileName()#"Select file to save task list")
+        if fname:
+            includeArchive=self.questionPopup("Exporting tasks", "Do you want to include completedTasks?")
+            tasks=self.db.exportTasks(self.currentContext, includeArchive)
+            from lib import importexport
+            importexport.export(tasks, fname[0])
             
     def about(self):
         f=open("about.html")
