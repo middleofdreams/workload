@@ -8,12 +8,8 @@ from settingsWindow import SettingsWindow
 from settings import Settings
 from contexts import loadContexts,selectCurrentContext
 from archive import ArchiveWindow
-<<<<<<< HEAD
 from lib.timer import TaskReminder
 import res_rc
-
-=======
->>>>>>> branch 'master' of https://github.com/middleofdreams/workload
 class Workload(QtGui.QMainWindow):
 
     def __init__(self,app):
