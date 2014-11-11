@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created: Mon Nov 10 20:18:03 2014
-#      by: pyside-uic 0.2.15 running on PySide 1.2.1
+# Created: Tue Nov 11 13:14:50 2014
+#      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -62,14 +62,15 @@ class Ui_MainWindow(object):
         self.taskList.setUniformRowHeights(False)
         self.taskList.setAnimated(True)
         self.taskList.setHeaderHidden(True)
-        self.taskList.setColumnCount(2)
+        self.taskList.setColumnCount(3)
         self.taskList.setObjectName("taskList")
         self.taskList.header().setVisible(False)
         self.taskList.header().setCascadingSectionResizes(False)
-        self.taskList.header().setDefaultSectionSize(26)
+        self.taskList.header().setDefaultSectionSize(15)
         self.taskList.header().setHighlightSections(False)
         self.taskList.header().setMinimumSectionSize(15)
         self.taskList.header().setSortIndicatorShown(False)
+        self.taskList.header().setStretchLastSection(True)
         self.verticalLayout.addWidget(self.taskList)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
@@ -152,6 +153,7 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "Workload", None, QtGui.QApplication.UnicodeUTF8))
         self.taskList.headerItem().setText(0, QtGui.QApplication.translate("MainWindow", "Priority", None, QtGui.QApplication.UnicodeUTF8))
         self.taskList.headerItem().setText(1, QtGui.QApplication.translate("MainWindow", "Task", None, QtGui.QApplication.UnicodeUTF8))
+        self.taskList.headerItem().setText(2, QtGui.QApplication.translate("MainWindow", "status", None, QtGui.QApplication.UnicodeUTF8))
         self.menuFile.setTitle(QtGui.QApplication.translate("MainWindow", "File", None, QtGui.QApplication.UnicodeUTF8))
         self.menuTask.setTitle(QtGui.QApplication.translate("MainWindow", "Task", None, QtGui.QApplication.UnicodeUTF8))
         self.menuContext.setTitle(QtGui.QApplication.translate("MainWindow", "Context", None, QtGui.QApplication.UnicodeUTF8))

@@ -15,27 +15,31 @@ class Workload(QtGui.QMainWindow):
         QtGui.QMainWindow.__init__(self)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.setStyleSheet('ui/style.qss')
-#         WindowStyle="QMainWindow{border:2px solid rgba(85, 170, 255,150);  border-radius: 2px; background-color:rgba(225,225,255,250)}"
-#         StatusbarStyle="QStatusBar{background-color:transparent;border-top: 0px transparent; border-radius:2px;\
-#         border-bottom: 3px solid rgba(85, 170, 255,150);border-left: 2px solid rgba(85, 170, 255,150);border-right: 2px solid rgba(85, 170, 255,150)}"
-#         MenubarStyle="QMenuBar{padding:2px 2px;background-color:transparent;border-top: 3px solid rgba(85, 170, 255,150);\
-#         border-left:2px solid rgba(85, 170, 255,150);border-right: 2px solid rgba(85, 170, 255,150);border-radius: 2px}\
-#         QMenuBar::item{padding: 2px 2px;background-color:transparent;color:rgb(55, 55, 55);border-radius:3px}"
-#         MenuStyle="QMenu{background-color:rgba(219,237,255,200);color:black;border:1px solid rgba(85, 170, 255,80);\
-#         border-left:3px solid rgba(85, 170, 255,80);border-radius:3px} \
-#         QMenu::item{padding: 2px 20px;background-color:rgba(219,237,255,100);color:rgb(55, 55, 55)}\
-#         QMenu::item::selected{background-color:rgba(245,245,220,200);color:rgb(55, 55, 55);border:1px solid rgba(85, 170, 255,150);\
-#         border-radius:3px}"
-#         TaskList="QTreeWidget{background-color:rgba(219,237,255,100);alternate-background-color:rgba(85, 170, 255,80)}"
-        
-#         self.ui.taskList.setStyleSheet(TaskList)
-#         self.ui.menubar.setStyleSheet(MenubarStyle)
-#         self.ui.menuFile.setStyleSheet(MenuStyle)
-#         self.ui.menuTask.setStyleSheet(MenuStyle)
-#         self.ui.menuContext.setStyleSheet(MenuStyle)
-#         self.ui.statusbar.setStyleSheet(StatusbarStyle)
-#         self.setStyleSheet(WindowStyle)
+        #self.setStyleSheet('ui/style.qss')
+        windowBG="(219,237,255,200)"
+        windowFrame="(85, 170, 255,150)"
+        selectedMenuItemBG="(85, 170, 220,80)"
+        alternateListItem="(170,213,255,250)"
+        WindowStyle="QMainWindow{border:2px solid rgba"+windowFrame+";  border-radius: 2px;background-color:rgba"+windowBG+";}"
+        StatusbarStyle="QStatusBar{background-color:transparent;border-top: 0px transparent; border-radius:2px;\
+        border-bottom: 3px solid rgba(85, 170, 255,150);border-left: 2px solid rgba(85, 170, 255,150);border-right: 2px solid rgba(85, 170, 255,150)}"
+        MenubarStyle="QMenuBar{padding:2px 2px;background-color:rgba"+windowBG+";border-top: 3px solid rgba(85, 170, 255,150);\
+        border-left:2px solid rgba(85, 170, 255,150);border-right: 2px solid rgba(85, 170, 255,150);border-radius: 2px}\
+        QMenuBar::item{padding: 2px 2px;background-color:transparent;color:rgb(55, 55, 55);border-radius:3px}"
+        MenuStyle="QMenu{background-color:rgba"+windowBG+";color:black;border:1px solid rgba"+windowFrame+";\
+        border-left:3px solid rgba(85, 170, 255,80);border-radius:3px} \
+        QMenu::item{padding: 2px 20px;background-color:rgba"+windowBG+";color:rgb(55, 55, 55)}\
+        QMenu::item::selected{background-color:rgba"+selectedMenuItemBG+";color:rgb(55, 55, 55);border:1px solid rgba(85, 170, 255,150);\
+        border-radius:3px}QMenu::separator{background-color:rgba"+windowFrame+";border 1px solid:rgb(55,55,55);height:2px;margin-left:5px;margin-right:5px;}"
+        TaskList="QTreeWidget{background-color:rgba"+windowBG+";alternate-background-color:rgba"+alternateListItem+"}"
+        self.setStyleSheet(WindowStyle)
+        #self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        self.ui.taskList.setStyleSheet(TaskList)
+        self.ui.menubar.setStyleSheet(MenubarStyle)
+        self.ui.menuFile.setStyleSheet(MenuStyle)
+        self.ui.menuTask.setStyleSheet(MenuStyle)
+        self.ui.menuContext.setStyleSheet(MenuStyle)
+        self.ui.statusbar.setStyleSheet(StatusbarStyle)
         
         #GUI setting
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint
@@ -46,7 +50,8 @@ class Workload(QtGui.QMainWindow):
             self.move(10, (desktop.height() / 2) - (self.height()))
         else:
             self.move(15, 150)
-        self.ui.taskList.setColumnWidth(0, 20)
+        self.resizeColumns()
+        
         
 #CONNECT SIGNALS
         self.ui.taskList.keyPressEvent = self.getKeysOnList
@@ -60,8 +65,6 @@ class Workload(QtGui.QMainWindow):
         sc.setKey("Ctrl+R")
         sc.activated.connect(self.adjustHeight)
 
-
-
 #CONNECT MENU ITEMS
         self.ui.actionExit.triggered.connect(self.exit)
         self.ui.actionImport_tasklist.triggered.connect(self.importTasklist)
@@ -74,7 +77,6 @@ class Workload(QtGui.QMainWindow):
         self.ui.actionSettings.triggered.connect(lambda s=self:SettingsWindow(s))
         self.ui.actionExport_tasklist.triggered.connect(self.exportTaskList)
         self.ui.taskInput.dropEvent = self.dropTask
-        
 # SET VARIABLES AND CONNECT TO DB:
 
         self.taskOpened = False
@@ -86,15 +88,29 @@ class Workload(QtGui.QMainWindow):
         selectCurrentContext(self)
         self.loadTasksList(init=True)  
         self.tray=Trayicon(self)
+        
         self.show()
 
         self.adjustHeight(downSize=True, init=False)
         self.ui.statusbar.showMessage("Hello! Ready to work ;-)",3600)
+    
     def dropTask(self,e):
         Task.dropTask(self, e)
-
+    
+    def resizeEvent(self,e):
+        self.resizeColumns()
+        
+    def resizeColumns(self):
+        self.ui.taskList.setColumnWidth(0, 20)
+        self.ui.taskList.setColumnWidth(2, 10)
+        self.ui.taskList.setColumnWidth(1, self.width()-45)
+        
+    def setMarker(self):
+        print("set icon in column 2 when task is notification time")
+           
 # TASKS RELATED ACTIONS
-    def addTask(self):
+    def addTask(self,e):
+        print(e)
         t = self.ui.taskInput.text().strip()
         if t =="":
             return False

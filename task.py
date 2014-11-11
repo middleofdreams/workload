@@ -24,7 +24,7 @@ class Task(QtGui.QDialog):
             if i in FontDB.families() or i=='Monospace' or 'Times New Roman':
                 self.ui.fontComboBox.addItem(i,None)
         
-        WindowStyle="QDialog{border: 2px solid rgba(55, 55, 55,222);  border-radius: 6px; background-color:rgba(255,255,220,250)}"
+        WindowStyle="QDialog{border: 2px solid rgba(55, 55, 55,222);  border-radius: 6px; background-color:rgba(255,255,230,250)}"
         self.setStyleSheet(WindowStyle)
 
         self.ui.taskDescription.cursorPositionChanged.connect(self.toggleFont)
@@ -259,10 +259,8 @@ class Task(QtGui.QDialog):
         newColor=QtGui.QColorDialog.getColor(parent=self.parent)
         if newColor!=QtGui.QColor():
             self.ui.taskDescription.setTextBackgroundColor(newColor)
-            #self.ui.currentBGcolor.setPalette(newColor)
             self.setStylesForButtons(self.ui.currentBGcolor, newColor.getRgb())
         else:
-            #self.ui.currentBGcolor.setPalette(currentColor)
             self.setStylesForButtons(self.ui.currentBGcolor, currentColor.getRgb())
         
     def setTextColor(self):
@@ -270,10 +268,8 @@ class Task(QtGui.QDialog):
         newColor=QtGui.QColorDialog.getColor(parent=self.parent)
         if newColor!=QtGui.QColor():
             self.ui.taskDescription.setTextColor(newColor)
-            #self.ui.currentTextColor.setPalette(newColor)
             self.setStylesForButtons(self.ui.currentTextColor, newColor.getRgb())
         else:
-            #self.ui.currentTextColor.setPalette(currentColor)
             self.setStylesForButtons(self.ui.currentTextColor, currentColor.getRgb())
             
     def setCurrentBGcolor(self):
