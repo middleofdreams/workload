@@ -13,29 +13,23 @@ class TaskReminder(QtCore.QTimer):
         self.settings=parent.settings
         self.activeNotifies={}
         self.timeout.connect(self.onTimeout)
-        #self.start(60000)
-        self.start(1000)
+        self.start(60000)
+        #self.start(1000)
         
     def onTimeout(self):
         onlyCurrentContext=self.settings.getNotifyOnlyCurrentContext()
         notifyInterval=self.settings.getNotifyInterval()
         notifyTime=self.settings.getNotifyTime()
         td=datetime.timedelta(minutes=notifyTime)
-        print (td)
         nt=datetime.datetime.now()+td
         ts=timestamp(nt)
-        print(ts)
         notify=[]
         foundtasks={}
         for i in self.db.getTasksByTimestamp(ts,onlyCurrentContext):
-            print(i)
             foundtasks[i[0]]=[i[1],i[2]]
-            #print(i)
             if i[0] in self.activeNotifies.keys():
-                #print("1")
                 self.activeNotifies[i[0]]+=1
             else:
-                #print("2")
                 self.activeNotifies[i[0]]=0
                 notify.append(i[0])
                 
@@ -58,7 +52,7 @@ class TaskReminder(QtCore.QTimer):
         
     def showNotification(self,tasks):
         if len(tasks)>0:
-            if len(tasks)>1:
+            if len(tasks)>1: 
                 taskNames=""
                 for v in tasks.values():
                     taskNames+="\n"+v[0]+" - "+self.formatDate(v[1])
