@@ -1,0 +1,57 @@
+
+QMainWindow{
+       border:2px solid rgba(85, 170, 255,150);  
+       border-radius: 2px;
+       background-color:rgba(225,225,255,250);
+}
+
+QStatusBar{
+       background-color:transparent;
+       border-top: 0px transparent;
+       border-radius:2px;
+       border-bottom: 3px solid rgba(85, 170, 255,150);
+       border-left: 2px solid rgba(85, 170, 255,150);
+       border-right: 2px solid rgba(85, 170, 255,150);
+}
+
+QMenuBar{
+padding:2px 2px;
+background-color:transparent;
+border-top: 3px solid rgba(85, 170, 255,150);
+border-left:2px solid rgba(85, 170, 255,150);
+border-right: 2px solid rgba(85, 170, 255,150);
+border-radius: 2px;
+}
+
+QMenuBar::item{
+padding: 2px 2px;
+background-color:transparent;
+color:rgb(55, 55, 55);
+border-radius:3px;
+}
+
+QMenu{
+       background-color:rgba(219,237,255,200);
+       color:black;
+       border:1px solid rgba(85, 170, 255,80);
+       border-left:3px solid rgba(85, 170, 255,80);
+       border-radius:3px;
+} 
+
+QMenu::item{
+       padding: 2px 20px;
+       background-color:rgba(219,237,255,100);
+       color:rgb(55, 55, 55);
+}
+
+QMenu::item::selected{
+       background-color:rgba(245,245,220,200);
+       color:rgb(55, 55, 55);
+       border:1px solid rgba(85, 170, 255,150);
+       border-radius:3px;
+}
+
+QTreeWidget{
+       background-color:rgba(219,237,255,100);
+       alternate-background-color:rgba(85, 170, 255,80);
+}

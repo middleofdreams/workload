@@ -131,7 +131,7 @@
        <bool>true</bool>
       </property>
       <property name="columnCount">
-       <number>2</number>
+       <number>3</number>
       </property>
       <attribute name="headerVisible">
        <bool>false</bool>
@@ -140,7 +140,7 @@
        <bool>false</bool>
       </attribute>
       <attribute name="headerDefaultSectionSize">
-       <number>26</number>
+       <number>15</number>
       </attribute>
       <attribute name="headerHighlightSections">
        <bool>false</bool>
@@ -150,6 +150,9 @@
       </attribute>
       <attribute name="headerShowSortIndicator" stdset="0">
        <bool>false</bool>
+      </attribute>
+      <attribute name="headerStretchLastSection">
+       <bool>true</bool>
       </attribute>
       <column>
        <property name="text">
@@ -164,6 +167,14 @@
         <string>Task</string>
        </property>
       </column>
+      <column>
+       <property name="text">
+        <string>status</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignRight|AlignVCenter</set>
+       </property>
+      </column>
      </widget>
     </item>
    </layout>
@@ -174,7 +185,7 @@
      <x>0</x>
      <y>0</y>
      <width>190</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -218,7 +229,11 @@
    <addaction name="menuTask"/>
    <addaction name="menuContext"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QStatusBar" name="statusbar">
+   <property name="autoFillBackground">
+    <bool>true</bool>
+   </property>
+  </widget>
   <action name="actionExit">
    <property name="text">
     <string>Exit</string>

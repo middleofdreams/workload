@@ -8,9 +8,12 @@ from settingsWindow import SettingsWindow
 from settings import Settings
 from contexts import loadContexts,selectCurrentContext
 from archive import ArchiveWindow
+<<<<<<< HEAD
 from lib.timer import TaskReminder
 import res_rc
 
+=======
+>>>>>>> branch 'master' of https://github.com/middleofdreams/workload
 class Workload(QtGui.QMainWindow):
 
     def __init__(self,app):
@@ -18,8 +21,32 @@ class Workload(QtGui.QMainWindow):
         QtGui.QMainWindow.__init__(self)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        #self.setStyleSheet('ui/style.qss')
+        windowBG="(219,237,255,200)"
+        windowFrame="(85, 170, 255,150)"
+        selectedMenuItemBG="(85, 170, 220,80)"
+        alternateListItem="(170,213,255,250)"
+        WindowStyle="QMainWindow{border:2px solid rgba"+windowFrame+";  border-radius: 2px;background-color:rgba"+windowBG+";}"
+        StatusbarStyle="QStatusBar{background-color:transparent;border-top: 0px transparent; border-radius:2px;\
+        border-bottom: 3px solid rgba(85, 170, 255,150);border-left: 2px solid rgba(85, 170, 255,150);border-right: 2px solid rgba(85, 170, 255,150)}"
+        MenubarStyle="QMenuBar{padding:2px 2px;background-color:rgba"+windowBG+";border-top: 3px solid rgba(85, 170, 255,150);\
+        border-left:2px solid rgba(85, 170, 255,150);border-right: 2px solid rgba(85, 170, 255,150);border-radius: 2px}\
+        QMenuBar::item{padding: 2px 2px;background-color:transparent;color:rgb(55, 55, 55);border-radius:3px}"
+        MenuStyle="QMenu{background-color:rgba"+windowBG+";color:black;border:1px solid rgba"+windowFrame+";\
+        border-left:3px solid rgba(85, 170, 255,80);border-radius:3px} \
+        QMenu::item{padding: 2px 20px;background-color:rgba"+windowBG+";color:rgb(55, 55, 55)}\
+        QMenu::item::selected{background-color:rgba"+selectedMenuItemBG+";color:rgb(55, 55, 55);border:1px solid rgba(85, 170, 255,150);\
+        border-radius:3px}QMenu::separator{background-color:rgba"+windowFrame+";border 1px solid:rgb(55,55,55);height:2px;margin-left:5px;margin-right:5px;}"
+        TaskList="QTreeWidget{background-color:rgba"+windowBG+";alternate-background-color:rgba"+alternateListItem+"}"
+        self.setStyleSheet(WindowStyle)
+        #self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        self.ui.taskList.setStyleSheet(TaskList)
+        self.ui.menubar.setStyleSheet(MenubarStyle)
+        self.ui.menuFile.setStyleSheet(MenuStyle)
+        self.ui.menuTask.setStyleSheet(MenuStyle)
+        self.ui.menuContext.setStyleSheet(MenuStyle)
+        self.ui.statusbar.setStyleSheet(StatusbarStyle)
         
-
         #GUI setting
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint
                             | QtCore.Qt.WindowStaysOnTopHint)
@@ -29,8 +56,9 @@ class Workload(QtGui.QMainWindow):
             self.move(10, (desktop.height() / 2) - (self.height()))
         else:
             self.move(15, 150)
-        self.ui.taskList.setColumnWidth(0, 20)
-
+        self.resizeColumns()
+        
+        
 #CONNECT SIGNALS
         self.ui.taskList.keyPressEvent = self.getKeysOnList
         self.ui.taskInput.keyPressEvent= self.getKeysOnInput
@@ -42,8 +70,6 @@ class Workload(QtGui.QMainWindow):
         sc = QtGui.QShortcut(self)
         sc.setKey("Ctrl+R")
         sc.activated.connect(self.adjustHeight)
-
-
 
 #CONNECT MENU ITEMS
         self.ui.actionExit.triggered.connect(self.exit)
@@ -57,7 +83,6 @@ class Workload(QtGui.QMainWindow):
         self.ui.actionSettings.triggered.connect(lambda s=self:SettingsWindow(s))
         self.ui.actionExport_tasklist.triggered.connect(self.exportTaskList)
         self.ui.taskInput.dropEvent = self.dropTask
-        
 # SET VARIABLES AND CONNECT TO DB:
 
         self.taskOpened = False
@@ -69,17 +94,32 @@ class Workload(QtGui.QMainWindow):
         selectCurrentContext(self)
         self.loadTasksList(init=True)  
         self.tray=Trayicon(self)
+        
         self.show()
         
         
         self.timer=TaskReminder(self)
 
-
+        self.adjustHeight(downSize=True, init=False)
+        self.ui.statusbar.showMessage("Hello! Ready to work ;-)",3600)
+    
     def dropTask(self,e):
         Task.dropTask(self, e)
-
+    
+    def resizeEvent(self,e):
+        self.resizeColumns()
+        
+    def resizeColumns(self):
+        self.ui.taskList.setColumnWidth(0, 20)
+        self.ui.taskList.setColumnWidth(2, 10)
+        self.ui.taskList.setColumnWidth(1, self.width()-45)
+        
+    def setMarker(self):
+        print("set icon in column 2 when task is notification time")
+           
 # TASKS RELATED ACTIONS
-    def addTask(self):
+    def addTask(self,e):
+        print(e)
         t = self.ui.taskInput.text().strip()
         if t =="":
             return False
@@ -113,6 +153,7 @@ class Workload(QtGui.QMainWindow):
             taskid = self.db.addTask(taskname,priority, taskDescription, duedate, self.currentContext)
             self.createTaskItem(taskname, taskid, priority)
             self.adjustHeight()
+            self.ui.statusbar.showMessage("New task created.",3300)
         else:
             self.ui.taskInput.setText(taskname)
             self.taskAlreadyExistMsg(self)
@@ -129,6 +170,7 @@ class Workload(QtGui.QMainWindow):
     def checkIfExist(self,t):
         if len(self.ui.taskList.findItems(t,QtCore.Qt.MatchFlags(QtCore.Qt.MatchExactly),1))>0:
             return True
+            
             
     def taskAlreadyExistMsg(self,parent):
         text="Task with same name already exist, choose another"
@@ -153,6 +195,7 @@ class Workload(QtGui.QMainWindow):
                 "Do you really want to delete selected  task(s) ?"):
                 self.deleteTasks(tasks)
             self.adjustHeight(downSize=True)
+            
 
 
     def deleteTasks(self, tasks):
@@ -160,6 +203,7 @@ class Workload(QtGui.QMainWindow):
             self.db.deleteTask(item.data(0, 32))
             index = self.ui.taskList.indexOfTopLevelItem(item)
             self.ui.taskList.takeTopLevelItem(index)
+            self.ui.statusbar.showMessage("Task removed.",3300)
 
 
     def setTaskPriority(self,priority):
@@ -169,6 +213,7 @@ class Workload(QtGui.QMainWindow):
             self.setPriorityColor(item, priority)
             item.setText(0,str(priority))
             self.ui.taskList.sortItems(0,QtCore.Qt.AscendingOrder)
+            self.ui.statusbar.showMessage("Priority updated.",3300)
 
     def setPriorityColor(self,item,priority):
         icon=QtGui.QIcon(':priority/status/'+str(priority)+'.png')
@@ -274,10 +319,10 @@ class Workload(QtGui.QMainWindow):
     def exportTaskList(self):
         fname=QtGui.QFileDialog.getSaveFileName()#"Select file to save task list")
         if fname:
-            includeArchive=self.questionPopup("Exporting tasks", "Do you want to include completedTasks?")
+            includeArchive=self.questionPopup("Exporting tasks", "Do you want to include completed tasks?")
             tasks=self.db.exportTasks(self.currentContext, includeArchive)
             from lib import importexport
-            importexport.export(tasks, fname[0])
+            importexport.export(tasks, fname[0],self.settings.getDateFormat())
             
     def about(self):
         f=open("about.html")
@@ -299,6 +344,7 @@ class Workload(QtGui.QMainWindow):
             self.db.completeTask(i.data(0,32))
             index = self.ui.taskList.indexOfTopLevelItem(i)
             self.ui.taskList.takeTopLevelItem(index)
+            self.ui.statusbar.showMessage("Task completed.",3300)
 
     def showHistory(self):
         ArchiveWindow(self)

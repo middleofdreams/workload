@@ -22,9 +22,12 @@ class Task(QtGui.QDialog):
         FontDB=QtGui.QFontDatabase()
         fontlist.sort()
         for i in fontlist:
-            if i in FontDB.families() or i=='Monospace':
+            if i in FontDB.families() or i=='Monospace' or 'Times New Roman':
                 self.ui.fontComboBox.addItem(i,None)
-                
+        
+        WindowStyle="QDialog{border: 2px solid rgba(55, 55, 55,222);  border-radius: 6px; background-color:rgba(255,255,230,250)}"
+        self.setStyleSheet(WindowStyle)
+
         self.ui.taskDescription.cursorPositionChanged.connect(self.toggleFont)
         self.ui.fontComboBox.activated.connect(self.setEditorFont)
         self.ui.fontSize.valueChanged.connect(self.setEditorFont)
@@ -35,8 +38,12 @@ class Task(QtGui.QDialog):
         self.ui.editorTextColor.clicked.connect(self.setTextColor)
         self.ui.currentBGcolor.clicked.connect(self.setCurrentBGcolor)
         self.ui.currentTextColor.clicked.connect(self.setCurrentTextColor)
+        self.setStylesForButtons(self.ui.currentBGcolor, "(255,255,255,255)")
+        self.setStylesForButtons(self.ui.currentTextColor, "(0,0,0,255)")
+        self.ui.editorResetColor.clicked.connect(self.resetColors)
+        self.ui.taskDescription.anchorClicked.connect(self.openHyperlink)
+        
         self.task=self.parent.db.getTaskDetails(taskid)
-       
         if self.taskid:
             self.ui.label_6.hide()  #Hide closed date label
             self.ui.dueDate.setDisplayFormat("dd-MM-yyyy HH:mm")
@@ -45,7 +52,6 @@ class Task(QtGui.QDialog):
             self.ui.priority.setValue(self.task["priority"])
             self.setPriorityText(self.task["priority"])
             self.ui.taskDescription.append(self.task["taskdescription"])
-            
             createdTimestamp=int(self.task["created"].split(".")[0])
             createdDate=datetime.datetime.fromtimestamp(createdTimestamp)
             createdDate=createdDate.strftime("%d-%m-%Y %H:%M")
@@ -79,14 +85,20 @@ class Task(QtGui.QDialog):
             date=date+delta
             self.ui.dueDate.setDateTime(QtCore.QDateTime(date.year,date.month,date.day,date.hour,date.minute,0,0))
         self.move(self.parent.pos())
+
         r=self.exec_()
         parent.taskOpened=False
+
         
     def setPriorityText(self,priority):
         priorities=["Not set!","Now","Next","Later","Someday","Awaiting"]
         self.ui.priorityText.setText(priorities[priority])
         
-
+    def setStylesForButtons(self,setButton,color):
+        styleSheet="QPushButton[Button=color] {height: 15px; border: 1px solid rgba(0, 0, 0,190);  border-radius: 2px;border-style: outset; background-color:rgba"+str(color)+"}"
+        setButton.setStyleSheet(styleSheet)
+        setButton.setProperty('Button','color')
+        
     def closeEvent(self,e):
         #print(e)
         pass
@@ -117,7 +129,10 @@ class Task(QtGui.QDialog):
             item.setText(0,str(priority))
             item.setText(1,str(taskname))
             self.parent.ui.taskList.sortItems(0,QtCore.Qt.AscendingOrder)
-      
+    
+    def openHyperlink(self,e):
+        QtGui.QDesktopServices.openUrl(e)
+        
     def accept(self):
         taskid=self.taskid
         if taskid!=0:    
@@ -130,6 +145,7 @@ class Task(QtGui.QDialog):
                 self.parent.db.setTaskDetails(taskid,taskDescription,priority,taskname,duedate)
                 self.updateItem(taskname, priority)
                 self.close()
+                self.parent.ui.statusbar.showMessage("Task updated",3300)
             else:
                 self.parent.taskAlreadyExistMsg(parent=self)
             
@@ -144,11 +160,13 @@ class Task(QtGui.QDialog):
                 self.parent.createTaskItem(taskname, taskid, priority)
                 self.parent.adjustHeight()
                 self.close()
+                self.parent.ui.statusbar.showMessage("New task created.",3300)
             else:
                 self.parent.taskAlreadyExistMsg(parent=self)
 
     def dropTask(self,e):
             fulldata=e.mimeData().text()    
+            self.ui.statusbar.showMessage("New task created.",3300)
             date=datetime.datetime.now()
             delta=datetime.timedelta(hours=24)
             duedate=date+delta
@@ -195,25 +213,10 @@ class Task(QtGui.QDialog):
         selection=Editor.textCursor()
         fontName=self.ui.fontComboBox.currentText()
         fontSize=int(self.ui.fontSize.text())
-        f=QtGui.QFont()
+        f=Editor.currentFont()
         f.setFamily(fontName)
         f.setPointSize(fontSize)
-        
-        if self.ui.editorBold.isFlat():
-            f.setBold(True)
-        else:
-            pass
-        
-        if self.ui.editorItalic.isFlat():
-            f.setItalic(True)
-        else:
-            pass
-        
-        if self.ui.editorUnderline.isFlat():
-            f.setUnderline(True)
-        else:
-            pass
-        
+
         if selection.hasSelection():
             Editor.setCurrentFont(f)
             Editor.setFocus()
@@ -222,47 +225,53 @@ class Task(QtGui.QDialog):
             Editor.setFocus()
       
     def setFontBold(self):
-        
+        f=self.ui.taskDescription.currentFont()
         if not self.ui.editorBold.isFlat():
             self.ui.editorBold.setFlat(True)
-            self.setEditorFont()
+            f.setBold(True)
         else:
             self.ui.editorBold.setFlat(False)
-            self.setEditorFont()
+            f.setBold(False)
+        self.ui.taskDescription.setCurrentFont(f)
+ 
    
     def setFontItalic(self):
+        f=self.ui.taskDescription.currentFont()
         if not self.ui.editorItalic.isFlat():
             self.ui.editorItalic.setFlat(True)
-            self.setEditorFont()
+            f.setItalic(True)
         else:
             self.ui.editorItalic.setFlat(False)
-            self.setEditorFont()
+            f.setItalic(False)
+        self.ui.taskDescription.setCurrentFont(f)
             
     def setFontUnderline(self):
+        f=self.ui.taskDescription.currentFont()
         if not self.ui.editorUnderline.isFlat():
             self.ui.editorUnderline.setFlat(True)
-            self.setEditorFont()
+            f.setUnderline(True)
         else:
             self.ui.editorUnderline.setFlat(False)
-            self.setEditorFont()
+            f.setUnderline(False)
+        self.ui.taskDescription.setCurrentFont(f)
     
     def setBGcolor(self):
         currentColor=self.ui.currentBGcolor.palette().button().color()
         newColor=QtGui.QColorDialog.getColor(parent=self.parent)
         if newColor!=QtGui.QColor():
             self.ui.taskDescription.setTextBackgroundColor(newColor)
-            self.ui.currentBGcolor.setPalette(newColor)
+            self.setStylesForButtons(self.ui.currentBGcolor, newColor.getRgb())
         else:
-            self.ui.currentBGcolor.setPalette(currentColor)
+            self.setStylesForButtons(self.ui.currentBGcolor, currentColor.getRgb())
         
     def setTextColor(self):
         currentColor=self.ui.currentTextColor.palette().button().color()
         newColor=QtGui.QColorDialog.getColor(parent=self.parent)
         if newColor!=QtGui.QColor():
             self.ui.taskDescription.setTextColor(newColor)
-            self.ui.currentTextColor.setPalette(newColor)
+            self.setStylesForButtons(self.ui.currentTextColor, newColor.getRgb())
         else:
-            self.ui.currentTextColor.setPalette(currentColor)
+            self.setStylesForButtons(self.ui.currentTextColor, currentColor.getRgb())
             
     def setCurrentBGcolor(self):
         color=self.ui.currentBGcolor.palette().button().color()
@@ -272,3 +281,6 @@ class Task(QtGui.QDialog):
         color=self.ui.currentTextColor.palette().button().color()
         self.ui.taskDescription.setTextColor(color)
     
+    def resetColors(self):
+        self.setStylesForButtons(self.ui.currentBGcolor, color="(255,255,255,255)")
+        self.setStylesForButtons(self.ui.currentTextColor, color="(0,0,0,255)")

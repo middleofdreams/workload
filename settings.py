@@ -42,3 +42,9 @@ class Settings(object):
         if setting is None:
             setting=30
         return setting
+    
+    def getDateFormat(self):
+        df=self.db.getSetting("dateFormat")
+        if df==None:
+            df="%d-%m-%Y %H:%M"
+        return df
