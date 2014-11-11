@@ -8,6 +8,7 @@ from settingsWindow import SettingsWindow
 from settings import Settings
 from contexts import loadContexts,selectCurrentContext
 from archive import ArchiveWindow
+from lib.timer import TaskReminder
 import res_rc
 
 class Workload(QtGui.QMainWindow):
@@ -69,6 +70,9 @@ class Workload(QtGui.QMainWindow):
         self.loadTasksList(init=True)  
         self.tray=Trayicon(self)
         self.show()
+        
+        
+        self.timer=TaskReminder(self)
 
 
     def dropTask(self,e):

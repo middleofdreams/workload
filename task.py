@@ -2,6 +2,7 @@
 from PySide import QtGui, QtCore
 from ui.task_ui import Ui_Dialog
 import datetime,unicodedata
+from lib.helpers import timestamp
 class Task(QtGui.QDialog):
 
     def __init__(self,parent,taskid):
@@ -125,7 +126,7 @@ class Task(QtGui.QDialog):
             if taskname==self.task["name"] or self.parent.checkIfExist(taskname) is not True:
                 taskDescription=self.ui.taskDescription.toHtml()
                 priority=int(self.ui.priority.text())
-                duedate=self.parent.db._timestamp(self.ui.dueDate.dateTime().toPython())
+                duedate=timestamp(self.ui.dueDate.dateTime().toPython())
                 self.parent.db.setTaskDetails(taskid,taskDescription,priority,taskname,duedate)
                 self.updateItem(taskname, priority)
                 self.close()

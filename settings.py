@@ -23,3 +23,22 @@ class Settings(object):
         self.db.setSetting("loadContext", context)
     def setCurrentContextAsLast(self):
         self.setLastContext(self.parent.currentContext)
+        
+    def getNotifyOnlyCurrentContext(self):
+        setting=self.db.getSetting("notifyOnlyCurrentContext")
+        if setting is None or setting==0:
+            return False
+        else:
+            return True
+        
+    def getNotifyTime(self):
+        setting=self.db.getSetting("notifyTime")
+        if setting is None:
+            setting=360
+        return setting
+    
+    def getNotifyInterval(self):
+        setting=self.db.getSetting("notifyInterval")
+        if setting is None:
+            setting=30
+        return setting
