@@ -10,6 +10,7 @@ from contexts import loadContexts,selectCurrentContext
 from archive import ArchiveWindow
 from lib.timer import TaskReminder
 import res_rc
+
 class Workload(QtGui.QMainWindow):
 
     def __init__(self,app):
