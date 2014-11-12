@@ -13,13 +13,14 @@ class TaskReminder(QtCore.QTimer):
         self.db=parent.db
         self.settings=parent.settings
         self.activeNotifies={}
-        self.timeout.connect(self.onTimeout)
+        self.lastFound={}
+        self.timeout.connect(self.getNearEndTasks)
         self.markTasks.connect(self.parent.setMarker)
-        self.onTimeout()
+        self.getNearEndTasks(force=True)
         self.start(60000)
         #self.start(1000)
         
-    def onTimeout(self):
+    def getNearEndTasks(self,force=False):
         onlyCurrentContext=self.settings.getNotifyOnlyCurrentContext()
         notifyInterval=self.settings.getNotifyInterval()
         notifyTime=self.settings.getNotifyTime()
@@ -46,12 +47,15 @@ class TaskReminder(QtCore.QTimer):
                     
         for k in removeFromActive:
             del self.activeNotifies[k]
-        
-        tasks={}
-        for i in notify:
-            tasks[i]=foundtasks[i]
-        self.showNotification(tasks)
-        
+            
+        if not force:
+            tasks={}
+            for i in notify:
+                tasks[i]=foundtasks[i]
+            self.showNotification(tasks)
+        if self.lastFound!=foundtasks:
+            self.markTasks.emit(list(foundtasks.keys()))
+        self.lastFound=foundtasks
         
     def showNotification(self,tasks):
         if len(tasks)>0:
@@ -64,7 +68,7 @@ class TaskReminder(QtCore.QTimer):
                 n,d=list(tasks.values())[0]
                 msg="Following task:\n"+n+" - "+self.formatDate(d)
             self.parent.tray.showMessage("Workload", msg)
-            self.markTasks.emit(list(tasks.keys()))
+            
         
     def formatDate(self,tmstpm):
         tmstpm=tmstpm.split(".")[0]

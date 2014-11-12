@@ -163,6 +163,7 @@ class Task(QtGui.QDialog):
                 self.parent.ui.statusbar.showMessage("New task created.",3300)
             else:
                 self.parent.taskAlreadyExistMsg(parent=self)
+        self.parent.timer.getNearEndTasks(force=True)
 
     def dropTask(self,e):
             fulldata=e.mimeData().text()    
