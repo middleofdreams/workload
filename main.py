@@ -11,6 +11,9 @@ from archive import ArchiveWindow
 from lib.timer import TaskReminder
 import res_rc
 from win32file import RemoveUsersFromEncryptedFile
+from _ctypes import alignment
+from PySide.QtGui import QPixmap
+from turtledemo.lindenmayer import draw
 
 class Workload(QtGui.QMainWindow):
 
@@ -104,9 +107,9 @@ class Workload(QtGui.QMainWindow):
         self.resizeColumns()
         
     def resizeColumns(self):
-        self.ui.taskList.setColumnWidth(0, 20)
-        self.ui.taskList.setColumnWidth(2, 10)
-        self.ui.taskList.setColumnWidth(1, self.width()-45)
+        self.ui.taskList.setColumnHidden(0,True)
+        self.ui.taskList.setColumnWidth(2, 0)
+        self.ui.taskList.setColumnWidth(1, self.width()-20)
         
     def setMarker(self,tasks):
         icon=QtGui.QIcon(':priority/status/marker.png')
@@ -114,14 +117,18 @@ class Workload(QtGui.QMainWindow):
         for i in items:
             removeicon=QtGui.QIcon()
             i.setIcon(2,removeicon)
-            
         for i in tasks:
             for j in items:
                 if j.data(0,32)==i:
                     j.setIcon(2,icon)
-
-                
-              
+                    
+#     def drawRow(self):
+#         print("draw")
+#         painter=QtGui.QPainter()
+#         myopt=QtGui.QStyleOptionViewItem
+#         myopt.decorationPosition=QtGui.QStyleOptionViewItem.Right
+#         myopt.decorationAlignment=QtCore.Qt.AlignLeft
+#         self.ui.taskList.drawRow(painter,myopt,QtCore.QModelIndex.row())
 # TASKS RELATED ACTIONS
     def addTask(self):
         t = self.ui.taskInput.text().strip()
@@ -221,8 +228,7 @@ class Workload(QtGui.QMainWindow):
 
     def setPriorityColor(self,item,priority):
         icon=QtGui.QIcon(':priority/status/'+str(priority)+'.png')
-        item.setIcon(0,icon)
-        item.setTextAlignment(0,QtCore.Qt.AlignCenter)
+        item.setIcon(1,icon)
 
     def openTask(self):
         if not self.taskOpened:

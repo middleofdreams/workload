@@ -186,7 +186,7 @@ class Task(QtGui.QDialog):
                 taskname=taskname.replace("\n"," ")
                 taskname=taskname.replace("\t"," ")
                 taskname=taskname.replace("  ","")
-                taskname=taskname[:20]+"..."
+                taskname=taskname[:50]+"..."
                 taskDescription=newdata
                 taskid = self.db.addTask(taskname,priority, taskDescription, duedate, self.currentContext)
                 self.createTaskItem(taskname, taskid, priority=0)

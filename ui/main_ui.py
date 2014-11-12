@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created: Wed Nov 12 08:48:58 2014
+# Created: Wed Nov 12 14:21:39 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -44,7 +44,7 @@ class Ui_MainWindow(object):
         font.setFamily("monofur")
         self.taskList.setFont(font)
         self.taskList.setAcceptDrops(True)
-        self.taskList.setAutoFillBackground(False)
+        self.taskList.setAutoFillBackground(True)
         self.taskList.setFrameShape(QtGui.QFrame.Panel)
         self.taskList.setFrameShadow(QtGui.QFrame.Plain)
         self.taskList.setLineWidth(1)
@@ -55,7 +55,7 @@ class Ui_MainWindow(object):
         self.taskList.setAlternatingRowColors(True)
         self.taskList.setSelectionMode(QtGui.QAbstractItemView.ContiguousSelection)
         self.taskList.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
-        self.taskList.setTextElideMode(QtCore.Qt.ElideLeft)
+        self.taskList.setTextElideMode(QtCore.Qt.ElideRight)
         self.taskList.setAutoExpandDelay(-1)
         self.taskList.setIndentation(10)
         self.taskList.setRootIsDecorated(False)
@@ -66,9 +66,9 @@ class Ui_MainWindow(object):
         self.taskList.setObjectName("taskList")
         self.taskList.header().setVisible(False)
         self.taskList.header().setCascadingSectionResizes(False)
-        self.taskList.header().setDefaultSectionSize(15)
+        self.taskList.header().setDefaultSectionSize(5)
         self.taskList.header().setHighlightSections(False)
-        self.taskList.header().setMinimumSectionSize(15)
+        self.taskList.header().setMinimumSectionSize(5)
         self.taskList.header().setSortIndicatorShown(False)
         self.taskList.header().setStretchLastSection(True)
         self.verticalLayout.addWidget(self.taskList)
