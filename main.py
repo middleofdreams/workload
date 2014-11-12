@@ -100,18 +100,15 @@ class Workload(QtGui.QMainWindow):
         self.adjustHeight(downSize=True, init=False)
         self.ui.statusbar.showMessage("Hello! Ready to work ;-)",3600)
         self.ui.taskList.drawRow=self.drawRow
-        
+               
+    
     def dropTask(self,e):
         Task.dropTask(self, e)
-    
-   # def resizeEvent(self,e):
-    #    self.resizeColumns()
         
     def resizeColumns(self):
-        self.ui.taskList.setColumnWidth(1, 20)
-        self.ui.taskList.hideColumn(0)
-        
-        #self.ui.taskList.setColumnWidth(2, self.width()-20)
+        self.ui.taskList.setColumnWidth(0, 20)
+        self.ui.taskList.hideColumn(1)
+
         
     def setMarker(self,tasks):
         icon=QtGui.QIcon(':priority/status/marker.png')
@@ -123,6 +120,7 @@ class Workload(QtGui.QMainWindow):
             for j in items:
                 if j.data(0,32)==i:
                     j.setIcon(2,icon)
+    
                     
     def drawRow(self,painter,myopt,index):
         myopt.decorationPosition=QtGui.QStyleOptionViewItem.Right
@@ -188,7 +186,6 @@ class Workload(QtGui.QMainWindow):
         self.setPriorityColor(item, priority)
         self.ui.taskList.sortItems(0,QtCore.Qt.AscendingOrder)
         
-        
     def checkIfExist(self,t):
         if len(self.ui.taskList.findItems(t,QtCore.Qt.MatchFlags(QtCore.Qt.MatchExactly),1))>0:
             return True
@@ -203,7 +200,6 @@ class Workload(QtGui.QMainWindow):
         for i in self.db.getTasks(self.currentContext):
             self.createTaskItem(i[1], i[0],i[2])
         self.adjustHeight(init=init)
-
 
     def deleteSelectedTasks(self, force=False):
         selectedItems = self.ui.taskList.selectedItems()
@@ -233,13 +229,13 @@ class Workload(QtGui.QMainWindow):
         for item in selectedItems:
             self.db.setTaskPriority(item.data(0, 32),priority)
             self.setPriorityColor(item, priority)
-            item.setText(1,str(priority))
+            item.setText(0,str(priority))
             self.ui.taskList.sortItems(0,QtCore.Qt.AscendingOrder)
             self.ui.statusbar.showMessage("Priority updated.",3300)
-
+            
     def setPriorityColor(self,item,priority):
         icon=QtGui.QIcon(':priority/status/'+str(priority)+'.png')
-        item.setIcon(1,icon)
+        item.setIcon(0,icon)
 
     def openTask(self):
         if not self.taskOpened:
