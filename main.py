@@ -37,7 +37,8 @@ class Workload(QtGui.QMainWindow):
         QMenu::item{padding: 2px 20px;background-color:rgba"+windowBG+";color:rgb(55, 55, 55)}\
         QMenu::item::selected{background-color:rgba"+selectedMenuItemBG+";color:rgb(55, 55, 55);border:1px solid rgba(85, 170, 255,150);\
         border-radius:3px}QMenu::separator{background-color:rgba"+windowFrame+";border 1px solid:rgb(55,55,55);height:2px;margin-left:5px;margin-right:5px;}"
-        TaskList="QTreeWidget{background-color:rgba"+windowBG+";alternate-background-color:rgba"+alternateListItem+"}"
+        TaskList="QTreeWidget{background-color:rgba"+windowBG+";alternate-background-color:rgba"+alternateListItem+"}\
+        QTreeWidget::Item{background-color:rgba(0,0,0,233);border 1px solid: black}"
         self.setStyleSheet(WindowStyle)
         #self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.ui.taskList.setStyleSheet(TaskList)
@@ -98,17 +99,19 @@ class Workload(QtGui.QMainWindow):
         self.timer=TaskReminder(self)
         self.adjustHeight(downSize=True, init=False)
         self.ui.statusbar.showMessage("Hello! Ready to work ;-)",3600)
-    
+        self.ui.taskList.drawRow=self.drawRow
+        
     def dropTask(self,e):
         Task.dropTask(self, e)
     
-    def resizeEvent(self,e):
-        self.resizeColumns()
+   # def resizeEvent(self,e):
+    #    self.resizeColumns()
         
     def resizeColumns(self):
-        self.ui.taskList.setColumnHidden(0,True)
-        self.ui.taskList.setColumnWidth(2, 0)
-        self.ui.taskList.setColumnWidth(1, self.width()-20)
+        self.ui.taskList.setColumnWidth(1, 20)
+        self.ui.taskList.hideColumn(0)
+        
+        #self.ui.taskList.setColumnWidth(2, self.width()-20)
         
     def setMarker(self,tasks):
         icon=QtGui.QIcon(':priority/status/marker.png')
@@ -121,13 +124,11 @@ class Workload(QtGui.QMainWindow):
                 if j.data(0,32)==i:
                     j.setIcon(2,icon)
                     
-#     def drawRow(self):
-#         print("draw")
-#         painter=QtGui.QPainter()
-#         myopt=QtGui.QStyleOptionViewItem
-#         myopt.decorationPosition=QtGui.QStyleOptionViewItem.Right
-#         myopt.decorationAlignment=QtCore.Qt.AlignLeft
-#         self.ui.taskList.drawRow(painter,myopt,QtCore.QModelIndex.row())
+    def drawRow(self,painter,myopt,index):
+        myopt.decorationPosition=QtGui.QStyleOptionViewItem.Right
+        myopt.decorationAlignment=QtCore.Qt.AlignCenter
+        QtGui.QTreeWidget.drawRow(self.ui.taskList,painter,myopt,index)
+        
 # TASKS RELATED ACTIONS
     def addTask(self):
         t = self.ui.taskInput.text().strip()
@@ -180,9 +181,9 @@ class Workload(QtGui.QMainWindow):
             return None
             
     def createTaskItem(self, t, taskid=None, priority=0):
-        item = QtGui.QTreeWidgetItem([str(priority), t])
+        item = QtGui.QTreeWidgetItem([str(priority),"", t])
         item.setData(0, 32, taskid)
-        item.setSizeHint(0, QtCore.QSize(0, 22))
+        item.setSizeHint(1, QtCore.QSize(0, 22))
         self.ui.taskList.addTopLevelItem(item)
         self.setPriorityColor(item, priority)
         self.ui.taskList.sortItems(0,QtCore.Qt.AscendingOrder)
@@ -232,7 +233,7 @@ class Workload(QtGui.QMainWindow):
         for item in selectedItems:
             self.db.setTaskPriority(item.data(0, 32),priority)
             self.setPriorityColor(item, priority)
-            item.setText(0,str(priority))
+            item.setText(1,str(priority))
             self.ui.taskList.sortItems(0,QtCore.Qt.AscendingOrder)
             self.ui.statusbar.showMessage("Priority updated.",3300)
 

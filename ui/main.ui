@@ -164,15 +164,15 @@
       </column>
       <column>
        <property name="text">
-        <string>Task</string>
+        <string>priority_icon</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignLeft|AlignVCenter</set>
        </property>
       </column>
       <column>
        <property name="text">
-        <string>status</string>
-       </property>
-       <property name="textAlignment">
-        <set>AlignLeft|AlignVCenter</set>
+        <string>Task</string>
        </property>
       </column>
      </widget>
@@ -185,7 +185,7 @@
      <x>0</x>
      <y>0</y>
      <width>190</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
    <property name="sizePolicy">

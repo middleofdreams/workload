@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created: Wed Nov 12 14:21:39 2014
-#      by: pyside-uic 0.2.15 running on PySide 1.2.2
+# Created: Wed Nov 12 19:00:46 2014
+#      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -74,7 +74,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.taskList)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 190, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 190, 20))
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -152,8 +152,8 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "Workload", None, QtGui.QApplication.UnicodeUTF8))
         self.taskList.headerItem().setText(0, QtGui.QApplication.translate("MainWindow", "Priority", None, QtGui.QApplication.UnicodeUTF8))
-        self.taskList.headerItem().setText(1, QtGui.QApplication.translate("MainWindow", "Task", None, QtGui.QApplication.UnicodeUTF8))
-        self.taskList.headerItem().setText(2, QtGui.QApplication.translate("MainWindow", "status", None, QtGui.QApplication.UnicodeUTF8))
+        self.taskList.headerItem().setText(1, QtGui.QApplication.translate("MainWindow", "priority_icon", None, QtGui.QApplication.UnicodeUTF8))
+        self.taskList.headerItem().setText(2, QtGui.QApplication.translate("MainWindow", "Task", None, QtGui.QApplication.UnicodeUTF8))
         self.menuFile.setTitle(QtGui.QApplication.translate("MainWindow", "File", None, QtGui.QApplication.UnicodeUTF8))
         self.menuTask.setTitle(QtGui.QApplication.translate("MainWindow", "Task", None, QtGui.QApplication.UnicodeUTF8))
         self.menuContext.setTitle(QtGui.QApplication.translate("MainWindow", "Context", None, QtGui.QApplication.UnicodeUTF8))

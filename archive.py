@@ -20,10 +20,10 @@ class ArchiveWindow(QtGui.QDialog):
             except KeyError:
                 tcontext=str(i[2])+" [removed]"
             tcontext
-            tcreate=datetime.datetime.fromtimestamp(int(i[3].rsplit(".")[0])).strftime(self.parent.settings.getDateFormat())
-            tclose=datetime.datetime.fromtimestamp(int(i[4].rsplit(".")[0])).strftime(self.parent.settings.getDateFormat())
+            tcreate=datetime.datetime.fromtimestamp(int(i[3].rsplit(".")[0])).strftime(self.parent.settings["dateFormat"])
+            tclose=datetime.datetime.fromtimestamp(int(i[4].rsplit(".")[0])).strftime(self.parent.settings["dateFormat"])
             item=QtGui.QTreeWidgetItem([tname,tcontext,tcreate,tclose])
-            item.setData(0,32,i[0])
+            item.setData(0,32,i[1])
             self.ui.treeWidget.addTopLevelItem(item)
             
         self.ui.treeWidget.itemActivated.connect(self.openTask)
