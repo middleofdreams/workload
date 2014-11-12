@@ -17,6 +17,7 @@ class Trayicon(QtGui.QSystemTrayIcon):
         self.iconMenu.addSeparator()
         exitAction=self.iconMenu.addAction("Exit")
         exitAction.triggered.connect(self.exit)
+        self.messageClicked.connect(self.parent.show)
        
         
     def showApp(self,reason):

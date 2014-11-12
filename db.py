@@ -27,11 +27,11 @@ class DB(object):
             tasks.append(i)
         return tasks
     
-    def getTasksByTimestamp(self,timestamp,context=None):
+    def getTasksByTimestamp(self,timestamp,context=False):
         query="SELECT rowid,taskname,due FROM tasks where closed=0 and due <= ?"
         if context:
-            t = (context,timestamp)
-            query+="and context=?"
+            t = (timestamp,self.parent.currentContext)
+            query+=" and context=?"
         else:
             t = (timestamp,)
         tasks = []

@@ -2,7 +2,7 @@
 from PySide import QtGui, QtCore
 from ui.task_ui import Ui_Dialog
 import datetime,unicodedata
-from lib.helpers import timestamp
+from lib.helpers import timestamp,QtDateFormat
 class Task(QtGui.QDialog):
 
     def __init__(self,parent,taskid):
@@ -17,6 +17,7 @@ class Task(QtGui.QDialog):
         self.taskid=taskid
         self.moveIt=False        
         self.ui.priority.valueChanged.connect(self.setPriorityText)
+        self.ui.dueOn.stateChanged.connect(self.setDueOn)
 #Text Editor
         fontlist=['monofur','Century Schoolbook','Arial','Courier New','Times New Roman','Monospace']  #TODO: read font settings from database
         FontDB=QtGui.QFontDatabase()
@@ -46,7 +47,7 @@ class Task(QtGui.QDialog):
         self.task=self.parent.db.getTaskDetails(taskid)
         if self.taskid:
             self.ui.label_6.hide()  #Hide closed date label
-            self.ui.dueDate.setDisplayFormat("dd-MM-yyyy HH:mm")
+            self.ui.dueDate.setDisplayFormat(QtDateFormat(self.parent.settings["dateFormat"]))
             self.setWindowTitle(self.task["name"])
             self.ui.taskName.setText(self.task["name"])
             self.ui.priority.setValue(self.task["priority"])
@@ -54,24 +55,23 @@ class Task(QtGui.QDialog):
             self.ui.taskDescription.append(self.task["taskdescription"])
             createdTimestamp=int(self.task["created"].split(".")[0])
             createdDate=datetime.datetime.fromtimestamp(createdTimestamp)
-            createdDate=createdDate.strftime("%d-%m-%Y %H:%M")
+            createdDate=createdDate.strftime(self.parent.settings["dateFormat"])
             self.ui.createDate.setText(createdDate)
             
             if self.task["closedat"] is not None:
                 self.ui.label_6.show()
                 closeTimestamp=int(self.task["closedat"].split(".")[0])
                 closeDate=datetime.datetime.fromtimestamp(closeTimestamp)
-                closeDate=closeDate.strftime("%d-%m-%Y %H:%M")
+                closeDate=closeDate.strftime(self.parent.settings.getDateFormat())
                 self.ui.closeDate.setText(closeDate)
             
             if self.task["due"] is not None:
+                self.ui.dueOn.setChecked(True)
                 timestamp=int(self.task["due"].split(".")[0])
                 date=datetime.datetime.fromtimestamp(timestamp)
                 self.ui.dueDate.setDateTime(QtCore.QDateTime(date.year,date.month,date.day,date.hour,date.minute,0,0))
             else:
                 date=datetime.datetime.now()
-                delta=datetime.timedelta(hours=24)
-                date=date+delta
                 self.ui.dueDate.setDateTime(QtCore.QDateTime(date.year,date.month,date.day,date.hour,date.minute,0,0))
         else:
             self.ui.label_4.hide()  #Hide created date label
@@ -93,6 +93,12 @@ class Task(QtGui.QDialog):
     def setPriorityText(self,priority):
         priorities=["Not set!","Now","Next","Later","Someday","Awaiting"]
         self.ui.priorityText.setText(priorities[priority])
+        
+    def setDueOn(self,e):
+        if e==2:
+            self.ui.dueDate.setEnabled(True)
+        else:
+            self.ui.dueDate.setDisabled(True)
         
     def setStylesForButtons(self,setButton,color):
         styleSheet="QPushButton[Button=color] {height: 15px; border: 1px solid rgba(0, 0, 0,190);  border-radius: 2px;border-style: outset; background-color:rgba"+str(color)+"}"
@@ -141,7 +147,10 @@ class Task(QtGui.QDialog):
             if taskname==self.task["name"] or self.parent.checkIfExist(taskname) is not True:
                 taskDescription=self.ui.taskDescription.toHtml()
                 priority=int(self.ui.priority.text())
-                duedate=timestamp(self.ui.dueDate.dateTime().toPython())
+                if self.ui.dueOn.isChecked():
+                    duedate=timestamp(self.ui.dueDate.dateTime().toPython())
+                else:
+                    duedate=None
                 self.parent.db.setTaskDetails(taskid,taskDescription,priority,taskname,duedate)
                 self.updateItem(taskname, priority)
                 self.close()
