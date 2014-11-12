@@ -10,10 +10,15 @@ from contexts import loadContexts,selectCurrentContext
 from archive import ArchiveWindow
 from lib.timer import TaskReminder
 import res_rc
+<<<<<<< HEAD
 from win32file import RemoveUsersFromEncryptedFile
 from _ctypes import alignment
 from PySide.QtGui import QPixmap
 from turtledemo.lindenmayer import draw
+=======
+import datetime
+from lib.helpers import timestamp
+>>>>>>> branch 'master' of https://github.com/middleofdreams/workload.git
 
 class Workload(QtGui.QMainWindow):
 
@@ -153,14 +158,14 @@ class Workload(QtGui.QMainWindow):
         except:
             pass
 #TODO: create new function to handle input (regexp etc)
-        duedate=None
         if len(t)>20:
             taskname=t[:20]+"..."
             taskDescription=t
         else:
             taskname=t
             taskDescription=""
-        if self.checkIfExist(taskname) is not True:  
+        if self.checkIfExist(taskname) is not True:
+            duedate=self.defaultDueDate()  
             taskid = self.db.addTask(taskname,priority, taskDescription, duedate, self.currentContext)
             self.createTaskItem(taskname, taskid, priority)
             self.adjustHeight()
@@ -168,6 +173,17 @@ class Workload(QtGui.QMainWindow):
         else:
             self.ui.taskInput.setText(taskname)
             self.taskAlreadyExistMsg(self)
+            
+    def defaultDueDate(self):
+        if self.settings["defaultDueDateOn"]:
+            dueValue=int(self.settings["defaultDueDateValue"])
+            if self.settings["defaultDueDateUnit"]=="0":
+                td=datetime.timedelta(hours=dueValue)
+            else:
+                td=datetime.timedelta(days=dueValue)
+            return timestamp(datetime.datetime.now()+td)
+        else:
+            return None
             
     def createTaskItem(self, t, taskid=None, priority=0):
         item = QtGui.QTreeWidgetItem([str(priority), t])
@@ -338,10 +354,15 @@ class Workload(QtGui.QMainWindow):
         f=open("about.html")
         text=f.read()
         f.close()
-        about = QtGui.QMessageBox.information(self, "About", text, buttons=QtGui.QMessageBox.Ok )
+        QtGui.QMessageBox.information(self, "About", text, buttons=QtGui.QMessageBox.Ok )
 
     def exit(self):
-        if self.questionPopup("Exit", "Are you sure?"):
+        exit_=False
+        if self.settings["askOnExit"]:
+            if self.questionPopup("Exit", "Are you sure?"):
+                exit_=True
+        else: exit_=True
+        if exit_==True:
             self.settings.setCurrentContextAsLast()
             self.app.exit()
 

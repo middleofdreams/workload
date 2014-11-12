@@ -21,10 +21,10 @@ class TaskReminder(QtCore.QTimer):
         #self.start(1000)
         
     def getNearEndTasks(self,force=False):
-        onlyCurrentContext=self.settings.getNotifyOnlyCurrentContext()
-        notifyInterval=self.settings.getNotifyInterval()
-        notifyTime=self.settings.getNotifyTime()
-        td=datetime.timedelta(minutes=notifyTime)
+        onlyCurrentContext=self.settings["notifyCurrentContext"]
+        notifyInterval=int(self.settings["notifyInterval"])
+        notifyTime=int(self.settings["notifyTime"])
+        td=datetime.timedelta(minutes=int(notifyTime))
         nt=datetime.datetime.now()+td
         ts=timestamp(nt)
         notify=[]
@@ -52,7 +52,8 @@ class TaskReminder(QtCore.QTimer):
             tasks={}
             for i in notify:
                 tasks[i]=foundtasks[i]
-            self.showNotification(tasks)
+            if self.settings["showNotifications"]:
+                self.showNotification(tasks)
         if self.lastFound!=foundtasks:
             self.markTasks.emit(list(foundtasks.keys()))
         self.lastFound=foundtasks
