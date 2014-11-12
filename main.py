@@ -10,15 +10,9 @@ from contexts import loadContexts,selectCurrentContext
 from archive import ArchiveWindow
 from lib.timer import TaskReminder
 import res_rc
-<<<<<<< HEAD
-from win32file import RemoveUsersFromEncryptedFile
-from _ctypes import alignment
-from PySide.QtGui import QPixmap
-from turtledemo.lindenmayer import draw
-=======
 import datetime
 from lib.helpers import timestamp
->>>>>>> branch 'master' of https://github.com/middleofdreams/workload.git
+
 
 class Workload(QtGui.QMainWindow):
 
