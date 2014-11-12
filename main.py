@@ -164,9 +164,9 @@ class Workload(QtGui.QMainWindow):
             self.taskAlreadyExistMsg(self)
             
     def defaultDueDate(self):
-        if self.settings["defaultDueTimeOn"]:
-            dueValue=self.settings["defaultDueTimeValue"]
-            if self.settings["defaultDueTimeUnit"]=="0":
+        if self.settings["defaultDueDateOn"]:
+            dueValue=int(self.settings["defaultDueDateValue"])
+            if self.settings["defaultDueDateUnit"]=="0":
                 td=datetime.timedelta(hours=dueValue)
             else:
                 td=datetime.timedelta(days=dueValue)
