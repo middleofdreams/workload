@@ -10,6 +10,7 @@ from contexts import loadContexts,selectCurrentContext
 from archive import ArchiveWindow
 from lib.timer import TaskReminder
 import res_rc
+from win32file import RemoveUsersFromEncryptedFile
 
 class Workload(QtGui.QMainWindow):
 
@@ -91,12 +92,8 @@ class Workload(QtGui.QMainWindow):
         selectCurrentContext(self)
         self.loadTasksList(init=True)  
         self.tray=Trayicon(self)
-        
         self.show()
-        
-        
         self.timer=TaskReminder(self)
-
         self.adjustHeight(downSize=True, init=False)
         self.ui.statusbar.showMessage("Hello! Ready to work ;-)",3600)
     
@@ -111,12 +108,22 @@ class Workload(QtGui.QMainWindow):
         self.ui.taskList.setColumnWidth(2, 10)
         self.ui.taskList.setColumnWidth(1, self.width()-45)
         
-    def setMarker(self):
-        print("set icon in column 2 when task is notification time")
-           
+    def setMarker(self,tasks):
+        icon=QtGui.QIcon(':priority/status/marker.png')
+        items=self.ui.taskList.findItems("",QtCore.Qt.MatchContains|QtCore.Qt.MatchRecursive)
+        for i in items:
+            removeicon=QtGui.QIcon()
+            i.setIcon(2,removeicon)
+            
+        for i in tasks:
+            for j in items:
+                if j.data(0,32)==i:
+                    j.setIcon(2,icon)
+
+                
+              
 # TASKS RELATED ACTIONS
-    def addTask(self,e):
-        print(e)
+    def addTask(self):
         t = self.ui.taskInput.text().strip()
         if t =="":
             return False

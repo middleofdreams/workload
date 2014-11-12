@@ -4,6 +4,7 @@ from .helpers import timestamp
 
 class TaskReminder(QtCore.QTimer):
     '''QTimer based class used for notifications'''
+    markTasks=QtCore.Signal(list)
     
     def __init__(self,parent):
         '''init function'''
@@ -13,6 +14,8 @@ class TaskReminder(QtCore.QTimer):
         self.settings=parent.settings
         self.activeNotifies={}
         self.timeout.connect(self.onTimeout)
+        self.markTasks.connect(self.parent.setMarker)
+        self.onTimeout()
         self.start(60000)
         #self.start(1000)
         
@@ -60,9 +63,8 @@ class TaskReminder(QtCore.QTimer):
             else:
                 n,d=list(tasks.values())[0]
                 msg="Following task:\n"+n+" - "+self.formatDate(d)
-
             self.parent.tray.showMessage("Workload", msg)
-            
+            self.markTasks.emit(list(tasks.keys()))
         
     def formatDate(self,tmstpm):
         tmstpm=tmstpm.split(".")[0]

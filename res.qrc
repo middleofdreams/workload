@@ -7,6 +7,7 @@
     <file>ui/style.qss</file>
   </qresource>
   <qresource prefix="priority">
+    <file>status/marker.png</file>
     <file>status/0.png</file>
     <file>status/1.png</file>
     <file>status/2.png</file>
