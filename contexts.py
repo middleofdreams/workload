@@ -2,7 +2,7 @@ from PySide import QtGui
 def loadContexts(self):
         self.contexts={}
         self.ui.menuContext.clear()
-        
+        c=0
         for i in self.db.getContexts():
             item=QtGui.QAction(self.ui.menuContext)
             item.setText(i[1])
@@ -10,15 +10,23 @@ def loadContexts(self):
             item.triggered.connect(lambda item=item,s=self: switchContext(s,item))
             item.setData(i[0])
             self.contexts[i[1]]=i[0]
+            if c<10:
+                if c==9:
+                    item.setShortcut("Ctrl+0")
+                else:
+                    item.setShortcut("Ctrl+"+str(c+1))
+            c+=1
             #item.triggered.connect(self.switchContext)
             self.ui.menuContext.addAction(item)
         self.ui.menuContext.addSeparator()
         nc = QtGui.QAction(self.ui.menuContext)
         nc.setText("Create new context")
         nc.triggered.connect(lambda s=self:addContext(s))
+        nc.setShortcut("Ctrl+Shift+C")
         self.ui.menuContext.addAction(nc)
         rc = QtGui.QAction(self.ui.menuContext)
         rc.setText("Remove current context")
+        rc.setShortcut("Ctrl+Shift+X")
         rc.triggered.connect(lambda s=self:removeContext(s))
         self.ui.menuContext.addAction(rc)
         

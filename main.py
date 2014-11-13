@@ -267,17 +267,14 @@ class Workload(QtGui.QMainWindow):
     # SHORTCUTS AND KEYBOARD EVENTS RELATED ACTIONS
     def getKeysOnList(self, e):
         if e.key() == 16777223:  # delete
-            force = False
             if (QtCore.Qt.ShiftModifier & e.modifiers()):
-                force = True
-            self.deleteSelectedTasks(force)
+                self.deleteSelectedTasks(True)
         elif e.key()>48 and e.key()<54:
             self.setTaskPriority(e.key()-48)
-        elif e.key()==16777221 or e.key()==16777220:  # enter/return
-            if(QtCore.Qt.ControlModifier & e.modifiers()):
-                self.completeTasks()
-            else:
-                self.openTask()
+        elif e.key()==78:
+            self.ui.taskInput.setFocus()
+        else:
+            QtGui.QTreeWidget.keyPressEvent(self.ui.taskList,e)
 
 
     def getKeysOnInput(self, e):
@@ -366,6 +363,7 @@ class Workload(QtGui.QMainWindow):
         else: exit_=True
         if exit_==True:
             self.settings.setCurrentContextAsLast()
+            self.shortcuts.terminate()
             self.app.exit()
 
     def createTask(self):
