@@ -22,25 +22,24 @@ class Workload(QtGui.QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         #self.setStyleSheet('ui/style.qss')
-        windowBG="(219,237,255,200)"
-        windowFrame="(85, 170, 255,150)"
+        windowBG="(219,237,255)"
+        windowFrame="(85,170,255)"
         selectedMenuItemBG="(85, 170, 220,80)"
         alternateListItem="(170,213,255,250)"
-        WindowStyle="QMainWindow{border:2px solid rgba"+windowFrame+";  border-radius: 2px;background-color:rgba"+windowBG+";}"
+        WindowStyle="QMainWindow{border:2px solid rgb"+windowFrame+";  border-radius: 2px;background-color:rgb"+windowBG+";}\
+        QMessageBox{background-color:rgb"+windowBG+"}"
         StatusbarStyle="QStatusBar{background-color:transparent;border-top: 0px transparent; border-radius:2px;\
-        border-bottom: 3px solid rgba(85, 170, 255,150);border-left: 2px solid rgba(85, 170, 255,150);border-right: 2px solid rgba(85, 170, 255,150)}"
-        MenubarStyle="QMenuBar{padding:2px 2px;background-color:rgba"+windowBG+";border-top: 3px solid rgba(85, 170, 255,150);\
-        border-left:2px solid rgba(85, 170, 255,150);border-right: 2px solid rgba(85, 170, 255,150);border-radius: 2px}\
+        border-bottom: 3px solid rgb(85, 170, 255,150);border-left: 2px solid rgb(85, 170, 255,150);border-right: 2px solid rgb(85, 170, 255,150)}"
+        MenubarStyle="QMenuBar{padding:2px 2px;background-color:rgb"+windowBG+";border-top: 3px solid rgb(85, 170, 255,150);\
+        border-left:2px solid rgb(85, 170, 255,150);border-right: 2px solid rgb(85, 170, 255,150);border-radius: 2px}\
         QMenuBar::item{padding: 2px 2px;background-color:transparent;color:rgb(55, 55, 55);border-radius:3px}"
-        MenuStyle="QMenu{background-color:rgba"+windowBG+";color:black;border:1px solid rgba"+windowFrame+";\
+        MenuStyle="QMenu{background-color:rgb"+windowBG+";color:black;border:1px solid rgb"+windowFrame+";\
         border-left:3px solid rgba(85, 170, 255,80);border-radius:3px} \
-        QMenu::item{padding: 2px 20px;background-color:rgba"+windowBG+";color:rgb(55, 55, 55)}\
-        QMenu::item::selected{background-color:rgba"+selectedMenuItemBG+";color:rgb(55, 55, 55);border:1px solid rgba(85, 170, 255,150);\
-        border-radius:3px}QMenu::separator{background-color:rgba"+windowFrame+";border 1px solid:rgb(55,55,55);height:2px;margin-left:5px;margin-right:5px;}"
-        TaskList="QTreeWidget{background-color:rgba"+windowBG+";alternate-background-color:rgba"+alternateListItem+"}\
-        QTreeWidget::Item{background-color:rgba(0,0,0,233);border 1px solid: black}"
+        QMenu::item{padding: 2px 20px;background-color:rgb"+windowBG+";color:rgb(55, 55, 55)}\
+        QMenu::item::selected{background-color:rgb"+selectedMenuItemBG+";color:rgb(55, 55, 55);border:1px solid rgb(85, 170, 255,150);\
+        border-radius:3px}QMenu::separator{background-color:rgb"+windowFrame+";border 1px solid:rgb(55,55,55);height:2px;margin-left:5px;margin-right:5px;}"
+        TaskList="QTreeWidget{background-color:rgb"+windowBG+";alternate-background-color:rgb"+alternateListItem+"}"
         self.setStyleSheet(WindowStyle)
-        #self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.ui.taskList.setStyleSheet(TaskList)
         self.ui.menubar.setStyleSheet(MenubarStyle)
         self.ui.menuFile.setStyleSheet(MenuStyle)
@@ -48,6 +47,7 @@ class Workload(QtGui.QMainWindow):
         self.ui.menuContext.setStyleSheet(MenuStyle)
         self.ui.statusbar.setStyleSheet(StatusbarStyle)
         
+        #self.setWindowOpacity(0.8)
         #GUI setting
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint
                             | QtCore.Qt.WindowStaysOnTopHint)
@@ -107,7 +107,8 @@ class Workload(QtGui.QMainWindow):
         
     def resizeColumns(self):
         self.ui.taskList.setColumnWidth(0, 20)
-        self.ui.taskList.hideColumn(1)
+        self.ui.taskList.setColumnWidth(1, 20)
+        self.ui.taskList.hideColumn(0)
 
         
     def setMarker(self,tasks):
@@ -187,14 +188,15 @@ class Workload(QtGui.QMainWindow):
         self.ui.taskList.sortItems(0,QtCore.Qt.AscendingOrder)
         
     def checkIfExist(self,t):
-        if len(self.ui.taskList.findItems(t,QtCore.Qt.MatchFlags(QtCore.Qt.MatchExactly),1))>0:
+        if len(self.ui.taskList.findItems(t,QtCore.Qt.MatchFlags(QtCore.Qt.MatchExactly),2))>0:
             return True
             
             
     def taskAlreadyExistMsg(self,parent):
+        
         text="Task with same name already exist, choose another"
         msg = QtGui.QMessageBox.information(parent, "Task name already exist", text, buttons=QtGui.QMessageBox.Ok )
-
+        
     def loadTasksList(self, archived=False,init=False):
         self.ui.taskList.clear()
         for i in self.db.getTasks(self.currentContext):
@@ -235,7 +237,7 @@ class Workload(QtGui.QMainWindow):
             
     def setPriorityColor(self,item,priority):
         icon=QtGui.QIcon(':priority/status/'+str(priority)+'.png')
-        item.setIcon(0,icon)
+        item.setIcon(1,icon)
 
     def openTask(self):
         if not self.taskOpened:
