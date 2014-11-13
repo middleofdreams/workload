@@ -12,6 +12,7 @@ from lib.timer import TaskReminder
 import res_rc
 import datetime
 from lib.helpers import timestamp
+from lib.shortcuts import ShortcutsHandler
 
 
 class Workload(QtGui.QMainWindow):
@@ -100,8 +101,16 @@ class Workload(QtGui.QMainWindow):
         self.adjustHeight(downSize=True, init=False)
         self.ui.statusbar.showMessage("Hello! Ready to work ;-)",3600)
         self.ui.taskList.drawRow=self.drawRow
+        
+        
+        self.shortcuts=ShortcutsHandler(self)
                
-    
+    def toggle(self):
+        if self.isVisible():
+            self.hide()
+        else:
+            self.show()
+            
     def dropTask(self,e):
         Task.dropTask(self, e)
         
