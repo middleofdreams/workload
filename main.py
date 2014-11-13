@@ -25,9 +25,13 @@ class Workload(QtGui.QMainWindow):
         #self.setStyleSheet('ui/style.qss')
         windowBG="(219,237,255)"
         windowFrame="(85,170,255)"
-        selectedMenuItemBG="(85, 170, 220,80)"
-        alternateListItem="(170,213,255,250)"
-        WindowStyle="QMainWindow{border:2px solid rgb"+windowFrame+";  border-radius: 2px;background-color:rgb"+windowBG+";}\
+        selectedMenuItemBG="(170,213,255)"
+        
+        taskListBG="(219,237,255)"
+        taskListFrame="(85,170,255)"
+        alternateListItem="(170,213,255)"
+        
+        WindowStyle="QMainWindow{border:2px solid rgb"+windowFrame+"; border-radius: 2px;background-color:rgb"+windowBG+";}\
         QMessageBox{background-color:rgb"+windowBG+"}"
         StatusbarStyle="QStatusBar{background-color:transparent;border-top: 0px transparent; border-radius:2px;\
         border-bottom: 3px solid rgb(85, 170, 255,150);border-left: 2px solid rgb(85, 170, 255,150);border-right: 2px solid rgb(85, 170, 255,150)}"
@@ -35,11 +39,12 @@ class Workload(QtGui.QMainWindow):
         border-left:2px solid rgb(85, 170, 255,150);border-right: 2px solid rgb(85, 170, 255,150);border-radius: 2px}\
         QMenuBar::item{padding: 2px 2px;background-color:transparent;color:rgb(55, 55, 55);border-radius:3px}"
         MenuStyle="QMenu{background-color:rgb"+windowBG+";color:black;border:1px solid rgb"+windowFrame+";\
-        border-left:3px solid rgba(85, 170, 255,80);border-radius:3px} \
+        border-left:3px solid rgb"+windowFrame+";border-radius:3px} \
         QMenu::item{padding: 2px 20px;background-color:rgb"+windowBG+";color:rgb(55, 55, 55)}\
-        QMenu::item::selected{background-color:rgb"+selectedMenuItemBG+";color:rgb(55, 55, 55);border:1px solid rgb(85, 170, 255,150);\
+        QMenu::item::selected{background-color:rgb"+selectedMenuItemBG+";color:rgb(55, 55, 55);border:1px solid rgb(85, 170, 255);\
         border-radius:3px}QMenu::separator{background-color:rgb"+windowFrame+";border 1px solid:rgb(55,55,55);height:2px;margin-left:5px;margin-right:5px;}"
-        TaskList="QTreeWidget{background-color:rgb"+windowBG+";alternate-background-color:rgb"+alternateListItem+"}"
+        TaskList="QTreeWidget{border: 1px solid rgb"+taskListFrame+";background-color:rgb"+taskListBG+";alternate-background-color:rgb"+alternateListItem+"}"
+        
         self.setStyleSheet(WindowStyle)
         self.ui.taskList.setStyleSheet(TaskList)
         self.ui.menubar.setStyleSheet(MenubarStyle)
@@ -48,7 +53,6 @@ class Workload(QtGui.QMainWindow):
         self.ui.menuContext.setStyleSheet(MenuStyle)
         self.ui.statusbar.setStyleSheet(StatusbarStyle)
         
-        #self.setWindowOpacity(0.8)
         #GUI setting
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint
                             | QtCore.Qt.WindowStaysOnTopHint)
@@ -202,10 +206,10 @@ class Workload(QtGui.QMainWindow):
             
             
     def taskAlreadyExistMsg(self,parent):
-        
         text="Task with same name already exist, choose another"
-        msg = QtGui.QMessageBox.information(parent, "Task name already exist", text, buttons=QtGui.QMessageBox.Ok )
-        
+        msgWindow=QtGui.QMessageBox()
+        msg = msgWindow.information(parent, "Task name already exist", text, buttons=QtGui.QMessageBox.Ok )
+    
     def loadTasksList(self, archived=False,init=False):
         self.ui.taskList.clear()
         for i in self.db.getTasks(self.currentContext):
@@ -290,7 +294,8 @@ class Workload(QtGui.QMainWindow):
 
     #ADDITIONAL FUNTIONS
     def questionPopup(self, title, msg):
-        resp = QtGui.QMessageBox.question(self, title, msg,
+        window=QtGui.QMessageBox()
+        resp = window.question(self, title, msg,
         buttons=QtGui.QMessageBox.Ok | QtGui.QMessageBox.Cancel)
         if resp == QtGui.QMessageBox.Ok:
             return True
@@ -327,7 +332,7 @@ class Workload(QtGui.QMainWindow):
         else:
             winheight=self.height()
             listheight=self.ui.taskList.height()
-        desiredHeight=22*len(tasks)+winheight-listheight+2
+        desiredHeight=22*len(tasks)+winheight-listheight+4
         if ( desiredHeight>self.height() or downSize ) and desiredHeight<QtGui.QApplication.desktop().height():
             self.resize(self.width(),desiredHeight)
 
