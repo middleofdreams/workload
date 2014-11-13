@@ -25,6 +25,7 @@ class Workload(QtGui.QMainWindow):
         #self.setStyleSheet('ui/style.qss')
         windowBG="(219,237,255)"
         windowFrame="(85,170,255)"
+<<<<<<< HEAD
         selectedMenuItemBG="(170,213,255)"
         
         taskListBG="(219,237,255)"
@@ -33,6 +34,13 @@ class Workload(QtGui.QMainWindow):
         
         WindowStyle="QMainWindow{border:2px solid rgb"+windowFrame+"; border-radius: 2px;background-color:rgb"+windowBG+";}\
         QMessageBox{background-color:rgb"+windowBG+"}"
+=======
+        selectedMenuItemBG="(85, 170, 220,80)"
+        alternateListItem="(170,213,255,250)"
+        self.WindowStyle="QMainWindow{border:2px solid rgb"+windowFrame+";  border-radius: 2px;background-color:rgb"+windowBG+";}\
+        QMessageBox{background-color:rgb"+windowBG+"} QDialog{background-color:rgb"+windowBG+"}\
+        QTreeWidget{background-color:rgb"+windowBG+";alternate-background-color:rgb"+alternateListItem+"}"
+>>>>>>> branch 'master' of https://github.com/middleofdreams/workload
         StatusbarStyle="QStatusBar{background-color:transparent;border-top: 0px transparent; border-radius:2px;\
         border-bottom: 3px solid rgb(85, 170, 255,150);border-left: 2px solid rgb(85, 170, 255,150);border-right: 2px solid rgb(85, 170, 255,150)}"
         MenubarStyle="QMenuBar{padding:2px 2px;background-color:rgb"+windowBG+";border-top: 3px solid rgb(85, 170, 255,150);\
@@ -43,10 +51,16 @@ class Workload(QtGui.QMainWindow):
         QMenu::item{padding: 2px 20px;background-color:rgb"+windowBG+";color:rgb(55, 55, 55)}\
         QMenu::item::selected{background-color:rgb"+selectedMenuItemBG+";color:rgb(55, 55, 55);border:1px solid rgb(85, 170, 255);\
         border-radius:3px}QMenu::separator{background-color:rgb"+windowFrame+";border 1px solid:rgb(55,55,55);height:2px;margin-left:5px;margin-right:5px;}"
+<<<<<<< HEAD
         TaskList="QTreeWidget{border: 1px solid rgb"+taskListFrame+";background-color:rgb"+taskListBG+";alternate-background-color:rgb"+alternateListItem+"}"
         
         self.setStyleSheet(WindowStyle)
         self.ui.taskList.setStyleSheet(TaskList)
+=======
+        #TaskList="QTreeWidget{background-color:rgb"+windowBG+";alternate-background-color:rgb"+alternateListItem+"}"
+        self.setStyleSheet(self.WindowStyle)
+        #self.ui.taskList.setStyleSheet(TaskList)
+>>>>>>> branch 'master' of https://github.com/middleofdreams/workload
         self.ui.menubar.setStyleSheet(MenubarStyle)
         self.ui.menuFile.setStyleSheet(MenuStyle)
         self.ui.menuTask.setStyleSheet(MenuStyle)
@@ -271,17 +285,14 @@ class Workload(QtGui.QMainWindow):
     # SHORTCUTS AND KEYBOARD EVENTS RELATED ACTIONS
     def getKeysOnList(self, e):
         if e.key() == 16777223:  # delete
-            force = False
             if (QtCore.Qt.ShiftModifier & e.modifiers()):
-                force = True
-            self.deleteSelectedTasks(force)
+                self.deleteSelectedTasks(True)
         elif e.key()>48 and e.key()<54:
             self.setTaskPriority(e.key()-48)
-        elif e.key()==16777221 or e.key()==16777220:  # enter/return
-            if(QtCore.Qt.ControlModifier & e.modifiers()):
-                self.completeTasks()
-            else:
-                self.openTask()
+        elif e.key()==78:
+            self.ui.taskInput.setFocus()
+        else:
+            QtGui.QTreeWidget.keyPressEvent(self.ui.taskList,e)
 
 
     def getKeysOnInput(self, e):
@@ -351,11 +362,11 @@ class Workload(QtGui.QMainWindow):
             
     def exportTaskList(self):
         fname=QtGui.QFileDialog.getSaveFileName()#"Select file to save task list")
-        if fname:
+        if fname[0]:
             includeArchive=self.questionPopup("Exporting tasks", "Do you want to include completed tasks?")
             tasks=self.db.exportTasks(self.currentContext, includeArchive)
             from lib import importexport
-            importexport.export(tasks, fname[0],self.settings.getDateFormat())
+            importexport.export(tasks, fname[0],self.settings["dateFormat"])
             
     def about(self):
         f=open("about.html")
@@ -371,6 +382,7 @@ class Workload(QtGui.QMainWindow):
         else: exit_=True
         if exit_==True:
             self.settings.setCurrentContextAsLast()
+            self.shortcuts.terminate()
             self.app.exit()
 
     def createTask(self):

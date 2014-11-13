@@ -5,6 +5,7 @@ class ShortcutsHandler(QThread):
     def __init__(self,parent):
         QThread.__init__(self,parent)
         self.show.connect(parent.toggle)
+        self.setTerminationEnabled(True)
         self.start()
         
     def run(self):

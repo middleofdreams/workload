@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created: Wed Nov 12 19:00:46 2014
-#      by: pyside-uic 0.2.15 running on PySide 1.2.1
+# Created: Thu Nov 13 14:00:15 2014
+#      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -53,7 +53,7 @@ class Ui_MainWindow(object):
         self.taskList.setDragDropMode(QtGui.QAbstractItemView.DropOnly)
         self.taskList.setDefaultDropAction(QtCore.Qt.IgnoreAction)
         self.taskList.setAlternatingRowColors(True)
-        self.taskList.setSelectionMode(QtGui.QAbstractItemView.ContiguousSelection)
+        self.taskList.setSelectionMode(QtGui.QAbstractItemView.ExtendedSelection)
         self.taskList.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
         self.taskList.setTextElideMode(QtCore.Qt.ElideRight)
         self.taskList.setAutoExpandDelay(-1)
@@ -74,7 +74,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.taskList)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 190, 20))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 190, 19))
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -154,24 +154,37 @@ class Ui_MainWindow(object):
         self.taskList.headerItem().setText(0, QtGui.QApplication.translate("MainWindow", "Priority", None, QtGui.QApplication.UnicodeUTF8))
         self.taskList.headerItem().setText(1, QtGui.QApplication.translate("MainWindow", "priority_icon", None, QtGui.QApplication.UnicodeUTF8))
         self.taskList.headerItem().setText(2, QtGui.QApplication.translate("MainWindow", "Task", None, QtGui.QApplication.UnicodeUTF8))
-        self.menuFile.setTitle(QtGui.QApplication.translate("MainWindow", "File", None, QtGui.QApplication.UnicodeUTF8))
-        self.menuTask.setTitle(QtGui.QApplication.translate("MainWindow", "Task", None, QtGui.QApplication.UnicodeUTF8))
-        self.menuContext.setTitle(QtGui.QApplication.translate("MainWindow", "Context", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionExit.setText(QtGui.QApplication.translate("MainWindow", "Exit", None, QtGui.QApplication.UnicodeUTF8))
+        self.menuFile.setTitle(QtGui.QApplication.translate("MainWindow", "&File", None, QtGui.QApplication.UnicodeUTF8))
+        self.menuTask.setTitle(QtGui.QApplication.translate("MainWindow", "&Task", None, QtGui.QApplication.UnicodeUTF8))
+        self.menuContext.setTitle(QtGui.QApplication.translate("MainWindow", "&Context", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionExit.setText(QtGui.QApplication.translate("MainWindow", "E&xit", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionExit.setShortcut(QtGui.QApplication.translate("MainWindow", "Ctrl+Q", None, QtGui.QApplication.UnicodeUTF8))
         self.actionDefault.setText(QtGui.QApplication.translate("MainWindow", "Default", None, QtGui.QApplication.UnicodeUTF8))
         self.actionAbout.setText(QtGui.QApplication.translate("MainWindow", "About", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionImport_tasklist.setText(QtGui.QApplication.translate("MainWindow", "Import tasklist", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionAdd_new.setText(QtGui.QApplication.translate("MainWindow", "Add new", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionDelete.setText(QtGui.QApplication.translate("MainWindow", "Delete", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionComplete.setText(QtGui.QApplication.translate("MainWindow", "Complete", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionHistory.setText(QtGui.QApplication.translate("MainWindow", "History", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionEdit.setText(QtGui.QApplication.translate("MainWindow", "Edit", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionImport_tasklist.setText(QtGui.QApplication.translate("MainWindow", "&Import tasklist", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionImport_tasklist.setShortcut(QtGui.QApplication.translate("MainWindow", "Ctrl+Shift+I", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionAdd_new.setText(QtGui.QApplication.translate("MainWindow", "&Add new", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionAdd_new.setShortcut(QtGui.QApplication.translate("MainWindow", "Ctrl+N", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionDelete.setText(QtGui.QApplication.translate("MainWindow", "&Delete", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionDelete.setShortcut(QtGui.QApplication.translate("MainWindow", "Del", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionComplete.setText(QtGui.QApplication.translate("MainWindow", "&Complete", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionComplete.setShortcut(QtGui.QApplication.translate("MainWindow", "Ctrl+Return", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionHistory.setText(QtGui.QApplication.translate("MainWindow", "&History", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionHistory.setShortcut(QtGui.QApplication.translate("MainWindow", "Ctrl+H", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionEdit.setText(QtGui.QApplication.translate("MainWindow", "&Edit", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionEdit.setShortcut(QtGui.QApplication.translate("MainWindow", "Ctrl+E", None, QtGui.QApplication.UnicodeUTF8))
         self.actionWork.setText(QtGui.QApplication.translate("MainWindow", "Work", None, QtGui.QApplication.UnicodeUTF8))
         self.actionHome.setText(QtGui.QApplication.translate("MainWindow", "Home", None, QtGui.QApplication.UnicodeUTF8))
         self.actionAdd_New_Context.setText(QtGui.QApplication.translate("MainWindow", "Add New Context", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionAbout_2.setText(QtGui.QApplication.translate("MainWindow", "About", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionAdd_New_Context.setToolTip(QtGui.QApplication.translate("MainWindow", "&Add New Context", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionAdd_New_Context.setShortcut(QtGui.QApplication.translate("MainWindow", "Ctrl+Shift+C", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionAbout_2.setText(QtGui.QApplication.translate("MainWindow", "&About", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionAbout_2.setShortcut(QtGui.QApplication.translate("MainWindow", "F1", None, QtGui.QApplication.UnicodeUTF8))
         self.actionRemove_Context.setText(QtGui.QApplication.translate("MainWindow", "Remove Context", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionSettings.setText(QtGui.QApplication.translate("MainWindow", "Settings", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionExport_tasklist.setText(QtGui.QApplication.translate("MainWindow", "Export tasklist", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionRemove_Context.setShortcut(QtGui.QApplication.translate("MainWindow", "Ctrl+Shift+X", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionSettings.setText(QtGui.QApplication.translate("MainWindow", "&Settings", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionSettings.setShortcut(QtGui.QApplication.translate("MainWindow", "Ctrl+Alt+P", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionExport_tasklist.setText(QtGui.QApplication.translate("MainWindow", "&Export tasklist", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionExport_tasklist.setShortcut(QtGui.QApplication.translate("MainWindow", "Ctrl+Shift+E", None, QtGui.QApplication.UnicodeUTF8))
 
 import res_rc
