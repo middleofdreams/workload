@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created: Wed Nov 12 19:00:46 2014
-#      by: pyside-uic 0.2.15 running on PySide 1.2.1
+# Created: Thu Nov 13 09:50:23 2014
+#      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -53,7 +53,7 @@ class Ui_MainWindow(object):
         self.taskList.setDragDropMode(QtGui.QAbstractItemView.DropOnly)
         self.taskList.setDefaultDropAction(QtCore.Qt.IgnoreAction)
         self.taskList.setAlternatingRowColors(True)
-        self.taskList.setSelectionMode(QtGui.QAbstractItemView.ContiguousSelection)
+        self.taskList.setSelectionMode(QtGui.QAbstractItemView.ExtendedSelection)
         self.taskList.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
         self.taskList.setTextElideMode(QtCore.Qt.ElideRight)
         self.taskList.setAutoExpandDelay(-1)
@@ -74,7 +74,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.taskList)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 190, 20))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 190, 19))
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)

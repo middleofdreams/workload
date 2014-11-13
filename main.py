@@ -344,11 +344,11 @@ class Workload(QtGui.QMainWindow):
             
     def exportTaskList(self):
         fname=QtGui.QFileDialog.getSaveFileName()#"Select file to save task list")
-        if fname:
+        if fname[0]:
             includeArchive=self.questionPopup("Exporting tasks", "Do you want to include completed tasks?")
             tasks=self.db.exportTasks(self.currentContext, includeArchive)
             from lib import importexport
-            importexport.export(tasks, fname[0],self.settings.getDateFormat())
+            importexport.export(tasks, fname[0],self.settings["dateFormat"])
             
     def about(self):
         f=open("about.html")
