@@ -27,11 +27,8 @@ class ShortcutsHandler(QThread):
             root = disp.screen().root
             root.change_attributes(event_mask = X.KeyPressMask)
             root.grab_key(65, X.ControlMask, 1,X.GrabModeAsync, X.GrabModeAsync)
-            i=0
             while True:
-                i+=1
                 event=root.display.next_event()
-                if event.detail==65:
-                    if i==2:    #workaround for sending 2 emits instead of 1...
+                if event.type==X.KeyPress:
+                    if event.detail==65:
                         self.show.emit()
-                        i=0
