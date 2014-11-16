@@ -348,7 +348,6 @@ class Workload(QtGui.QMainWindow):
 ###### MENU FUNCTIONS
 
     def importTasklist(self):
-        
         dialog=QtGui.QFileDialog(self, "Open", "", "CSV File (*.csv)")
         if dialog.exec_():
             filename=dialog.selectedFiles()

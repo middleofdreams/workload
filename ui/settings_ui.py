@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'settings.ui'
 #
-# Created: Thu Nov 13 14:52:21 2014
+# Created: Sat Nov 15 18:47:36 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,7 +12,7 @@ from PySide import QtCore, QtGui
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(419, 282)
+        Dialog.resize(419, 283)
         self.gridLayout_3 = QtGui.QGridLayout(Dialog)
         self.gridLayout_3.setObjectName("gridLayout_3")
         self.buttonBox = QtGui.QDialogButtonBox(Dialog)
@@ -131,6 +131,7 @@ class Ui_Dialog(object):
         self.horizontalLayout_12.setContentsMargins(2, 2, 2, 2)
         self.horizontalLayout_12.setObjectName("horizontalLayout_12")
         self.allFonts = QtGui.QListWidget(self.fontsTab)
+        self.allFonts.setSelectionMode(QtGui.QAbstractItemView.ExtendedSelection)
         self.allFonts.setObjectName("allFonts")
         self.horizontalLayout_12.addWidget(self.allFonts)
         self.verticalLayout = QtGui.QVBoxLayout()
@@ -141,12 +142,13 @@ class Ui_Dialog(object):
         self.addFonts.setMaximumSize(QtCore.QSize(14, 50))
         self.addFonts.setObjectName("addFonts")
         self.verticalLayout.addWidget(self.addFonts)
-        self.pushButton = QtGui.QPushButton(self.fontsTab)
-        self.pushButton.setMaximumSize(QtCore.QSize(14, 50))
-        self.pushButton.setObjectName("pushButton")
-        self.verticalLayout.addWidget(self.pushButton)
+        self.removeFonts = QtGui.QPushButton(self.fontsTab)
+        self.removeFonts.setMaximumSize(QtCore.QSize(14, 50))
+        self.removeFonts.setObjectName("removeFonts")
+        self.verticalLayout.addWidget(self.removeFonts)
         self.horizontalLayout_12.addLayout(self.verticalLayout)
         self.chosenFonts = QtGui.QListWidget(self.fontsTab)
+        self.chosenFonts.setSelectionMode(QtGui.QAbstractItemView.ExtendedSelection)
         self.chosenFonts.setObjectName("chosenFonts")
         self.horizontalLayout_12.addWidget(self.chosenFonts)
         self.gridLayout_5.addLayout(self.horizontalLayout_12, 1, 0, 1, 1)
@@ -318,7 +320,7 @@ class Ui_Dialog(object):
         self.notifyIntervalUnit.setItemText(1, QtGui.QApplication.translate("Dialog", "Minute(s)", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.notificationsTab), QtGui.QApplication.translate("Dialog", "Notifications", None, QtGui.QApplication.UnicodeUTF8))
         self.addFonts.setText(QtGui.QApplication.translate("Dialog", ">", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton.setText(QtGui.QApplication.translate("Dialog", "<", None, QtGui.QApplication.UnicodeUTF8))
+        self.removeFonts.setText(QtGui.QApplication.translate("Dialog", "<", None, QtGui.QApplication.UnicodeUTF8))
         self.label_13.setText(QtGui.QApplication.translate("Dialog", "Select Fonts you would like to use in program", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.fontsTab), QtGui.QApplication.translate("Dialog", "Fonts", None, QtGui.QApplication.UnicodeUTF8))
         self.label_9.setText(QtGui.QApplication.translate("Dialog", "Window frame", None, QtGui.QApplication.UnicodeUTF8))
