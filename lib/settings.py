@@ -11,7 +11,9 @@ class Settings(dict):
                          "defaultDueDateOn":True,
                          "defaultDueDateValue":"24",
                          "defaultDueDateUnit":"0",
-                         "chosenFonts":"Monospace"
+                         "chosenFonts":"Monospace",
+                         "mainWindowOpacity":"0.9",
+                         "windowBGcolor":"(219,237,255)"
         }
                             
         self.__booleans=["notifyCurrentContext","askOnExit","showNotifications","defaultDueDateOn"]

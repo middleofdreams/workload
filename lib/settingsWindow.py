@@ -11,13 +11,21 @@ class SettingsWindow(QtGui.QDialog):
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
         ## CONNECT SIGNALS
+        self.ui.windowBG.clicked.connect(self.getWindowBGcolor)
+#         self.ui.windowFrame.clicked.connect(self.updateStyle)
+#         self.ui.tasklistBG.clicked.connect(self.updateStyle)
+#         self.ui.tasklistFrame.clicked.connect(self.updateStyle)
+#         self.ui.tasklistFontColor.clicked.connect(self.updateStyle)
+#         self.ui.taskEditorBG.clicked.connect(self.updateStyle)
+        
         self.ui.notificationsOn.stateChanged.connect(self.notificationsSwitch)
         self.ui.defaultDueTimeOn.stateChanged.connect(self.defaultDueSwitch)
-
         self.ui.notifyIntervalUnit.currentIndexChanged.connect(lambda e:self.setSpinMax(e, self.ui.notifyIntervalSpin, [600, 60]))
         self.ui.notifyTimeUnit.currentIndexChanged.connect(lambda e:self.setSpinMax(e, self.ui.notifyTimeSpin, [600, 60]))
         self.ui.defaultDueTimeUnit.currentIndexChanged.connect(lambda e:self.setSpinMax(e, self.ui.defaultDueTimeSpin, [24, 60]))
-
+        self.ui.windowOpacity.valueChanged.connect(self.editWindowOpacity)
+        self.ui.tasklistFont.activated.connect(self.editTasklistFont)
+        self.ui.tasklistFontSize.valueChanged.connect(self.editTasklistFont)
         for i in self.parent.db.getContexts():
             self.ui.startupContext.addItem(i[1],i[0])
         
@@ -61,6 +69,11 @@ class SettingsWindow(QtGui.QDialog):
         self.ui.defaultDueTimeUnit.setCurrentIndex(int(self.settings["defaultDueDateUnit"]))
         
         self.loadFontList()
+        self.ui.windowOpacity.setValue(int(self.settings["mainWindowOpacity"]))
+        self.ui.taskEditorOpacity.setValue(int(self.settings["taskWindowOpacity"]))
+        currentIndex=self.ui.tasklistFont.findText(self.settings["tasklistFont"])
+        self.ui.tasklistFont.setCurrentIndex(currentIndex)
+        self.ui.tasklistFontSize.setValue(int(self.settings["tasklistFontSize"]))
         self.ui.addFonts.clicked.connect(self.addFonts)
         self.ui.removeFonts.clicked.connect(self.removeFonts)
         if self.exec_():
@@ -99,6 +112,43 @@ class SettingsWindow(QtGui.QDialog):
             self.settings["defaultDueDateUnit"]=self.ui.defaultDueTimeUnit.currentIndex()
             #save chosen fonts
             self.saveChosenFonts()
+            #save opacity settings
+            self.editWindowOpacity(save=True)
+            #save tasklist font settings
+            self.editTasklistFont(save=True)
+         
+    def getWindowBGcolor(self):
+        currentColor=self.settings["windowBGcolor"]
+        newColor=QtGui.QColorDialog.getColor(parent=self.parent)
+        if newColor!=QtGui.QColor():
+            self.setButtonColor(self.ui.windowBG, newColor.getRgb())
+            self.settings["windowBGcolor"]=str(newColor.getRgb())
+        else:
+            self.setButtonColor(self.ui.windowBG, currentColor)
+   
+    def setButtonColor(self,button,color):
+        style="QPushButton[Button=settings] {height: 15px; border: 1px solid rgba(0, 0, 0,190);  border-radius: 2px;border-style: outset; background-color:rgba"+str(color)+"}"
+        button.setProperty('Button','settings')    
+        button.setStyleSheet(style)
+        
+    
+    def editTasklistFont(self,save=False):
+        font=QtGui.QFont(self.ui.tasklistFont.currentText())
+        font.setPointSize(self.ui.tasklistFontSize.value())
+        self.parent.ui.taskList.setFont(font)
+        if save:
+            self.settings["tasklistFont"]=self.ui.tasklistFont.currentText()
+            self.settings["tasklistFontSize"]=self.ui.tasklistFontSize.value()
+    
+    def editWindowOpacity(self,save=False):
+        windowOpacity=self.ui.windowOpacity.value()
+        taskEditorOpacity=self.ui.taskEditorOpacity.value()
+        self.parent.setWindowOpacity(int(windowOpacity)/100)
+        
+        if save:
+            self.settings["mainWindowOpacity"]=windowOpacity
+            self.settings["taskWindowOpacity"]=taskEditorOpacity
+            
     def notificationsSwitch(self,e):
         if e==2:
             disable=False
@@ -120,6 +170,8 @@ class SettingsWindow(QtGui.QDialog):
         chosenFonts=self.settings["chosenFonts"].split("|")
         for i in chosenFonts:
             self.ui.chosenFonts.addItem(i)
+            self.ui.tasklistFont.addItem(i)
+            
             
         
     def addFonts(self):

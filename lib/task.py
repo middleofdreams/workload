@@ -16,19 +16,20 @@ class Task(QtGui.QDialog):
         self.parent=parent
         self.taskid=taskid
         self.moveIt=False        
-        self.ui.priority.valueChanged.connect(self.setPriorityText)
-        self.ui.dueOn.stateChanged.connect(self.setDueOn)
+        
+        
 #Text Editor
-        fontlist=['monofur','Century Schoolbook','Arial','Courier New','Times New Roman','Monospace']  #TODO: read font settings from database
-        FontDB=QtGui.QFontDatabase()
-        fontlist.sort()
+        fontlist=self.parent.settings["chosenFonts"].split("|")  #TODO: read font settings from database
         for i in fontlist:
-            if i in FontDB.families() or i=='Monospace' or 'Times New Roman':
+            if i in fontlist:
                 self.ui.fontComboBox.addItem(i,None)
         
         WindowStyle="QDialog{border: 2px solid rgba(55, 55, 55,222);  border-radius: 6px; background-color:rgba(255,255,230,250)}"
         self.setStyleSheet(WindowStyle)
-
+        windowOpacity=int(self.parent.settings["taskWindowOpacity"])/100
+        self.setWindowOpacity(float(windowOpacity))
+        self.ui.dueOn.stateChanged.connect(self.setDueOn)
+        self.ui.priority.valueChanged.connect(self.setPriorityText)
         self.ui.taskDescription.cursorPositionChanged.connect(self.toggleFont)
         self.ui.fontComboBox.activated.connect(self.setEditorFont)
         self.ui.fontSize.valueChanged.connect(self.setEditorFont)
@@ -43,7 +44,7 @@ class Task(QtGui.QDialog):
         self.setStylesForButtons(self.ui.currentTextColor, "(0,0,0,255)")
         self.ui.editorResetColor.clicked.connect(self.resetColors)
         self.ui.taskDescription.anchorClicked.connect(self.openHyperlink)
-        self.setWindowOpacity(0.7)
+        
         self.task=self.parent.db.getTaskDetails(taskid)
         if self.taskid:
             self.ui.label_6.hide()  #Hide closed date label

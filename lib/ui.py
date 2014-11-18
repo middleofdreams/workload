@@ -45,6 +45,12 @@ def connectSignals(main):
         
 def finalizeInit(main):
     '''show window and adjust it's size'''
+    windowOpacity=main.settings["mainWindowOpacity"]
+    main.setWindowOpacity(int(windowOpacity)/100)
+    font=QtGui.QFont(main.settings["tasklistFont"])
+    font.setPointSize(int(main.settings["tasklistFontSize"]))
+    main.ui.taskList.setFont(font)
+
     main.show()
     main.adjustHeight(downSize=True, init=False)
 
@@ -53,7 +59,7 @@ def finalizeInit(main):
     
 def setStyle(main):
     '''apply css style for window'''
-    windowBG="(219,237,255)"
+    windowBG="(170,213,255)"
     windowFrame="(85,170,255)"
     selectedMenuItemBG="(170,213,255)"
     
@@ -89,4 +95,6 @@ def setStyle(main):
     main.ui.menuTask.setStyleSheet(MenuStyle)
     main.ui.menuContext.setStyleSheet(MenuStyle)
     main.ui.statusbar.setStyleSheet(StatusbarStyle)
+    
+
         

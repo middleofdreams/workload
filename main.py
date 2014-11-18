@@ -173,8 +173,6 @@ class Workload(QtGui.QMainWindow):
                 "Do you really want to delete selected  task(s) ?"):
                 self.deleteTasks(tasks)
             self.adjustHeight(downSize=True)
-            
-
 
     def deleteTasks(self, tasks):
         for item in tasks:

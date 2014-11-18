@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'settings.ui'
 #
-# Created: Sat Nov 15 18:47:36 2014
+# Created: Tue Nov 18 20:09:21 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,7 +12,8 @@ from PySide import QtCore, QtGui
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(419, 283)
+        Dialog.resize(478, 288)
+        Dialog.setModal(False)
         self.gridLayout_3 = QtGui.QGridLayout(Dialog)
         self.gridLayout_3.setObjectName("gridLayout_3")
         self.buttonBox = QtGui.QDialogButtonBox(Dialog)
@@ -170,6 +171,7 @@ class Ui_Dialog(object):
         self.windowFrame.setMaximumSize(QtCore.QSize(20, 20))
         self.windowFrame.setAutoFillBackground(True)
         self.windowFrame.setText("")
+        self.windowFrame.setFlat(False)
         self.windowFrame.setObjectName("windowFrame")
         self.horizontalLayout_4.addWidget(self.windowFrame)
         self.gridLayout_4.addLayout(self.horizontalLayout_4, 1, 0, 1, 1)
@@ -195,6 +197,7 @@ class Ui_Dialog(object):
         self.taskEditorBG.setMaximumSize(QtCore.QSize(20, 20))
         self.taskEditorBG.setAutoFillBackground(True)
         self.taskEditorBG.setText("")
+        self.taskEditorBG.setFlat(False)
         self.taskEditorBG.setObjectName("taskEditorBG")
         self.horizontalLayout_10.addWidget(self.taskEditorBG)
         self.gridLayout_4.addLayout(self.horizontalLayout_10, 0, 1, 1, 1)
@@ -208,6 +211,7 @@ class Ui_Dialog(object):
         self.windowBG.setMaximumSize(QtCore.QSize(20, 20))
         self.windowBG.setAutoFillBackground(True)
         self.windowBG.setText("")
+        self.windowBG.setFlat(False)
         self.windowBG.setObjectName("windowBG")
         self.horizontalLayout_3.addWidget(self.windowBG)
         self.gridLayout_4.addLayout(self.horizontalLayout_3, 0, 0, 1, 1)
@@ -221,6 +225,7 @@ class Ui_Dialog(object):
         self.tasklistFrame.setMaximumSize(QtCore.QSize(20, 20))
         self.tasklistFrame.setAutoFillBackground(True)
         self.tasklistFrame.setText("")
+        self.tasklistFrame.setFlat(False)
         self.tasklistFrame.setObjectName("tasklistFrame")
         self.horizontalLayout_6.addWidget(self.tasklistFrame)
         self.gridLayout_4.addLayout(self.horizontalLayout_6, 3, 0, 1, 1)
@@ -229,18 +234,18 @@ class Ui_Dialog(object):
         self.label_15 = QtGui.QLabel(self.themeTab)
         self.label_15.setObjectName("label_15")
         self.horizontalLayout_9.addWidget(self.label_15)
-        self.taskEditorFontSize = QtGui.QSpinBox(self.themeTab)
-        self.taskEditorFontSize.setMaximumSize(QtCore.QSize(35, 16777215))
-        self.taskEditorFontSize.setMinimum(8)
-        self.taskEditorFontSize.setMaximum(24)
-        self.taskEditorFontSize.setProperty("value", 10)
-        self.taskEditorFontSize.setObjectName("taskEditorFontSize")
-        self.horizontalLayout_9.addWidget(self.taskEditorFontSize)
+        self.tasklistFontSize = QtGui.QSpinBox(self.themeTab)
+        self.tasklistFontSize.setMaximumSize(QtCore.QSize(35, 16777215))
+        self.tasklistFontSize.setMinimum(8)
+        self.tasklistFontSize.setMaximum(24)
+        self.tasklistFontSize.setProperty("value", 10)
+        self.tasklistFontSize.setObjectName("tasklistFontSize")
+        self.horizontalLayout_9.addWidget(self.tasklistFontSize)
         self.gridLayout_4.addLayout(self.horizontalLayout_9, 5, 1, 1, 1)
         self.horizontalLayout_2 = QtGui.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.label_12 = QtGui.QLabel(self.themeTab)
-        self.label_12.setMaximumSize(QtCore.QSize(64, 16777215))
+        self.label_12.setMaximumSize(QtCore.QSize(70, 16777215))
         self.label_12.setObjectName("label_12")
         self.horizontalLayout_2.addWidget(self.label_12)
         self.tasklistFont = QtGui.QComboBox(self.themeTab)
@@ -257,6 +262,7 @@ class Ui_Dialog(object):
         self.tasklistBG.setMaximumSize(QtCore.QSize(20, 20))
         self.tasklistBG.setAutoFillBackground(True)
         self.tasklistBG.setText("")
+        self.tasklistBG.setFlat(False)
         self.tasklistBG.setObjectName("tasklistBG")
         self.horizontalLayout_5.addWidget(self.tasklistBG)
         self.gridLayout_4.addLayout(self.horizontalLayout_5, 2, 0, 1, 1)
@@ -270,6 +276,7 @@ class Ui_Dialog(object):
         self.tasklistFontColor.setMaximumSize(QtCore.QSize(20, 20))
         self.tasklistFontColor.setAutoFillBackground(True)
         self.tasklistFontColor.setText("")
+        self.tasklistFontColor.setFlat(False)
         self.tasklistFontColor.setObjectName("tasklistFontColor")
         self.horizontalLayout_7.addWidget(self.tasklistFontColor)
         self.gridLayout_4.addLayout(self.horizontalLayout_7, 4, 0, 1, 1)
@@ -286,11 +293,15 @@ class Ui_Dialog(object):
         self.windowOpacity.setObjectName("windowOpacity")
         self.horizontalLayout_11.addWidget(self.windowOpacity)
         self.gridLayout_4.addLayout(self.horizontalLayout_11, 2, 1, 1, 1)
+        self.diableModality = QtGui.QCheckBox(self.themeTab)
+        self.diableModality.setLayoutDirection(QtCore.Qt.RightToLeft)
+        self.diableModality.setObjectName("diableModality")
+        self.gridLayout_4.addWidget(self.diableModality, 4, 1, 1, 1)
         self.tabWidget.addTab(self.themeTab, "")
         self.gridLayout_3.addWidget(self.tabWidget, 0, 0, 1, 1)
 
         self.retranslateUi(Dialog)
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(3)
         self.notifyIntervalUnit.setCurrentIndex(1)
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("accepted()"), Dialog.accept)
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("rejected()"), Dialog.reject)
@@ -333,5 +344,6 @@ class Ui_Dialog(object):
         self.label_10.setText(QtGui.QApplication.translate("Dialog", "Tasklist background", None, QtGui.QApplication.UnicodeUTF8))
         self.label_17.setText(QtGui.QApplication.translate("Dialog", "Tasklist font color", None, QtGui.QApplication.UnicodeUTF8))
         self.label_18.setText(QtGui.QApplication.translate("Dialog", "Main window opacity", None, QtGui.QApplication.UnicodeUTF8))
+        self.diableModality.setText(QtGui.QApplication.translate("Dialog", "Enable Window Modality", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.themeTab), QtGui.QApplication.translate("Dialog", "Theme", None, QtGui.QApplication.UnicodeUTF8))
 
