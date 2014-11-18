@@ -10,8 +10,10 @@ class Settings(dict):
                          "dateFormat":"%d-%m-%Y %H:%M",
                          "defaultDueDateOn":True,
                          "defaultDueDateValue":"24",
-                         "defaultDueDateUnit":"0"}
-        
+                         "defaultDueDateUnit":"0",
+                         "chosenFonts":"Monospace"
+        }
+                            
         self.__booleans=["notifyCurrentContext","askOnExit","showNotifications","defaultDueDateOn"]
         
     def __getitem__(self,key):

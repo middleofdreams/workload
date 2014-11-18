@@ -1,4 +1,4 @@
-from PySide import QtGui
+from PySide import QtCore,QtGui
 from ui.settings_ui import Ui_Dialog
 
 class SettingsWindow(QtGui.QDialog):
@@ -10,7 +10,6 @@ class SettingsWindow(QtGui.QDialog):
         QtGui.QDialog.__init__(self)
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
-        self.setStyleSheet(parent.WindowStyle)
         ## CONNECT SIGNALS
         self.ui.notificationsOn.stateChanged.connect(self.notificationsSwitch)
         self.ui.defaultDueTimeOn.stateChanged.connect(self.defaultDueSwitch)
@@ -61,6 +60,9 @@ class SettingsWindow(QtGui.QDialog):
         self.ui.defaultDueTimeSpin.setValue(int(self.settings["defaultDueDateValue"]))
         self.ui.defaultDueTimeUnit.setCurrentIndex(int(self.settings["defaultDueDateUnit"]))
         
+        self.loadFontList()
+        self.ui.addFonts.clicked.connect(self.addFonts)
+        self.ui.removeFonts.clicked.connect(self.removeFonts)
         if self.exec_():
             #save load context values
             r=self.ui.startupContext.currentIndex()
@@ -95,7 +97,8 @@ class SettingsWindow(QtGui.QDialog):
             self.settings["defaultDueDateOn"]=self.ui.defaultDueTimeOn.isChecked()
             self.settings["defaultDueDateValue"]=self.ui.defaultDueTimeSpin.value()
             self.settings["defaultDueDateUnit"]=self.ui.defaultDueTimeUnit.currentIndex()
-            
+            #save chosen fonts
+            self.saveChosenFonts()
     def notificationsSwitch(self,e):
         if e==2:
             disable=False
@@ -108,6 +111,38 @@ class SettingsWindow(QtGui.QDialog):
         self.ui.notifyTimeSpin.setDisabled(disable)
         self.ui.notifyTimeUnit.setDisabled(disable)
         
+    def loadFontList(self):
+        FontDB=QtGui.QFontDatabase()
+        allFonts=FontDB.families()
+        for i in allFonts:
+            self.ui.allFonts.addItem(i)
+        
+        chosenFonts=self.settings["chosenFonts"].split("|")
+        for i in chosenFonts:
+            self.ui.chosenFonts.addItem(i)
+            
+        
+    def addFonts(self):
+        selectedFonts=self.ui.allFonts.selectedItems()
+        for i in selectedFonts:
+            self.ui.chosenFonts.addItem(i.text())
+        
+        
+    def removeFonts(self):
+        selectedFonts=self.ui.chosenFonts.selectedItems()
+        for i in selectedFonts:
+            item=self.ui.chosenFonts.row(i)
+            self.ui.chosenFonts.takeItem(item)
+    
+    def saveChosenFonts(self):
+    
+        allItems=self.ui.chosenFonts.findItems("",QtCore.Qt.MatchFlags(QtCore.Qt.MatchContains|QtCore.Qt.MatchRecursive))
+        allFonts=[]
+        for i in allItems:
+            allFonts.append(i.text())
+        self.settings["chosenFonts"]="|".join(allFonts)
+    
+    
     def defaultDueSwitch(self,e):
         if e==2:
             disable=False

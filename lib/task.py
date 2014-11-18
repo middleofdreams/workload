@@ -43,7 +43,7 @@ class Task(QtGui.QDialog):
         self.setStylesForButtons(self.ui.currentTextColor, "(0,0,0,255)")
         self.ui.editorResetColor.clicked.connect(self.resetColors)
         self.ui.taskDescription.anchorClicked.connect(self.openHyperlink)
-        
+        self.setWindowOpacity(0.7)
         self.task=self.parent.db.getTaskDetails(taskid)
         if self.taskid:
             self.ui.label_6.hide()  #Hide closed date label
