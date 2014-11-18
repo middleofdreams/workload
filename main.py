@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 from PySide import QtGui,QtCore
 from ui.main_ui import Ui_MainWindow
-from db import DB
-from task import Task
-from tray import Trayicon
-from settingsWindow import SettingsWindow
-from settings import Settings
-from contexts import loadContexts,selectCurrentContext
-from archive import ArchiveWindow
+from lib.db import DB
+from lib.task import Task
+from lib.tray import Trayicon
+from lib.settings import Settings
+from lib.contexts import loadContexts,selectCurrentContext
+from lib.archive import ArchiveWindow
 from lib.timer import TaskReminder
 import res_rc
 import datetime
 from lib.helpers import timestamp
 from lib.shortcuts import ShortcutsHandler
+from lib.ui import guiSettings,connectSignals, finalizeInit,setStyle
 
 
 class Workload(QtGui.QMainWindow):
@@ -22,89 +22,37 @@ class Workload(QtGui.QMainWindow):
         QtGui.QMainWindow.__init__(self)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        #self.setStyleSheet('ui/style.qss')
-        windowBG="(219,237,255)"
-        windowFrame="(85,170,255)"
-        selectedMenuItemBG="(85, 170, 220,80)"
-        alternateListItem="(170,213,255,250)"
-        self.WindowStyle="QMainWindow{border:2px solid rgb"+windowFrame+";  border-radius: 2px;background-color:rgb"+windowBG+";}\
-        QMessageBox{background-color:rgb"+windowBG+"} QDialog{background-color:rgb"+windowBG+"}\
-        QTreeWidget{background-color:rgb"+windowBG+";alternate-background-color:rgb"+alternateListItem+"}"
-        StatusbarStyle="QStatusBar{background-color:transparent;border-top: 0px transparent; border-radius:2px;\
-        border-bottom: 3px solid rgb(85, 170, 255,150);border-left: 2px solid rgb(85, 170, 255,150);border-right: 2px solid rgb(85, 170, 255,150)}"
-        MenubarStyle="QMenuBar{padding:2px 2px;background-color:rgb"+windowBG+";border-top: 3px solid rgb(85, 170, 255,150);\
-        border-left:2px solid rgb(85, 170, 255,150);border-right: 2px solid rgb(85, 170, 255,150);border-radius: 2px}\
-        QMenuBar::item{padding: 2px 2px;background-color:transparent;color:rgb(55, 55, 55);border-radius:3px}"
-        MenuStyle="QMenu{background-color:rgb"+windowBG+";color:black;border:1px solid rgb"+windowFrame+";\
-        border-left:3px solid rgba(85, 170, 255,80);border-radius:3px} \
-        QMenu::item{padding: 2px 20px;background-color:rgb"+windowBG+";color:rgb(55, 55, 55)}\
-        QMenu::item::selected{background-color:rgb"+selectedMenuItemBG+";color:rgb(55, 55, 55);border:1px solid rgb(85, 170, 255,150);\
-        border-radius:3px}QMenu::separator{background-color:rgb"+windowFrame+";border 1px solid:rgb(55,55,55);height:2px;margin-left:5px;margin-right:5px;}"
-        #TaskList="QTreeWidget{background-color:rgb"+windowBG+";alternate-background-color:rgb"+alternateListItem+"}"
-        self.setStyleSheet(self.WindowStyle)
-        #self.ui.taskList.setStyleSheet(TaskList)
-        self.ui.menubar.setStyleSheet(MenubarStyle)
-        self.ui.menuFile.setStyleSheet(MenuStyle)
-        self.ui.menuTask.setStyleSheet(MenuStyle)
-        self.ui.menuContext.setStyleSheet(MenuStyle)
-        self.ui.statusbar.setStyleSheet(StatusbarStyle)
-        
-        #self.setWindowOpacity(0.8)
-        #GUI setting
-        self.setWindowFlags(QtCore.Qt.FramelessWindowHint
-                            | QtCore.Qt.WindowStaysOnTopHint)
-        
-        desktop = QtGui.QApplication.desktop()
-        if desktop.height() > 800:
-            self.move(10, (desktop.height() / 2) - (self.height()))
-        else:
-            self.move(15, 150)
-        self.resizeColumns()
-        
-        
-#CONNECT SIGNALS
-        self.ui.taskList.keyPressEvent = self.getKeysOnList
-        self.ui.taskInput.keyPressEvent= self.getKeysOnInput
-        self.ui.taskList.activated.connect(self.openTask)
-        sc = QtGui.QShortcut(self)
-        sc.setKey("Escape")
-        sc.activated.connect(self.closeEvent)
-        
-        sc = QtGui.QShortcut(self)
-        sc.setKey("Ctrl+R")
-        sc.activated.connect(self.adjustHeight)
 
-#CONNECT MENU ITEMS
-        self.ui.actionExit.triggered.connect(self.exit)
-        self.ui.actionImport_tasklist.triggered.connect(self.importTasklist)
-        self.ui.actionAbout_2.triggered.connect(self.about)
-        self.ui.actionAdd_new.triggered.connect(self.createTask)
-        self.ui.actionEdit.triggered.connect(self.openTask)
-        self.ui.actionDelete.triggered.connect(self.deleteSelectedTasks)
-        self.ui.actionComplete.triggered.connect(self.completeTasks)
-        self.ui.actionHistory.triggered.connect(self.showHistory)
-        self.ui.actionSettings.triggered.connect(lambda s=self:SettingsWindow(s))
-        self.ui.actionExport_tasklist.triggered.connect(self.exportTaskList)
-        self.ui.taskInput.dropEvent = self.dropTask
-# SET VARIABLES AND CONNECT TO DB:
+        #GUI setting
+        guiSettings(self)
+        connectSignals(self)
+        setStyle(self)
+
 
         self.taskOpened = False
         self.app = app
+        
+        
         self.db = DB(self)
+        
         self.settings=Settings(self)
         loadContexts(self)
         self.currentContext = self.settings.getInitContext()
         selectCurrentContext(self)
+        
         self.loadTasksList(init=True)  
         self.tray=Trayicon(self)
-        self.show()
         self.timer=TaskReminder(self)
-        self.adjustHeight(downSize=True, init=False)
-        self.ui.statusbar.showMessage("Hello! Ready to work ;-)",3600)
-        self.ui.taskList.drawRow=self.drawRow
-        
-        
         self.shortcuts=ShortcutsHandler(self)
+        
+        finalizeInit(self)
+        
+    def taskListFocusIn(self,e):
+        if e.reason()==QtCore.Qt.FocusReason.TabFocusReason:
+            try:
+                self.ui.taskList.setCurrentItem(self.ui.taskList.itemAt(0))
+            except:
+                pass
                
     def toggle(self):
         if self.isVisible():
@@ -203,9 +151,8 @@ class Workload(QtGui.QMainWindow):
             
             
     def taskAlreadyExistMsg(self,parent):
-        
         text="Task with same name already exist, choose another"
-        msg = QtGui.QMessageBox.information(parent, "Task name already exist", text, buttons=QtGui.QMessageBox.Ok )
+        QtGui.QMessageBox.information(parent, "Task name already exist", text, buttons=QtGui.QMessageBox.Ok )
         
     def loadTasksList(self, archived=False,init=False):
         self.ui.taskList.clear()

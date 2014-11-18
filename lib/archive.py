@@ -1,7 +1,7 @@
 from PySide import QtGui,QtCore
 from ui.archive_ui import Ui_Dialog
 import datetime
-from task import Task
+from .task import Task
 class ArchiveWindow(QtGui.QDialog):
 
     def __init__(self,parent):
@@ -11,6 +11,7 @@ class ArchiveWindow(QtGui.QDialog):
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
         contexts={}
+        self.setStyleSheet(parent.WindowStyle)
         for k,v in self.parent.contexts.items():
             contexts[v]=k
         for i in parent.db.getArchive():

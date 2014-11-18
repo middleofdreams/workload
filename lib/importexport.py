@@ -1,4 +1,4 @@
-import os,datetime,codecs
+import datetime,codecs
 def export(tasks,filename,dateformat):
     out="taskname,taskdescription,created,priority,due,closed,closedat"
     for i in tasks:
@@ -14,6 +14,7 @@ def export(tasks,filename,dateformat):
                 try:
                     attr=int(attr)
                 except:
+                    ln+=","
                     continue
                 d=datetime.datetime.fromtimestamp(int(attr))
                 attr=d.strftime(dateformat)

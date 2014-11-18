@@ -10,6 +10,7 @@ class SettingsWindow(QtGui.QDialog):
         QtGui.QDialog.__init__(self)
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
+        self.setStyleSheet(parent.WindowStyle)
         ## CONNECT SIGNALS
         self.ui.notificationsOn.stateChanged.connect(self.notificationsSwitch)
         self.ui.defaultDueTimeOn.stateChanged.connect(self.defaultDueSwitch)
