@@ -152,8 +152,9 @@ class Workload(QtGui.QMainWindow):
             
     def taskAlreadyExistMsg(self,parent):
         text="Task with same name already exist, choose another"
-        QtGui.QMessageBox.information(parent, "Task name already exist", text, buttons=QtGui.QMessageBox.Ok )
-        
+        msgWindow=QtGui.QMessageBox()
+        msgWindow.information(parent, "Task name already exist", text, buttons=QtGui.QMessageBox.Ok )
+    
     def loadTasksList(self, archived=False,init=False):
         self.ui.taskList.clear()
         for i in self.db.getTasks(self.currentContext):
@@ -235,7 +236,8 @@ class Workload(QtGui.QMainWindow):
 
     #ADDITIONAL FUNTIONS
     def questionPopup(self, title, msg):
-        resp = QtGui.QMessageBox.question(self, title, msg,
+        window=QtGui.QMessageBox()
+        resp = window.question(self, title, msg,
         buttons=QtGui.QMessageBox.Ok | QtGui.QMessageBox.Cancel)
         if resp == QtGui.QMessageBox.Ok:
             return True
@@ -272,7 +274,7 @@ class Workload(QtGui.QMainWindow):
         else:
             winheight=self.height()
             listheight=self.ui.taskList.height()
-        desiredHeight=22*len(tasks)+winheight-listheight+2
+        desiredHeight=22*len(tasks)+winheight-listheight+4
         if ( desiredHeight>self.height() or downSize ) and desiredHeight<QtGui.QApplication.desktop().height():
             self.resize(self.width(),desiredHeight)
 
@@ -284,7 +286,6 @@ class Workload(QtGui.QMainWindow):
 ###### MENU FUNCTIONS
 
     def importTasklist(self):
-        
         dialog=QtGui.QFileDialog(self, "Open", "", "CSV File (*.csv)")
         if dialog.exec_():
             filename=dialog.selectedFiles()
