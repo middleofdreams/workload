@@ -323,7 +323,8 @@ class Workload(QtGui.QMainWindow):
     def showHistory(self):
         ArchiveWindow(self)
                 
-
+    def hoyKeyError(self):
+        QtGui.QMessageBox.critical(self,"Error","Unable to register global shortcut")
 
 if __name__ == "__main__":
     import sys

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'settings.ui'
 #
-# Created: Tue Nov 18 20:09:21 2014
+# Created: Wed Nov 19 13:07:44 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -298,10 +298,23 @@ class Ui_Dialog(object):
         self.diableModality.setObjectName("diableModality")
         self.gridLayout_4.addWidget(self.diableModality, 4, 1, 1, 1)
         self.tabWidget.addTab(self.themeTab, "")
+        self.shortcutsTab = QtGui.QWidget()
+        self.shortcutsTab.setObjectName("shortcutsTab")
+        self.formLayout_2 = QtGui.QFormLayout(self.shortcutsTab)
+        self.formLayout_2.setFieldGrowthPolicy(QtGui.QFormLayout.AllNonFixedFieldsGrow)
+        self.formLayout_2.setObjectName("formLayout_2")
+        self.label_19 = QtGui.QLabel(self.shortcutsTab)
+        self.label_19.setObjectName("label_19")
+        self.formLayout_2.setWidget(0, QtGui.QFormLayout.LabelRole, self.label_19)
+        self.mainWindowToggleKey = QtGui.QLineEdit(self.shortcutsTab)
+        self.mainWindowToggleKey.setCursor(QtCore.Qt.IBeamCursor)
+        self.mainWindowToggleKey.setObjectName("mainWindowToggleKey")
+        self.formLayout_2.setWidget(0, QtGui.QFormLayout.FieldRole, self.mainWindowToggleKey)
+        self.tabWidget.addTab(self.shortcutsTab, "")
         self.gridLayout_3.addWidget(self.tabWidget, 0, 0, 1, 1)
 
         self.retranslateUi(Dialog)
-        self.tabWidget.setCurrentIndex(3)
+        self.tabWidget.setCurrentIndex(0)
         self.notifyIntervalUnit.setCurrentIndex(1)
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("accepted()"), Dialog.accept)
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("rejected()"), Dialog.reject)
@@ -346,4 +359,6 @@ class Ui_Dialog(object):
         self.label_18.setText(QtGui.QApplication.translate("Dialog", "Main window opacity", None, QtGui.QApplication.UnicodeUTF8))
         self.diableModality.setText(QtGui.QApplication.translate("Dialog", "Enable Window Modality", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.themeTab), QtGui.QApplication.translate("Dialog", "Theme", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_19.setText(QtGui.QApplication.translate("Dialog", "Toggle main window", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.shortcutsTab), QtGui.QApplication.translate("Dialog", "Shortcuts", None, QtGui.QApplication.UnicodeUTF8))
 

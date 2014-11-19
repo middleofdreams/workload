@@ -74,6 +74,14 @@ class SettingsWindow(QtGui.QDialog):
         self.ui.tasklistFontSize.setValue(int(self.settings["tasklistFontSize"]))
         self.ui.addFonts.clicked.connect(self.addFonts)
         self.ui.removeFonts.clicked.connect(self.removeFonts)
+        
+        self.ui.mainWindowToggleKey.setText(self.settings['keyMainWindowToggle'])
+        
+        
+        #kill shortcut handler to be able to grab new shortcut:
+        self.parent.shortcuts.terminate()
+        self.ui.mainWindowToggleKey.keyPressEvent=self.grabToggleMainWindowKey
+        
         if self.exec_():
             #save load context values
             r=self.ui.startupContext.currentIndex()
@@ -116,7 +124,8 @@ class SettingsWindow(QtGui.QDialog):
             self.editTasklistFont(save=True)
         else:
             self.parent.setWindowOpacity(int(self.settings["mainWindowOpacity"])/100)
-
+            
+        self.parent.shortcuts.start()
          
     def editStyle(self,button,setting):
         print(button,setting)
@@ -211,4 +220,22 @@ class SettingsWindow(QtGui.QDialog):
         
     def setSpinMax(self,e,spinobject,maxValues):
         spinobject.setMaximum(maxValues[e])
+        
+    def grabToggleMainWindowKey(self, e):
+        if self.ui.mainWindowToggleKey.hasFocus():
+            if e.text()!="":
+                k=""
+                if QtCore.Qt.ControlModifier & e.modifiers():
+                    k+="Ctrl + "
+                if QtCore.Qt.ShiftModifier & e.modifiers():
+                    k+="Shift + "
+                if QtCore.Qt.AltModifier & e.modifiers():
+                    k+="Alt + "
+                if k!="":
+                    #ne=QtGui.QKeyEvent(e.type(),e.key(),QtCore.Qt.NoModifier)
+                    print(e.text())
+                    
+                    #k+=str(QtCore.QString().number(e.key()))
+                    self.ui.mainWindowToggleKey.setText(k)
+        
             

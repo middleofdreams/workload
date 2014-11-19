@@ -19,6 +19,7 @@ class Settings(dict):
                          "windowFrame":"(85,170,255)",
                          "tasklistBG":"(219,237,255)",
                          "tasklistFrame":"(85,170,255)",
+                         "keyMainWindowToggle":"Ctrl+Space"
         }
                             
         self.__booleans=["notifyCurrentContext","askOnExit","showNotifications","defaultDueDateOn"]
