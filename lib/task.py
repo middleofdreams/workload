@@ -23,8 +23,9 @@ class Task(QtGui.QDialog):
         for i in fontlist:
             if i in fontlist:
                 self.ui.fontComboBox.addItem(i,None)
-        
-        WindowStyle="QDialog{border: 2px solid rgba(55, 55, 55,222);  border-radius: 6px; background-color:rgba(255,255,230,250)}"
+        windowColor=self.parent.settings["taskEditorBG"]
+        frameColor=self.parent.settings["taskEditorFrame"]
+        WindowStyle="QDialog{border: 2px solid rgba"+frameColor+";  border-radius: 6px; background-color:rgba"+windowColor+"}"
         self.setStyleSheet(WindowStyle)
         windowOpacity=int(self.parent.settings["taskWindowOpacity"])/100
         self.setWindowOpacity(float(windowOpacity))
@@ -102,7 +103,7 @@ class Task(QtGui.QDialog):
             self.ui.dueDate.setDisabled(True)
         
     def setStylesForButtons(self,setButton,color):
-        styleSheet="QPushButton[Button=color] {height: 15px; border: 1px solid rgba(0, 0, 0,190);  border-radius: 2px;border-style: outset; background-color:rgba"+str(color)+"}"
+        styleSheet="QPushButton[Button=color] {border: 1px solid rgba(0, 0, 0,190);  border-radius: 2px;border-style: outset; background-color:rgba"+str(color)+"}"
         setButton.setStyleSheet(styleSheet)
         setButton.setProperty('Button','color')
         

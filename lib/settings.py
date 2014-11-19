@@ -14,11 +14,17 @@ class Settings(dict):
                          "chosenFonts":"Monospace",
                          "mainWindowOpacity":"90",
                          "taskWindowOpacity":"90",
+                         "tasklistFont":"Monospace",
                          "tasklistFontSize":"8",
+                         "tasklistFontColor":"(0,0,0,255)",
                          "windowBG":"(219,237,255)",
+                         "taskEditorBG":"(219,237,255)",
+                         "taskEditorFrame":"(0,0,0)",
                          "windowFrame":"(85,170,255)",
                          "tasklistBG":"(219,237,255)",
                          "tasklistFrame":"(85,170,255)",
+                         "alternateListItem":"(170,213,255)",
+                         "selectedMenuItem":"(170,213,255)",
                          "keyMainWindowToggle":"Ctrl+Space"
         }
                             
