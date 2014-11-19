@@ -15,7 +15,8 @@ class Settings(dict):
                          "mainWindowOpacity":"90",
                          "taskWindowOpacity":"90",
                          "tasklistFontSize":"8",
-                         "windowBGcolor":"(219,237,255)"
+                         "windowBGcolor":"(219,237,255)",
+                         "keyMainWindowToggle":"Ctrl+Space"
         }
                             
         self.__booleans=["notifyCurrentContext","askOnExit","showNotifications","defaultDueDateOn"]
