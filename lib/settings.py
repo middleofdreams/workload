@@ -12,7 +12,9 @@ class Settings(dict):
                          "defaultDueDateValue":"24",
                          "defaultDueDateUnit":"0",
                          "chosenFonts":"Monospace",
-                         "mainWindowOpacity":"0.9",
+                         "mainWindowOpacity":"90",
+                         "taskWindowOpacity":"90",
+                         "tasklistFontSize":"8",
                          "windowBGcolor":"(219,237,255)"
         }
                             
