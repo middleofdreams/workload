@@ -22,20 +22,16 @@ class Workload(QtGui.QMainWindow):
         QtGui.QMainWindow.__init__(self)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-
+        self.db = DB(self)
+        self.settings=Settings(self)
+        
         #GUI setting
         guiSettings(self)
         connectSignals(self)
         setStyle(self)
 
-
         self.taskOpened = False
         self.app = app
-        
-        
-        self.db = DB(self)
-        
-        self.settings=Settings(self)
         loadContexts(self)
         self.currentContext = self.settings.getInitContext()
         selectCurrentContext(self)

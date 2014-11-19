@@ -59,12 +59,12 @@ def finalizeInit(main):
     
 def setStyle(main):
     '''apply css style for window'''
-    windowBG="(170,213,255)"
-    windowFrame="(85,170,255)"
+    windowBG=main.settings["windowBG"]
+    windowFrame=main.settings["windowFrame"]
     selectedMenuItemBG="(170,213,255)"
     
-    taskListBG="(219,237,255)"
-    taskListFrame="(85,170,255)"
+    taskListBG=main.settings["tasklistBG"]
+    taskListFrame=main.settings["tasklistFrame"]
     alternateListItem="(170,213,255)"
     
     WindowStyle="QMainWindow{border:2px solid rgb"+windowFrame+"; border-radius: 2px;background-color:rgb"+windowBG+";}\

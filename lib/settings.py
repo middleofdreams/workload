@@ -15,7 +15,10 @@ class Settings(dict):
                          "mainWindowOpacity":"90",
                          "taskWindowOpacity":"90",
                          "tasklistFontSize":"8",
-                         "windowBGcolor":"(219,237,255)"
+                         "windowBG":"(219,237,255)",
+                         "windowFrame":"(85,170,255)",
+                         "tasklistBG":"(219,237,255)",
+                         "tasklistFrame":"(85,170,255)",
         }
                             
         self.__booleans=["notifyCurrentContext","askOnExit","showNotifications","defaultDueDateOn"]

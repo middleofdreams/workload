@@ -11,12 +11,10 @@ class SettingsWindow(QtGui.QDialog):
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
         ## CONNECT SIGNALS
-        self.ui.windowBG.clicked.connect(self.getWindowBGcolor)
-#         self.ui.windowFrame.clicked.connect(self.updateStyle)
-#         self.ui.tasklistBG.clicked.connect(self.updateStyle)
-#         self.ui.tasklistFrame.clicked.connect(self.updateStyle)
-#         self.ui.tasklistFontColor.clicked.connect(self.updateStyle)
-#         self.ui.taskEditorBG.clicked.connect(self.updateStyle)
+        colorButtons={"windowBG":self.ui.windowBG,"windowFrame":self.ui.windowFrame,"tasklistBG":self.ui.tasklistBG,"tasklistFrame":self.ui.tasklistFrame,"tasklistFontColor":self.ui.tasklistFontColor,"taskEditorBG":self.ui.taskEditorBG}
+        for k,v in colorButtons.items():
+            v.clicked.connect(lambda button=v,setting=k :self.editStyle(button,setting))
+
         
         self.ui.notificationsOn.stateChanged.connect(self.notificationsSwitch)
         self.ui.defaultDueTimeOn.stateChanged.connect(self.defaultDueSwitch)
@@ -120,14 +118,17 @@ class SettingsWindow(QtGui.QDialog):
             self.parent.setWindowOpacity(int(self.settings["mainWindowOpacity"])/100)
 
          
-    def getWindowBGcolor(self):
-        currentColor=self.settings["windowBGcolor"]
+    def editStyle(self,button,setting):
+        print(button,setting)
+        currentColor=button.palette().button().color()
         newColor=QtGui.QColorDialog.getColor(parent=self.parent)
         if newColor!=QtGui.QColor():
-            self.setButtonColor(self.ui.windowBG, newColor.getRgb())
-            self.settings["windowBGcolor"]=str(newColor.getRgb())
+            self.setButtonColor(button, newColor.getRgb())
+            print("picked color",str(newColor.getRgb()))
+            self.settings[setting]=str(newColor.getRgb())
+            
         else:
-            self.setButtonColor(self.ui.windowBG, currentColor)
+            self.setButtonColor(button, currentColor)
    
     def setButtonColor(self,button,color):
         style="QPushButton[Button=settings] {height: 15px; border: 1px solid rgba(0, 0, 0,190);  border-radius: 2px;border-style: outset; background-color:rgba"+str(color)+"}"
@@ -153,6 +154,7 @@ class SettingsWindow(QtGui.QDialog):
         if save:
             self.settings["mainWindowOpacity"]=windowOpacity
             self.settings["taskWindowOpacity"]=taskEditorOpacity
+            
     def notificationsSwitch(self,e):
         if e==2:
             disable=False
