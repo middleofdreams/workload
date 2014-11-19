@@ -116,6 +116,9 @@ class SettingsWindow(QtGui.QDialog):
             self.editWindowOpacity(save=True)
             #save tasklist font settings
             self.editTasklistFont(save=True)
+        else:
+            self.parent.setWindowOpacity(int(self.settings["mainWindowOpacity"])/100)
+
          
     def getWindowBGcolor(self):
         currentColor=self.settings["windowBGcolor"]
@@ -140,15 +143,16 @@ class SettingsWindow(QtGui.QDialog):
             self.settings["tasklistFont"]=self.ui.tasklistFont.currentText()
             self.settings["tasklistFontSize"]=self.ui.tasklistFontSize.value()
     
-    def editWindowOpacity(self,save=False):
-        windowOpacity=self.ui.windowOpacity.value()
+    def editWindowOpacity(self,v=None,save=False):
+        if not v:
+            windowOpacity=self.ui.windowOpacity.value()
+        else:
+            windowOpacity=v
         taskEditorOpacity=self.ui.taskEditorOpacity.value()
         self.parent.setWindowOpacity(int(windowOpacity)/100)
-        
         if save:
             self.settings["mainWindowOpacity"]=windowOpacity
             self.settings["taskWindowOpacity"]=taskEditorOpacity
-            
     def notificationsSwitch(self,e):
         if e==2:
             disable=False
