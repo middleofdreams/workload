@@ -108,7 +108,10 @@ class DB(object):
         
         
     def getContexts(self):
-        return self.c.execute("SELECT rowid,contextname from contexts order by rowid ASC")
+        contexts=[]
+        for i in self.c.execute("SELECT rowid,contextname from contexts order by rowid ASC"):
+            contexts.append(i)
+        return contexts
     
     def getSetting(self,key):
         t=(str(key),)
