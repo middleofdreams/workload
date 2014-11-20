@@ -12,13 +12,13 @@ class SettingsWindow(QtGui.QDialog):
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint | QtCore.Qt.WindowStaysOnTopHint)
         self.ui.setupUi(self)
         changeStyle(self)
-        
+        self.currentSettings={}
         ## CONNECT SIGNALS
-        colorButtons={"windowBG":self.ui.windowBG,"windowFrame":self.ui.windowFrame,"tasklistBG":self.ui.tasklistBG,
+        self.colorButtons={"windowBG":self.ui.windowBG,"windowFrame":self.ui.windowFrame,"tasklistBG":self.ui.tasklistBG,
                       "tasklistFrame":self.ui.tasklistFrame,"tasklistFontColor":self.ui.tasklistFontColor,
                       "taskEditorBG":self.ui.taskEditorBG,"selectedMenuItem":self.ui.selectedMenuItem,
                       "alternateListItem":self.ui.alternateTasklistBG,"taskEditorFrame":self.ui.taskEditorFrame}
-        for k,v in colorButtons.items():
+        for k,v in self.colorButtons.items():
             v.clicked.connect(lambda button=v,setting=k :self.editStyle(button,setting))
             self.setButtonColor(v, self.settings[k])
             
@@ -30,6 +30,7 @@ class SettingsWindow(QtGui.QDialog):
         self.ui.windowOpacity.valueChanged.connect(self.editWindowOpacity)
         self.ui.tasklistFont.activated.connect(self.editTasklistFont)
         self.ui.tasklistFontSize.valueChanged.connect(self.editTasklistFont)
+        self.ui.resetToDefaults.clicked.connect(self.resetStyle)
         for i in self.parent.db.getContexts():
             self.ui.startupContext.addItem(i[1],i[0])
         
@@ -127,27 +128,43 @@ class SettingsWindow(QtGui.QDialog):
             self.editWindowOpacity(save=True)
             #save tasklist font settings
             self.editTasklistFont(save=True)
-            
+            self.saveStyle()
+
             key=self.ui.mainWindowToggleKey.text()
             self.settings['keyMainWindowToggle']=key
             self.parent.shortcuts.key=key
         else:
             self.parent.setWindowOpacity(int(self.settings["mainWindowOpacity"])/100)
+            font=QtGui.QFont(self.settings["tasklistFont"]).setPointSize(int(self.settings["tasklistFontSize"]))
+            self.parent.ui.taskList.setFont(font)
+            changeStyle(self.parent)
             
         self.parent.shortcuts.start()
-
+    
+    def saveStyle(self):
+        for setting,button in self.colorButtons.items():
+            color=button.palette().button().color().getRgb()
+            self.settings[setting]=str(color)    
             
+    def resetStyle(self):
+        for setting,button in self.colorButtons.items():
+            self.setButtonColor(button, self.settings.defaults[setting])
+            self.settings[setting]=self.settings.defaults[setting]
+        changeStyle(self.parent)
+        changeStyle(self)
+          
     def editStyle(self,button,setting):
-        currentColor=self.settings[setting]
+        currentColor=button.palette().button().color()
         newColor=QtGui.QColorDialog.getColor(parent=self)
         if newColor!=QtGui.QColor():
             self.setButtonColor(button, newColor.getRgb())
-            self.settings[setting]=str(newColor.getRgb())
+            self.currentSettings[setting]=str(newColor.getRgb())
+            changeStyle(self.parent,self.currentSettings)
+            changeStyle(self,self.currentSettings)
         else:
-            self.setButtonColor(button, currentColor)
+            self.setButtonColor(button, currentColor.getRgb())
         
-        changeStyle(self.parent)
-        changeStyle(self)
+        
                 
     def setButtonColor(self,button,color):
         style="QPushButton[Button=settings] { border: 1px solid rgba(0, 0, 0,190);  border-radius: 2px;border-style: outset; background-color:rgba"+str(color)+"}"
