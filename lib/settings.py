@@ -25,7 +25,7 @@ class Settings(dict):
                          "tasklistFrame":"(85,170,255)",
                          "alternateListItem":"(170,213,255)",
                          "selectedMenuItem":"(170,213,255)",
-                         "keyMainWindowToggle":"Ctrl+Space"
+                         "keyMainWindowToggle":"Ctrl + Space"
         }
                             
         self.__booleans=["notifyCurrentContext","askOnExit","showNotifications","defaultDueDateOn"]

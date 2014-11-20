@@ -62,7 +62,7 @@ def removeContext(self):
             return False
         if self.questionPopup("Remove context", "Do you really want to remove active context?"):
             self.db.deleteContext(self.currentContext)
-            self.currentContext=self.db.getContexts()[0][0] #TODO: change it to first available
+            self.currentContext=self.db.getContexts()[0][0] 
             self.loadTasksList()
             loadContexts(self)
             selectCurrentContext(self)
