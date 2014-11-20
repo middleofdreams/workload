@@ -126,6 +126,10 @@ class SettingsWindow(QtGui.QDialog):
             self.editWindowOpacity(save=True)
             #save tasklist font settings
             self.editTasklistFont(save=True)
+            
+            key=self.ui.mainWindowToggleKey.text()
+            self.settings['keyMainWindowToggle']=key
+            self.parent.shortcuts.key=key
         else:
             self.parent.setWindowOpacity(int(self.settings["mainWindowOpacity"])/100)
             
@@ -234,6 +238,8 @@ class SettingsWindow(QtGui.QDialog):
                     k+="Ctrl + "
                 if QtCore.Qt.ShiftModifier & e.modifiers():
                     k+="Shift + "
+                if QtCore.Qt.MetaModifier & e.modifiers():
+                    k+="Win +" 
                 if QtCore.Qt.AltModifier & e.modifiers():
                     k+="Alt + "
                 if k!="":
