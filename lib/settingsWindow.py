@@ -1,6 +1,6 @@
 from PySide import QtCore,QtGui
 from ui.settings_ui import Ui_Dialog
-
+from .GuiManager import changeStyle
 class SettingsWindow(QtGui.QDialog):
 
     def __init__(self,parent):
@@ -10,14 +10,16 @@ class SettingsWindow(QtGui.QDialog):
         QtGui.QDialog.__init__(self)
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
-        ## CONNECT SIGNALS
-        self.ui.windowBG.clicked.connect(self.getWindowBGcolor)
-#         self.ui.windowFrame.clicked.connect(self.updateStyle)
-#         self.ui.tasklistBG.clicked.connect(self.updateStyle)
-#         self.ui.tasklistFrame.clicked.connect(self.updateStyle)
-#         self.ui.tasklistFontColor.clicked.connect(self.updateStyle)
-#         self.ui.taskEditorBG.clicked.connect(self.updateStyle)
         
+        ## CONNECT SIGNALS
+        colorButtons={"windowBG":self.ui.windowBG,"windowFrame":self.ui.windowFrame,"tasklistBG":self.ui.tasklistBG,
+                      "tasklistFrame":self.ui.tasklistFrame,"tasklistFontColor":self.ui.tasklistFontColor,
+                      "taskEditorBG":self.ui.taskEditorBG,"selectedMenuItem":self.ui.selectedMenuItem,
+                      "alternateListItem":self.ui.alternateTasklistBG,"taskEditorFrame":self.ui.taskEditorFrame}
+        for k,v in colorButtons.items():
+            v.clicked.connect(lambda button=v,setting=k :self.editStyle(button,setting))
+            self.setButtonColor(v, self.settings[k])
+            
         self.ui.notificationsOn.stateChanged.connect(self.notificationsSwitch)
         self.ui.defaultDueTimeOn.stateChanged.connect(self.defaultDueSwitch)
         self.ui.notifyIntervalUnit.currentIndexChanged.connect(lambda e:self.setSpinMax(e, self.ui.notifyIntervalSpin, [600, 60]))
@@ -76,7 +78,6 @@ class SettingsWindow(QtGui.QDialog):
         self.ui.tasklistFontSize.setValue(int(self.settings["tasklistFontSize"]))
         self.ui.addFonts.clicked.connect(self.addFonts)
         self.ui.removeFonts.clicked.connect(self.removeFonts)
-        
         self.ui.mainWindowToggleKey.setText(self.settings['keyMainWindowToggle'])
         
         
@@ -129,39 +130,44 @@ class SettingsWindow(QtGui.QDialog):
             
         self.parent.shortcuts.start()
          
-    def getWindowBGcolor(self):
-        currentColor=self.settings["windowBGcolor"]
-        newColor=QtGui.QColorDialog.getColor(parent=self.parent)
+    def editStyle(self,button,setting):
+        currentColor=self.settings[setting]
+        newColor=QtGui.QColorDialog.getColor(parent=self)
         if newColor!=QtGui.QColor():
-            self.setButtonColor(self.ui.windowBG, newColor.getRgb())
-            self.settings["windowBGcolor"]=str(newColor.getRgb())
+            self.setButtonColor(button, newColor.getRgb())
+            self.settings[setting]=str(newColor.getRgb())
         else:
-            self.setButtonColor(self.ui.windowBG, currentColor)
-   
+            self.setButtonColor(button, currentColor)
+        
+        changeStyle(self.parent)
+        changeStyle(self)
+                
     def setButtonColor(self,button,color):
-        style="QPushButton[Button=settings] {height: 15px; border: 1px solid rgba(0, 0, 0,190);  border-radius: 2px;border-style: outset; background-color:rgba"+str(color)+"}"
+        style="QPushButton[Button=settings] { border: 1px solid rgba(0, 0, 0,190);  border-radius: 2px;border-style: outset; background-color:rgba"+str(color)+"}"
         button.setProperty('Button','settings')    
         button.setStyleSheet(style)
         
     
-    def editTasklistFont(self,save=False):
+    def editTasklistFont(self,v=None,save=False):
         font=QtGui.QFont(self.ui.tasklistFont.currentText())
         font.setPointSize(self.ui.tasklistFontSize.value())
         self.parent.ui.taskList.setFont(font)
         if save:
             self.settings["tasklistFont"]=self.ui.tasklistFont.currentText()
             self.settings["tasklistFontSize"]=self.ui.tasklistFontSize.value()
-    
+        
     def editWindowOpacity(self,v=None,save=False):
         if not v:
             windowOpacity=self.ui.windowOpacity.value()
+            taskEditorOpacity=self.ui.taskEditorOpacity.value()
         else:
             windowOpacity=v
-        taskEditorOpacity=self.ui.taskEditorOpacity.value()
+            taskEditorOpacity=None
         self.parent.setWindowOpacity(int(windowOpacity)/100)
         if save:
             self.settings["mainWindowOpacity"]=windowOpacity
             self.settings["taskWindowOpacity"]=taskEditorOpacity
+            
     def notificationsSwitch(self,e):
         if e==2:
             disable=False

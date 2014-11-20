@@ -12,7 +12,7 @@ import res_rc
 import datetime
 from lib.helpers import timestamp
 from lib.shortcuts import ShortcutsHandler
-from lib.ui import guiSettings,connectSignals, finalizeInit,setStyle
+from lib.GuiManager import guiSettings,connectSignals, finalizeInit,changeStyle
 
 
 class Workload(QtGui.QMainWindow):
@@ -22,20 +22,16 @@ class Workload(QtGui.QMainWindow):
         QtGui.QMainWindow.__init__(self)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-
+        self.db = DB(self)
+        self.settings=Settings(self)
+        
         #GUI setting
         guiSettings(self)
         connectSignals(self)
-        setStyle(self)
-
+        changeStyle(self)
 
         self.taskOpened = False
         self.app = app
-        
-        
-        self.db = DB(self)
-        
-        self.settings=Settings(self)
         loadContexts(self)
         self.currentContext = self.settings.getInitContext()
         selectCurrentContext(self)

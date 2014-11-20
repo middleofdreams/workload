@@ -57,44 +57,47 @@ def finalizeInit(main):
     main.ui.statusbar.showMessage("Hello! Ready to work ;-)",3600)
     
     
-def setStyle(main):
+def changeStyle(main):
     '''apply css style for window'''
-    windowBG="(170,213,255)"
-    windowFrame="(85,170,255)"
-    selectedMenuItemBG="(170,213,255)"
-    
-    taskListBG="(219,237,255)"
-    taskListFrame="(85,170,255)"
-    alternateListItem="(170,213,255)"
-    
-    WindowStyle="QMainWindow{border:2px solid rgb"+windowFrame+"; border-radius: 2px;background-color:rgb"+windowBG+";}\
-    QMessageBox{background-color:rgb"+windowBG+"}"
-    selectedMenuItemBG="(85, 170, 220,80)"
-    alternateListItem="(170,213,255,250)"
-    main.WindowStyle="QMainWindow{border:2px solid rgb"+windowFrame+";  border-radius: 2px;background-color:rgb"+windowBG+";}\
-    QMessageBox{background-color:rgb"+windowBG+"} QDialog{background-color:rgb"+windowBG+"}\
-    QTreeWidget{background-color:rgb"+windowBG+";alternate-background-color:rgb"+alternateListItem+"}"
+    font=QtGui.QFont(main.settings["tasklistFont"])
+    fontColor=main.settings["tasklistFontColor"]
+    windowBG=main.settings["windowBG"]
+    windowFrame=main.settings["windowFrame"]
+    selectedMenuItemBG=main.settings["selectedMenuItem"]
+    tasklistBG=main.settings["tasklistBG"]
+    tasklistFrame=main.settings["tasklistFrame"]
+    alternateListItem=main.settings["alternateListItem"]
+
+    main.WindowStyle="QMainWindow{border:2px solid rgba"+windowFrame+";  \
+    background-color:rgba"+windowBG+";}\
+    QMessageBox{background-color:rgba"+windowBG+"} QDialog{background-color:rgba"+windowBG+"}\
+    QTreeWidget{alternate-background-color:rgba"+alternateListItem+";background-color:rgba"+tasklistBG+"\
+    ;border: 1px solid rgba"+tasklistFrame+";color:rgba"+fontColor+"}"
     
     StatusbarStyle="QStatusBar{background-color:transparent;border-top: 0px transparent; border-radius:2px;\
-    border-bottom: 3px solid rgb(85, 170, 255,150);border-left: 2px solid rgb(85, 170, 255,150);border-right: 2px solid rgb(85, 170, 255,150)}"
+    border-bottom: 3px solid rgba"+windowFrame+";border-left: 2px solid rgba"+windowFrame+";\
+    border-right: 2px solid rgba"+windowFrame+"}"
     
-    MenubarStyle="QMenuBar{padding:2px 2px;background-color:rgb"+windowBG+";border-top: 3px solid rgb(85, 170, 255,150);\
-    border-left:2px solid rgb(85, 170, 255,150);border-right: 2px solid rgb(85, 170, 255,150);border-radius: 2px}\
-    QMenuBar::item{padding: 2px 2px;background-color:transparent;color:rgb(55, 55, 55);border-radius:3px}"
+    MenubarStyle="QMenuBar{padding:2px 2px;background-color:rgba"+windowBG+";border-top: 3px solid rgba"+windowFrame+";\
+    border-left:2px solid rgba"+windowFrame+";border-right: 2px solid rgba"+windowFrame+";border-radius: 2px}\
+    QMenuBar::item{padding: 2px 2px;background-color:transparent;color:rgb(55, 55, 55);border-radius:2px}"
     
-    MenuStyle="QMenu{background-color:rgb"+windowBG+";color:black;border:1px solid rgb"+windowFrame+";\
-    border-left:3px solid rgb"+windowFrame+";border-radius:3px} \
-    QMenu::item{padding: 2px 20px;background-color:rgb"+windowBG+";color:rgb(55, 55, 55)}\
-    QMenu::item::selected{background-color:rgb"+selectedMenuItemBG+";color:rgb(55, 55, 55);border:1px solid rgb(85, 170, 255);\
-    border-radius:3px}QMenu::separator{background-color:rgb"+windowFrame+";border 1px solid:rgb(55,55,55);height:2px;margin-left:5px;margin-right:5px;}"
+    MenuStyle="QMenu{background-color:rgba"+windowBG+";color:black;border:1px solid rgba"+windowFrame+";\
+    border-left:3px solid rgba"+windowFrame+";border-radius:3px} \
+    QMenu::item{padding: 2px 20px;background-color:rgba"+windowBG+";color:rgb(55, 55, 55)}\
+    QMenu::item::selected{background-color:rgba"+selectedMenuItemBG+";color:rgb(55, 55, 55);\
+    border:1px solid rgb(85, 170, 255);\
+    border-radius:3px}QMenu::separator{background-color:rgba"+windowFrame+";\
+    border 1px solid:rgb(55,55,55);height:2px;margin-left:5px;margin-right:5px;}"
     
     main.setStyleSheet(main.WindowStyle)
-
-    main.ui.menubar.setStyleSheet(MenubarStyle)
-    main.ui.menuFile.setStyleSheet(MenuStyle)
-    main.ui.menuTask.setStyleSheet(MenuStyle)
-    main.ui.menuContext.setStyleSheet(MenuStyle)
-    main.ui.statusbar.setStyleSheet(StatusbarStyle)
-    
-
+    try:
+        main.ui.menubar.setStyleSheet(MenubarStyle)
+        main.ui.menuFile.setStyleSheet(MenuStyle)
+        main.ui.menuTask.setStyleSheet(MenuStyle)
+        main.ui.menuContext.setStyleSheet(MenuStyle)
+        main.ui.statusbar.setStyleSheet(StatusbarStyle)
+        main.ui.taskList.setFont(font)
+    except:
+        pass
         
