@@ -231,9 +231,17 @@ class SettingsWindow(QtGui.QDialog):
                     k+="Alt + "
                 if k!="":
                     #ne=QtGui.QKeyEvent(e.type(),e.key(),QtCore.Qt.NoModifier)
-                    print(e.text())
+                
                     
                     #k+=str(QtCore.QString().number(e.key()))
-                    self.ui.mainWindowToggleKey.setText(k)
+                    try:
+                        k+=chr(e.key())
+                    except:
+                        k=""
+                    finally:
+                        if k.endswith("  "):
+                        
+                            k=k.replace("  "," Space")
+                        self.ui.mainWindowToggleKey.setText(k)
         
             
