@@ -56,14 +56,13 @@ def addContext(self):
 def removeContext(self):
     if len(self.contexts)==1:
         QtGui.QMessageBox.critical(self,"Error","Can't remove last context")
-#TODO: some settings table with saved last opened context
     else:
         if len(self.db.getTasks(self.currentContext))>0:
             QtGui.QMessageBox.critical(self,"Error","Can't remove context with active tasks")
             return False
         if self.questionPopup("Remove context", "Do you really want to remove active context?"):
             self.db.deleteContext(self.currentContext)
-            self.currentContext=1 #TODO: change it to first available
+            self.currentContext=self.db.getContexts()[0][0] 
             self.loadTasksList()
             loadContexts(self)
             selectCurrentContext(self)

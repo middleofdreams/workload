@@ -39,7 +39,7 @@ class Workload(QtGui.QMainWindow):
         self.loadTasksList(init=True)  
         self.tray=Trayicon(self)
         self.timer=TaskReminder(self)
-        self.shortcuts=ShortcutsHandler(self)
+        self.shortcuts=ShortcutsHandler(self,self.settings['keyMainWindowToggle'])
         
         finalizeInit(self)
         

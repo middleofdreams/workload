@@ -127,8 +127,15 @@ class SettingsWindow(QtGui.QDialog):
             self.editWindowOpacity(save=True)
             #save tasklist font settings
             self.editTasklistFont(save=True)
+<<<<<<< HEAD
             self.saveStyle()
             
+=======
+            
+            key=self.ui.mainWindowToggleKey.text()
+            self.settings['keyMainWindowToggle']=key
+            self.parent.shortcuts.key=key
+>>>>>>> branch 'master' of https://github.com/middleofdreams/workload
         else:
             self.parent.setWindowOpacity(int(self.settings["mainWindowOpacity"])/100)
             font=QtGui.QFont(self.settings["tasklistFont"]).setPointSize(int(self.settings["tasklistFontSize"]))
@@ -253,6 +260,8 @@ class SettingsWindow(QtGui.QDialog):
                     k+="Ctrl + "
                 if QtCore.Qt.ShiftModifier & e.modifiers():
                     k+="Shift + "
+                if QtCore.Qt.MetaModifier & e.modifiers():
+                    k+="Win +" 
                 if QtCore.Qt.AltModifier & e.modifiers():
                     k+="Alt + "
                 if k!="":
