@@ -167,7 +167,7 @@ class SettingsWindow(QtGui.QDialog):
         
                 
     def setButtonColor(self,button,color):
-        style="QPushButton[Button=settings] { border: 1px solid rgba(0, 0, 0,190);  border-radius: 2px;border-style: outset; background-color:rgba"+str(color)+"}"
+        style="QPushButton[Button=settings] {border: 1px solid rgba(0, 0, 0,190);border-radius: 2px; border-style: inset; background-color:rgba"+str(color)+"}"
         button.setProperty('Button','settings')    
         button.setStyleSheet(style)
         
