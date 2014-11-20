@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'task.ui'
 #
-# Created: Thu Nov 20 09:21:41 2014
+# Created: Thu Nov 20 20:10:19 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -16,6 +16,7 @@ class Ui_Dialog(object):
         font = QtGui.QFont()
         font.setFamily("monofur")
         Dialog.setFont(font)
+        Dialog.setModal(False)
         self.verticalLayout = QtGui.QVBoxLayout(Dialog)
         self.verticalLayout.setObjectName("verticalLayout")
         self.groupBox_2 = QtGui.QGroupBox(Dialog)
@@ -230,7 +231,7 @@ class Ui_Dialog(object):
         self.taskDescription.setHtml("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'monofur\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'monofur\'; font-size:8pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;\"><br /></p></body></html>")
         self.taskDescription.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByKeyboard|QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextBrowserInteraction|QtCore.Qt.TextEditable|QtCore.Qt.TextEditorInteraction|QtCore.Qt.TextSelectableByKeyboard|QtCore.Qt.TextSelectableByMouse)
         self.taskDescription.setOpenExternalLinks(False)
@@ -238,7 +239,12 @@ class Ui_Dialog(object):
         self.taskDescription.setObjectName("taskDescription")
         self.verticalLayout.addWidget(self.taskDescription)
         self.buttonBox = QtGui.QDialogButtonBox(Dialog)
-        self.buttonBox.setMaximumSize(QtCore.QSize(16777215, 22))
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.buttonBox.sizePolicy().hasHeightForWidth())
+        self.buttonBox.setSizePolicy(sizePolicy)
+        self.buttonBox.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
         self.buttonBox.setObjectName("buttonBox")

@@ -3,6 +3,7 @@ from PySide import QtGui, QtCore
 from ui.task_ui import Ui_Dialog
 import datetime,unicodedata
 from lib.helpers import timestamp,QtDateFormat
+from .GuiManager import changeStyle
 class Task(QtGui.QDialog):
 
     def __init__(self,parent,taskid):
@@ -15,19 +16,20 @@ class Task(QtGui.QDialog):
                             | QtCore.Qt.WindowStaysOnTopHint)
         self.parent=parent
         self.taskid=taskid
-        self.moveIt=False        
+        self.moveIt=False
+        self.settings=self.parent.settings
         
-        
-#Text Editor
-        fontlist=self.parent.settings["chosenFonts"].split("|")  #TODO: read font settings from database
+        fontlist=self.settings["chosenFonts"].split("|")
         for i in fontlist:
             if i in fontlist:
                 self.ui.fontComboBox.addItem(i,None)
-        windowColor=self.parent.settings["taskEditorBG"]
-        frameColor=self.parent.settings["taskEditorFrame"]
-        WindowStyle="QDialog{border: 2px solid rgba"+frameColor+";  border-radius: 6px; background-color:rgba"+windowColor+"}"
-        self.setStyleSheet(WindowStyle)
-        windowOpacity=int(self.parent.settings["taskWindowOpacity"])/100
+        
+        windowOpacity=int(self.settings["taskWindowOpacity"])/100
+        
+        self.setProperty("dialog","taskEditor")
+        self.ui.buttonBox.buttons()[0].setProperty("custom","buttonbox")
+        self.ui.buttonBox.buttons()[1].setProperty("custom","buttonbox")
+        changeStyle(self)
         self.setWindowOpacity(float(windowOpacity))
         self.ui.dueOn.stateChanged.connect(self.setDueOn)
         self.ui.priority.valueChanged.connect(self.setPriorityText)
@@ -49,7 +51,7 @@ class Task(QtGui.QDialog):
         self.task=self.parent.db.getTaskDetails(taskid)
         if self.taskid:
             self.ui.label_6.hide()  #Hide closed date label
-            self.ui.dueDate.setDisplayFormat(QtDateFormat(self.parent.settings["dateFormat"]))
+            self.ui.dueDate.setDisplayFormat(QtDateFormat(self.settings["dateFormat"]))
             self.setWindowTitle(self.task["name"])
             self.ui.taskName.setText(self.task["name"])
             self.ui.priority.setValue(self.task["priority"])
@@ -57,14 +59,14 @@ class Task(QtGui.QDialog):
             self.ui.taskDescription.append(self.task["taskdescription"])
             createdTimestamp=int(self.task["created"].split(".")[0])
             createdDate=datetime.datetime.fromtimestamp(createdTimestamp)
-            createdDate=createdDate.strftime(self.parent.settings["dateFormat"])
+            createdDate=createdDate.strftime(self.settings["dateFormat"])
             self.ui.createDate.setText(createdDate)
             
             if self.task["closedat"] is not None:
                 self.ui.label_6.show()
                 closeTimestamp=int(self.task["closedat"].split(".")[0])
                 closeDate=datetime.datetime.fromtimestamp(closeTimestamp)
-                closeDate=closeDate.strftime(self.parent.settings.getDateFormat())
+                closeDate=closeDate.strftime(self.settings.getDateFormat())
                 self.ui.closeDate.setText(closeDate)
             
             if self.task["due"] is not None:
@@ -104,8 +106,8 @@ class Task(QtGui.QDialog):
         
     def setStylesForButtons(self,setButton,color):
         styleSheet="QPushButton[Button=color] {border: 1px solid rgba(0, 0, 0,190);  border-radius: 2px;border-style: outset; background-color:rgba"+str(color)+"}"
-        setButton.setStyleSheet(styleSheet)
         setButton.setProperty('Button','color')
+        setButton.setStyleSheet(styleSheet)
         
     def closeEvent(self,e):
         #print(e)

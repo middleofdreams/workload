@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'settings.ui'
 #
-# Created: Thu Nov 20 11:21:02 2014
+# Created: Thu Nov 20 20:15:29 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,7 +12,7 @@ from PySide import QtCore, QtGui
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(585, 348)
+        Dialog.resize(577, 364)
         Dialog.setModal(False)
         self.gridLayout_3 = QtGui.QGridLayout(Dialog)
         self.gridLayout_3.setObjectName("gridLayout_3")
@@ -20,7 +20,7 @@ class Ui_Dialog(object):
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
         self.buttonBox.setObjectName("buttonBox")
-        self.gridLayout_3.addWidget(self.buttonBox, 2, 0, 1, 1)
+        self.gridLayout_3.addWidget(self.buttonBox, 1, 0, 1, 1)
         self.tabWidget = QtGui.QTabWidget(Dialog)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
@@ -50,10 +50,6 @@ class Ui_Dialog(object):
         self.label_3 = QtGui.QLabel(self.generalTab)
         self.label_3.setObjectName("label_3")
         self.formLayout.setWidget(6, QtGui.QFormLayout.LabelRole, self.label_3)
-        self.confirmExit = QtGui.QCheckBox(self.generalTab)
-        self.confirmExit.setChecked(True)
-        self.confirmExit.setObjectName("confirmExit")
-        self.formLayout.setWidget(6, QtGui.QFormLayout.FieldRole, self.confirmExit)
         self.label_7 = QtGui.QLabel(self.generalTab)
         self.label_7.setObjectName("label_7")
         self.formLayout.setWidget(3, QtGui.QFormLayout.LabelRole, self.label_7)
@@ -80,6 +76,10 @@ class Ui_Dialog(object):
         self.formLayout.setLayout(4, QtGui.QFormLayout.FieldRole, self.horizontalLayout)
         spacerItem = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.formLayout.setItem(5, QtGui.QFormLayout.LabelRole, spacerItem)
+        self.confirmExit = QtGui.QCheckBox(self.generalTab)
+        self.confirmExit.setChecked(True)
+        self.confirmExit.setObjectName("confirmExit")
+        self.formLayout.setWidget(6, QtGui.QFormLayout.FieldRole, self.confirmExit)
         self.tabWidget.addTab(self.generalTab, "")
         self.notificationsTab = QtGui.QWidget()
         self.notificationsTab.setObjectName("notificationsTab")
@@ -406,8 +406,13 @@ class Ui_Dialog(object):
         spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_13.addItem(spacerItem1)
         self.resetToDefaults = QtGui.QPushButton(self.themeTab)
-        self.resetToDefaults.setMinimumSize(QtCore.QSize(23, 0))
-        self.resetToDefaults.setMaximumSize(QtCore.QSize(150, 16777215))
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.resetToDefaults.sizePolicy().hasHeightForWidth())
+        self.resetToDefaults.setSizePolicy(sizePolicy)
+        self.resetToDefaults.setMinimumSize(QtCore.QSize(0, 0))
+        self.resetToDefaults.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.resetToDefaults.setObjectName("resetToDefaults")
         self.horizontalLayout_13.addWidget(self.resetToDefaults)
         self.gridLayout_4.addLayout(self.horizontalLayout_13, 6, 1, 1, 1)
@@ -431,13 +436,9 @@ class Ui_Dialog(object):
         self.formLayout_2.setWidget(0, QtGui.QFormLayout.FieldRole, self.mainWindowToggleKey)
         self.tabWidget.addTab(self.shortcutsTab, "")
         self.gridLayout_3.addWidget(self.tabWidget, 0, 0, 1, 1)
-        spacerItem2 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
-        self.gridLayout_3.addItem(spacerItem2, 1, 0, 1, 1)
-        spacerItem3 = QtGui.QSpacerItem(0, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.gridLayout_3.addItem(spacerItem3, 0, 1, 1, 1)
 
         self.retranslateUi(Dialog)
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(3)
         self.notifyIntervalUnit.setCurrentIndex(1)
         self.tasklistFont.setCurrentIndex(-1)
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("accepted()"), Dialog.accept)
@@ -451,12 +452,12 @@ class Ui_Dialog(object):
         self.label_2.setText(QtGui.QApplication.translate("Dialog", "Date and time format", None, QtGui.QApplication.UnicodeUTF8))
         self.dateFormat.setText(QtGui.QApplication.translate("Dialog", "%d-%m-%Y %H:%M", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("Dialog", "On program exit", None, QtGui.QApplication.UnicodeUTF8))
-        self.confirmExit.setText(QtGui.QApplication.translate("Dialog", "Confirm exit", None, QtGui.QApplication.UnicodeUTF8))
         self.label_7.setText(QtGui.QApplication.translate("Dialog", "New tasks:", None, QtGui.QApplication.UnicodeUTF8))
         self.defaultDueTimeOn.setText(QtGui.QApplication.translate("Dialog", "Set default due date/time", None, QtGui.QApplication.UnicodeUTF8))
         self.defaultDueTimeUnit.setItemText(0, QtGui.QApplication.translate("Dialog", "Hour(s)", None, QtGui.QApplication.UnicodeUTF8))
         self.defaultDueTimeUnit.setItemText(1, QtGui.QApplication.translate("Dialog", "Day(s)", None, QtGui.QApplication.UnicodeUTF8))
         self.label_8.setText(QtGui.QApplication.translate("Dialog", " after create time", None, QtGui.QApplication.UnicodeUTF8))
+        self.confirmExit.setText(QtGui.QApplication.translate("Dialog", "Confirm exit", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.generalTab), QtGui.QApplication.translate("Dialog", " General ", None, QtGui.QApplication.UnicodeUTF8))
         self.notificationsOn.setText(QtGui.QApplication.translate("Dialog", "Show notifications", None, QtGui.QApplication.UnicodeUTF8))
         self.notificationsCurrentContext.setText(QtGui.QApplication.translate("Dialog", "Only from current context", None, QtGui.QApplication.UnicodeUTF8))
@@ -484,7 +485,7 @@ class Ui_Dialog(object):
         self.label_12.setText(QtGui.QApplication.translate("Dialog", "Tasklist font", None, QtGui.QApplication.UnicodeUTF8))
         self.label_17.setText(QtGui.QApplication.translate("Dialog", "Tasklist font color", None, QtGui.QApplication.UnicodeUTF8))
         self.label_15.setText(QtGui.QApplication.translate("Dialog", "Tasklist font size", None, QtGui.QApplication.UnicodeUTF8))
-        self.resetToDefaults.setText(QtGui.QApplication.translate("Dialog", "Reset to default colors", None, QtGui.QApplication.UnicodeUTF8))
+        self.resetToDefaults.setText(QtGui.QApplication.translate("Dialog", " Reset to default colors ", None, QtGui.QApplication.UnicodeUTF8))
         self.diableModality.setText(QtGui.QApplication.translate("Dialog", "Enable Window Modality", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.themeTab), QtGui.QApplication.translate("Dialog", " Theme ", None, QtGui.QApplication.UnicodeUTF8))
         self.label_19.setText(QtGui.QApplication.translate("Dialog", "Toggle main window", None, QtGui.QApplication.UnicodeUTF8))

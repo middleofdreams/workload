@@ -19,7 +19,7 @@ class Settings(dict):
                          "tasklistFontColor":"(0,0,0,255)",
                          "windowBG":"(219,237,255)",
                          "taskEditorBG":"(219,237,255)",
-                         "taskEditorFrame":"(0,0,0)",
+                         "taskEditorFrame":"(0,0,0,255)",
                          "windowFrame":"(85,170,255)",
                          "tasklistBG":"(219,237,255)",
                          "tasklistFrame":"(85,170,255)",

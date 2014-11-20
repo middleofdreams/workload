@@ -11,6 +11,9 @@ class SettingsWindow(QtGui.QDialog):
         self.ui = Ui_Dialog()
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint | QtCore.Qt.WindowStaysOnTopHint)
         self.ui.setupUi(self)
+        self.ui.buttonBox.buttons()[0].setProperty("custom","buttonbox")
+        self.ui.buttonBox.buttons()[1].setProperty("custom","buttonbox")
+        self.ui.resetToDefaults.setProperty("custom","buttonbox")
         changeStyle(self)
         self.currentSettings={}
         ## CONNECT SIGNALS
@@ -85,7 +88,7 @@ class SettingsWindow(QtGui.QDialog):
         
         
         #kill shortcut handler to be able to grab new shortcut:
-        self.parent.shortcuts.terminate()
+        #self.parent.shortcuts.terminate()
         self.ui.mainWindowToggleKey.keyPressEvent=self.grabToggleMainWindowKey
         
         if self.exec_():
