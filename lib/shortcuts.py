@@ -69,7 +69,11 @@ class ShortcutsHandler(QThread):
                 mods|=win32con.MOD_SHIFT
             except:
                 mods=win32con.MOD_SHIFT
-        
+        if "Win" in k:
+            try:
+                mods|=win32con.MOD_WIN
+            except:
+                mods=win32con.MOD_WIN        
         k=k.split(" + ")[-1]
         if k=="Space":
             k=win32con.VK_SPACE
