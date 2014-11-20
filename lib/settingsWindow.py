@@ -10,6 +10,7 @@ class SettingsWindow(QtGui.QDialog):
         QtGui.QDialog.__init__(self)
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
+        changeStyle(self)
         
         ## CONNECT SIGNALS
         colorButtons={"windowBG":self.ui.windowBG,"windowFrame":self.ui.windowFrame,"tasklistBG":self.ui.tasklistBG,

@@ -1,5 +1,5 @@
 from PySide import QtCore,QtGui
-from lib.settingsWindow import SettingsWindow
+
 '''Some functions for application init'''
 def guiSettings(main):
     '''setting window flags, position'''
@@ -14,6 +14,7 @@ def guiSettings(main):
     main.resizeColumns()
         
 def connectSignals(main):
+    from lib.settingsWindow import SettingsWindow
     '''connect signals to functions'''
     main.ui.taskList.keyPressEvent = main.getKeysOnList
     main.ui.taskInput.keyPressEvent= main.getKeysOnInput
