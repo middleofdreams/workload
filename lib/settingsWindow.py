@@ -9,6 +9,7 @@ class SettingsWindow(QtGui.QDialog):
         self.settings=parent.settings
         QtGui.QDialog.__init__(self)
         self.ui = Ui_Dialog()
+        self.setWindowFlags(QtCore.Qt.FramelessWindowHint | QtCore.Qt.WindowStaysOnTopHint)
         self.ui.setupUi(self)
         changeStyle(self)
         
@@ -134,7 +135,8 @@ class SettingsWindow(QtGui.QDialog):
             self.parent.setWindowOpacity(int(self.settings["mainWindowOpacity"])/100)
             
         self.parent.shortcuts.start()
-         
+
+            
     def editStyle(self,button,setting):
         currentColor=self.settings[setting]
         newColor=QtGui.QColorDialog.getColor(parent=self)
@@ -239,7 +241,7 @@ class SettingsWindow(QtGui.QDialog):
                 if QtCore.Qt.ShiftModifier & e.modifiers():
                     k+="Shift + "
                 if QtCore.Qt.MetaModifier & e.modifiers():
-                    k+="Win +" 
+                    k+="Win + " 
                 if QtCore.Qt.AltModifier & e.modifiers():
                     k+="Alt + "
                 if k!="":
@@ -257,4 +259,24 @@ class SettingsWindow(QtGui.QDialog):
                             k=k.replace("  "," Space")
                         self.ui.mainWindowToggleKey.setText(k)
         
-            
+    #WINDOWS MOVEMENT
+    def mouseMoveEvent(self, e):
+        if e.buttons() & QtCore.Qt.LeftButton:
+            try:
+                self.posx
+                self.posy
+            except:
+                self.posx=e.x()
+                self.posy=e.y()
+            y=e.globalY()-self.posy
+            x=e.globalX()-self.posx
+            self.move(x,y)
+            #e.accept()
+
+
+    def mouseReleaseEvent(self, e):
+        try:
+            del(self.posx)
+            del(self.posy)
+        except:
+            pass
