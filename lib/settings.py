@@ -3,7 +3,7 @@ class Settings(dict):
         dict.__init__(self)
         self.parent=parent
         self.db=parent.db
-        self.__defaults={"notifyOnlyCurrentContext":False,
+        self.defaults={"notifyOnlyCurrentContext":False,
                          "askOnExit":True,
                          "notifyTime":"300",
                          "notifyInterval":"30",
@@ -28,16 +28,16 @@ class Settings(dict):
                          "keyMainWindowToggle":"Ctrl+Space"
         }
                             
-        self.__booleans=["notifyCurrentContext","askOnExit","showNotifications","defaultDueDateOn"]
+        self.booleans=["notifyCurrentContext","askOnExit","showNotifications","defaultDueDateOn"]
         
     def __getitem__(self,key):
         setting=self.db.getSetting(key)
         if setting is None:
             try:
-                setting=self.__defaults[key]
+                setting=self.defaults[key]
             except:
                 pass
-        if key in self.__booleans:
+        if key in self.booleans:
             if setting=="0":
                 setting=False
             else:
