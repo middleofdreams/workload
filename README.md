@@ -10,7 +10,8 @@ Currently there are plenty similar applications but Workload suppose to work acc
 There is no release yet but current code is working pretty well.
 
 System requirements:
-python 3 (preferably) or python > 2.5
-latest PySide
-pywin (to handle global shortcuts on Windows)
-python-xlib (to handle global shortcuts on Linux)
+ - python 3 (preferably) or python > 2.5
+ - latest PySide
+ - pywin (to handle global shortcuts on Windows)
+ - python-xlib (to handle global shortcuts on Linux)
+
