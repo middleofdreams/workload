@@ -12,7 +12,7 @@ import res_rc
 import datetime
 from lib.helpers import timestamp
 from lib.shortcuts import ShortcutsHandler
-from lib.ui import guiSettings,connectSignals, finalizeInit,changeStyle
+from lib.GuiManager import guiSettings,connectSignals, finalizeInit,changeStyle
 
 
 class Workload(QtGui.QMainWindow):

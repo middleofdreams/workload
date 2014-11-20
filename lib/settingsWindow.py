@@ -1,6 +1,6 @@
 from PySide import QtCore,QtGui
 from ui.settings_ui import Ui_Dialog
-
+from .GuiManager import changeStyle
 class SettingsWindow(QtGui.QDialog):
 
     def __init__(self,parent):
@@ -10,6 +10,7 @@ class SettingsWindow(QtGui.QDialog):
         QtGui.QDialog.__init__(self)
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
+        
         ## CONNECT SIGNALS
         colorButtons={"windowBG":self.ui.windowBG,"windowFrame":self.ui.windowFrame,"tasklistBG":self.ui.tasklistBG,
                       "tasklistFrame":self.ui.tasklistFrame,"tasklistFontColor":self.ui.tasklistFontColor,
@@ -81,7 +82,7 @@ class SettingsWindow(QtGui.QDialog):
         
         
         #kill shortcut handler to be able to grab new shortcut:
-        #self.parent.shortcuts.terminate()
+        self.parent.shortcuts.terminate()
         self.ui.mainWindowToggleKey.keyPressEvent=self.grabToggleMainWindowKey
         
         if self.exec_():
@@ -137,9 +138,9 @@ class SettingsWindow(QtGui.QDialog):
             self.settings[setting]=str(newColor.getRgb())
         else:
             self.setButtonColor(button, currentColor)
-        from lib.ui import changeStyle
-        changeStyle(self.parent)
         
+        changeStyle(self.parent)
+        changeStyle(self)
                 
     def setButtonColor(self,button,color):
         style="QPushButton[Button=settings] { border: 1px solid rgba(0, 0, 0,190);  border-radius: 2px;border-style: outset; background-color:rgba"+str(color)+"}"
