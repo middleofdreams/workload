@@ -81,7 +81,12 @@ def changeStyle(main,settings={}):
     QPushButton[custom=buttonbox]::hover{border: 1px rgba(15,15,15,200); border-radius:3px;\
     padding-top:7px;border-style:inset;background-color:rgba"+s["selectedMenuItem"]+"}"\
     "QDialog[dialog=taskEditor]{border: 2px solid rgba"+s["taskEditorFrame"]+";\
-    border-radius: 8px; background-color:rgba"+s["taskEditorBG"]+"}"
+    border-radius: 8px; background-color:rgba"+s["taskEditorBG"]+"}\
+    QComboBox{background-color:rgba"+s["alternateListItem"]+";border:1px solid rgba(15,15,15,100);border-radius:3px;min-width:13ex;\
+    padding-top:3px;padding-bottom:3px;padding-left:5px;padding-right:5px;border-style:outset;}\
+    QComboBox::down-arrow{image:url(./ui/down_arrow.png)}\
+    QComboBox QAbstractItemView{background:rgba"+s["alternateListItem"]+";border:1px solid rgba(15,15,15,100);border-radius:3px}\
+    QComboBox::item::selected{background-color:rgba"+s["selectedMenuItem"]+"}"
     
     StatusbarStyle="QStatusBar{background-color:transparent;border-top: 3px transparent; border-radius:5px;\
     border-bottom: 3px transparent;border-left: 3px transparent;border-right: 3px transparent}"

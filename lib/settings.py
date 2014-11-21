@@ -28,7 +28,7 @@ class Settings(dict):
                          "keyMainWindowToggle":"Ctrl + Space"
         }
                             
-        self.booleans=["notifyCurrentContext","askOnExit","showNotifications","defaultDueDateOn"]
+        self.booleans=["notifyCurrentContext","askOnExit","showNotifications","defaultDueDateOn","windowModality"]
         
     def __getitem__(self,key):
         setting=self.db.getSetting(key)

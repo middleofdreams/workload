@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'settings.ui'
 #
-# Created: Thu Nov 20 20:15:29 2014
+# Created: Fri Nov 21 21:30:46 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -416,11 +416,11 @@ class Ui_Dialog(object):
         self.resetToDefaults.setObjectName("resetToDefaults")
         self.horizontalLayout_13.addWidget(self.resetToDefaults)
         self.gridLayout_4.addLayout(self.horizontalLayout_13, 6, 1, 1, 1)
-        self.diableModality = QtGui.QCheckBox(self.themeTab)
-        self.diableModality.setMinimumSize(QtCore.QSize(0, 24))
-        self.diableModality.setLayoutDirection(QtCore.Qt.RightToLeft)
-        self.diableModality.setObjectName("diableModality")
-        self.gridLayout_4.addWidget(self.diableModality, 7, 1, 1, 1)
+        self.disableModality = QtGui.QCheckBox(self.themeTab)
+        self.disableModality.setMinimumSize(QtCore.QSize(0, 24))
+        self.disableModality.setLayoutDirection(QtCore.Qt.RightToLeft)
+        self.disableModality.setObjectName("disableModality")
+        self.gridLayout_4.addWidget(self.disableModality, 7, 1, 1, 1)
         self.tabWidget.addTab(self.themeTab, "")
         self.shortcutsTab = QtGui.QWidget()
         self.shortcutsTab.setObjectName("shortcutsTab")
@@ -438,7 +438,7 @@ class Ui_Dialog(object):
         self.gridLayout_3.addWidget(self.tabWidget, 0, 0, 1, 1)
 
         self.retranslateUi(Dialog)
-        self.tabWidget.setCurrentIndex(3)
+        self.tabWidget.setCurrentIndex(0)
         self.notifyIntervalUnit.setCurrentIndex(1)
         self.tasklistFont.setCurrentIndex(-1)
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("accepted()"), Dialog.accept)
@@ -486,7 +486,7 @@ class Ui_Dialog(object):
         self.label_17.setText(QtGui.QApplication.translate("Dialog", "Tasklist font color", None, QtGui.QApplication.UnicodeUTF8))
         self.label_15.setText(QtGui.QApplication.translate("Dialog", "Tasklist font size", None, QtGui.QApplication.UnicodeUTF8))
         self.resetToDefaults.setText(QtGui.QApplication.translate("Dialog", " Reset to default colors ", None, QtGui.QApplication.UnicodeUTF8))
-        self.diableModality.setText(QtGui.QApplication.translate("Dialog", "Enable Window Modality", None, QtGui.QApplication.UnicodeUTF8))
+        self.disableModality.setText(QtGui.QApplication.translate("Dialog", "Enable Window Modality", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.themeTab), QtGui.QApplication.translate("Dialog", " Theme ", None, QtGui.QApplication.UnicodeUTF8))
         self.label_19.setText(QtGui.QApplication.translate("Dialog", "Toggle main window", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.shortcutsTab), QtGui.QApplication.translate("Dialog", " Shortcuts ", None, QtGui.QApplication.UnicodeUTF8))

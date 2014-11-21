@@ -21,6 +21,7 @@ class SettingsWindow(QtGui.QDialog):
         path.addRoundedRect(-1,-1,rect.width()+6,rect.height()+2,7,7)
         region=QtGui.QRegion(path.toFillPolygon().toPolygon())
         self.setMask(region)
+        self.changeModality()
         ## CONNECT SIGNALS
         self.colorButtons={"windowBG":self.ui.windowBG,"windowFrame":self.ui.windowFrame,"tasklistBG":self.ui.tasklistBG,
                       "tasklistFrame":self.ui.tasklistFrame,"tasklistFontColor":self.ui.tasklistFontColor,
@@ -39,6 +40,7 @@ class SettingsWindow(QtGui.QDialog):
         self.ui.tasklistFont.activated.connect(self.editTasklistFont)
         self.ui.tasklistFontSize.valueChanged.connect(self.editTasklistFont)
         self.ui.resetToDefaults.clicked.connect(self.resetStyle)
+        self.ui.disableModality.stateChanged.connect(self.changeModality)
         for i in self.parent.db.getContexts():
             self.ui.startupContext.addItem(i[1],i[0])
         
@@ -75,7 +77,7 @@ class SettingsWindow(QtGui.QDialog):
         self.ui.notifyIntervalSpin.setValue(notifyInterval)
         
         self.ui.notificationsOn.setChecked(self.settings["showNotifications"])
-        
+        self.ui.disableModality.setChecked(self.settings["windowModality"])
         self.ui.notificationsCurrentContext.setChecked(self.settings["notifyCurrentContext"])
         self.ui.defaultDueTimeOn.setChecked(self.settings["defaultDueDateOn"])
         self.ui.defaultDueTimeSpin.setValue(int(self.settings["defaultDueDateValue"]))
@@ -90,12 +92,14 @@ class SettingsWindow(QtGui.QDialog):
         self.ui.addFonts.clicked.connect(self.addFonts)
         self.ui.removeFonts.clicked.connect(self.removeFonts)
         self.ui.mainWindowToggleKey.setText(self.settings['keyMainWindowToggle'])
-        
-        
         #kill shortcut handler to be able to grab new shortcut:
         #self.parent.shortcuts.terminate()
         self.ui.mainWindowToggleKey.keyPressEvent=self.grabToggleMainWindowKey
-        
+        posx=self.parent.x()
+        posy=self.parent.y()
+        parentWidth=self.parent.width()
+        self.move(posx+parentWidth+30,posy-30)
+        self.changeModality()
         if self.exec_():
             #save load context values
             r=self.ui.startupContext.currentIndex()
@@ -149,6 +153,14 @@ class SettingsWindow(QtGui.QDialog):
             
         self.parent.shortcuts.start()
     
+    def changeModality(self,e=None):
+        
+        if e==2 or self.ui.disableModality.isChecked():
+            self.settings["windowModality"]=self.ui.disableModality.isChecked()
+        else:
+            self.settings["windowModality"]=self.ui.disableModality.isChecked()
+        print(self.settings["windowModality"])
+        self.setModal(self.settings["windowModality"])
     def saveStyle(self):
         for setting,button in self.colorButtons.items():
             color=button.palette().button().color().getRgb()
@@ -171,8 +183,6 @@ class SettingsWindow(QtGui.QDialog):
             changeStyle(self,self.currentSettings)
         else:
             self.setButtonColor(button, currentColor.getRgb())
-        
-        
                 
     def setButtonColor(self,button,color):
         style="QPushButton[Button=settings] {border: 1px solid rgba(0, 0, 0,190);border-radius: 2px; border-style: inset; background-color:rgba"+str(color)+"}"
