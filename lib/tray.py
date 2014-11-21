@@ -11,11 +11,11 @@ class Trayicon(QtGui.QSystemTrayIcon):
         self.activated.connect(self.showApp)
         self.iconMenu = QtGui.QMenu(parent)
         self.setContextMenu(self.iconMenu)
-        add=self.iconMenu.addAction("Create task")
+        add=self.iconMenu.addAction(self.tr("Create task"))
         add.triggered.connect(self.createTask)
       
         self.iconMenu.addSeparator()
-        exitAction=self.iconMenu.addAction("Exit")
+        exitAction=self.iconMenu.addAction(self.tr("Exit"))
         exitAction.triggered.connect(self.exit)
         self.messageClicked.connect(self.parent.show)
        

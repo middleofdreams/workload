@@ -19,7 +19,7 @@ class ArchiveWindow(QtGui.QDialog):
             try:
                 tcontext=contexts[i[2]]
             except KeyError:
-                tcontext=str(i[2])+" [removed]"
+                tcontext=str(i[2])+self.tr(" [removed]")
             tcontext
             tcreate=datetime.datetime.fromtimestamp(int(i[3].rsplit(".")[0])).strftime(self.parent.settings["dateFormat"])
             tclose=datetime.datetime.fromtimestamp(int(i[4].rsplit(".")[0])).strftime(self.parent.settings["dateFormat"])
@@ -81,8 +81,8 @@ class ArchiveWindow(QtGui.QDialog):
                 tasks.append(item)
             if force:
                 self.removeTask(tasks)
-            elif self.questionPopup("Delete task",
-                "Do you really want to delete selected  task(s) ?"):
+            elif self.questionPopup(self.tr("Delete task"),
+                self.tr("Do you really want to delete selected  task(s) ?")):
                 self.removeTask(tasks)
 
 

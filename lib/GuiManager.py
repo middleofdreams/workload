@@ -56,7 +56,6 @@ def finalizeInit(main):
     main.show()
     main.adjustHeight(downSize=True, init=False)
 
-    main.ui.statusbar.showMessage("Hello! Ready to work ;-)",3600)
     
     
 def changeStyle(main,settings={}):
