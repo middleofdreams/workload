@@ -14,8 +14,13 @@ class SettingsWindow(QtGui.QDialog):
         self.ui.buttonBox.buttons()[0].setProperty("custom","buttonbox")
         self.ui.buttonBox.buttons()[1].setProperty("custom","buttonbox")
         self.ui.resetToDefaults.setProperty("custom","buttonbox")
-        changeStyle(self)
+        changeStyle(self)       
         self.currentSettings={}
+        path=QtGui.QPainterPath()
+        rect=self.size()
+        path.addRoundedRect(-1,-1,rect.width()+6,rect.height()+2,7,7)
+        region=QtGui.QRegion(path.toFillPolygon().toPolygon())
+        self.setMask(region)
         ## CONNECT SIGNALS
         self.colorButtons={"windowBG":self.ui.windowBG,"windowFrame":self.ui.windowFrame,"tasklistBG":self.ui.tasklistBG,
                       "tasklistFrame":self.ui.tasklistFrame,"tasklistFontColor":self.ui.tasklistFontColor,

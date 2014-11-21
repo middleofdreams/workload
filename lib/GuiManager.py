@@ -68,7 +68,7 @@ def changeStyle(main,settings={}):
     WindowStyle="QMainWindow{border:2px solid rgba"+s["windowFrame"]+";border-radius:6px;  \
     background-color:rgba"+s["windowBG"]+"}\
     QMessageBox{background-color:rgba"+s["windowBG"]+"} QDialog{background-color:rgba"+s["windowBG"]+";\
-    border:2px solid rgba"+s["windowFrame"]+";border-radius:3px}\
+    border:2px solid rgba"+s["windowFrame"]+";border-radius:6px}\
     QTreeWidget{alternate-background-color:rgba"+s["alternateListItem"]+";background-color:rgba"+s["tasklistBG"]+"\
     ;border: 1px solid rgba"+s["tasklistFrame"]+";color:rgba"+s["tasklistFontColor"]+"}\
     QTabWidget::pane{border: 1px solid rgba(15,15,15,100)}\
