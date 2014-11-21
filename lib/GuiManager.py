@@ -5,7 +5,7 @@ def guiSettings(main):
     '''setting window flags, position'''
     main.setWindowFlags(QtCore.Qt.FramelessWindowHint
                         | QtCore.Qt.WindowStaysOnTopHint)
-    #main.setWindowFlags(QtCore.Qt.WA_TranslucentBackground)
+    
     
     desktop = QtGui.QApplication.desktop()
     if desktop.height() > 800:
@@ -52,10 +52,8 @@ def finalizeInit(main):
     font=QtGui.QFont(main.settings["tasklistFont"])
     font.setPointSize(int(main.settings["tasklistFontSize"]))
     main.ui.taskList.setFont(font)
-
     main.show()
     main.adjustHeight(downSize=True, init=False)
-
     main.ui.statusbar.showMessage("Hello! Ready to work ;-)",3600)
     
     
@@ -66,9 +64,9 @@ def changeStyle(main,settings={}):
     for i in settingList:
         if i not in s.keys():
             s[i]=main.settings[i]
-    
-    main.WindowStyle="QMainWindow{border-radius:5px;border:3px solid rgba"+s["windowFrame"]+";  \
-    background-color:rgba"+s["windowBG"]+";}\
+
+    WindowStyle="QMainWindow{border:2px solid rgba"+s["windowFrame"]+";border-radius:6px;  \
+    background-color:rgba"+s["windowBG"]+"}\
     QMessageBox{background-color:rgba"+s["windowBG"]+"} QDialog{background-color:rgba"+s["windowBG"]+";\
     border:2px solid rgba"+s["windowFrame"]+";border-radius:3px}\
     QTreeWidget{alternate-background-color:rgba"+s["alternateListItem"]+";background-color:rgba"+s["tasklistBG"]+"\
@@ -83,32 +81,29 @@ def changeStyle(main,settings={}):
     QPushButton[custom=buttonbox]::hover{border: 1px rgba(15,15,15,200); border-radius:3px;\
     padding-top:7px;border-style:inset;background-color:rgba"+s["selectedMenuItem"]+"}"\
     "QDialog[dialog=taskEditor]{border: 2px solid rgba"+s["taskEditorFrame"]+";\
-    border-radius: 5px; background-color:rgba"+s["taskEditorBG"]+"}"
+    border-radius: 8px; background-color:rgba"+s["taskEditorBG"]+"}"
     
-    StatusbarStyle="QStatusBar{background-color:transparent;border-top: 3px transparent; border-radius:2px;\
-    border-bottom: 3px transparent;border-left: 3px transparent;border-right: 3px transparent rgba}"
+    StatusbarStyle="QStatusBar{background-color:transparent;border-top: 3px transparent; border-radius:5px;\
+    border-bottom: 3px transparent;border-left: 3px transparent;border-right: 3px transparent}"
     
-    MenubarStyle="QMenuBar{padding:2px 2px;background-color:transparent;border-top: 3px transparent;\
+    MenubarStyle="QMenuBar{padding:2px 2px;transparent;border-top: 3px transparent;\
     border-left:2px transparent ;border-right: 2px transparent ;border-bottom: 3px transparent ;border-radius: 2px}\
-    QMenuBar::item{padding: 2px 2px;background-color:transparent;color:rgb(55, 55, 55);border-radius:2px}"
+    QMenuBar::item{padding: 2px 2px;background-color:transparent;color:rgb(55, 55, 55)}"
     
-    MenuStyle="QMenu{background-color: rgba"+s["windowBG"]+";color:black;border:1px solid rgba"+s["windowFrame"]+";\
-    border-left:3px solid rgba"+s["windowFrame"]+";border-bottom:3px solid rgba"+s["windowFrame"]+";border-radius:5px} \
+    MenuStyle="QMenu{color:black; border:1px solid rgba"+s["windowFrame"]+";\
+    border-left:3px solid rgba"+s["windowFrame"]+";border-bottom:3px solid rgba"+s["windowFrame"]+";border-radius:3px;background-color:rgba"+s["windowBG"]+"} \
     QMenu::item{padding: 2px 20px;background-color: rgba"+s["windowBG"]+";color:rgb(55, 55, 55)}\
     QMenu::item::selected{background-color:rgba"+s["selectedMenuItem"]+";color:rgb(55, 55, 55);\
     border:1px solid rgb(85, 170, 255);\
     border-radius:3px}QMenu::separator{background-color:rgba"+s["windowFrame"]+";\
     border 1px solid:rgb(55,55,55);height:2px;margin-left:5px;margin-right:5px;}"
-    
-	
-    main.setStyleSheet(main.WindowStyle)
+    main.setStyleSheet(WindowStyle)
     try:
         main.ui.menubar.setStyleSheet(MenubarStyle)
         main.ui.menuFile.setStyleSheet(MenuStyle)
         main.ui.menuTask.setStyleSheet(MenuStyle)
         main.ui.menuContext.setStyleSheet(MenuStyle)
-        main.ui.statusbar.setStyleSheet(StatusbarStyle)
-        main.ui.taskList.setFont(font)
+        main.ui.statusbar.setStyleSheet(StatusbarStyle) 
     except:
         pass
         

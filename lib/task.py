@@ -89,7 +89,11 @@ class Task(QtGui.QDialog):
             date=date+delta
             self.ui.dueDate.setDateTime(QtCore.QDateTime(date.year,date.month,date.day,date.hour,date.minute,0,0))
         self.move(self.parent.pos())
-
+        path=QtGui.QPainterPath()
+        rect=self.size()
+        path.addRoundedRect(-1,-1,rect.width()+1,rect.height()+1,10,10)
+        region=QtGui.QRegion(path.toFillPolygon().toPolygon())
+        self.setMask(region)
         r=self.exec_()
         parent.taskOpened=False
 

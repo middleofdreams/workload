@@ -13,6 +13,7 @@ import datetime
 from lib.helpers import timestamp
 from lib.shortcuts import ShortcutsHandler
 from lib.GuiManager import guiSettings,connectSignals, finalizeInit,changeStyle
+from PySide.QtGui import QColor, QPainterPath
 
 
 class Workload(QtGui.QMainWindow):
@@ -40,9 +41,16 @@ class Workload(QtGui.QMainWindow):
         self.tray=Trayicon(self)
         self.timer=TaskReminder(self)
         self.shortcuts=ShortcutsHandler(self,self.settings['keyMainWindowToggle'])
-        
         finalizeInit(self)
         
+        
+    def resizeEvent(self,e):
+        path=QtGui.QPainterPath()
+        rect=e.size()
+        path.addRoundedRect(-1,-1,rect.width()+1,rect.height()+1,7,7)
+        region=QtGui.QRegion(path.toFillPolygon().toPolygon())
+        self.setMask(region)
+
     def taskListFocusIn(self,e):
         if e.reason()==QtCore.Qt.FocusReason.TabFocusReason:
             try:
@@ -231,12 +239,15 @@ class Workload(QtGui.QMainWindow):
     #ADDITIONAL FUNTIONS
     def questionPopup(self, title, msg):
         window=QtGui.QMessageBox()
+        window.setWindowFlags(QtCore.Qt.FramelessWindowHint)
         resp = window.question(self, title, msg,
         buttons=QtGui.QMessageBox.Ok | QtGui.QMessageBox.Cancel)
+       
         if resp == QtGui.QMessageBox.Ok:
             return True
         else:
             return False
+            
 
     #WINDOWS MOVEMENT
     def mouseMoveEvent(self, e):
