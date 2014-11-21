@@ -42,14 +42,17 @@ class Workload(QtGui.QMainWindow):
         self.timer=TaskReminder(self)
         self.shortcuts=ShortcutsHandler(self,self.settings['keyMainWindowToggle'])
         finalizeInit(self)
-        
-        
+       
+
     def resizeEvent(self,e):
+       
         path=QtGui.QPainterPath()
         rect=e.size()
         path.addRoundedRect(-1,-1,rect.width()+1,rect.height()+1,7,7)
         region=QtGui.QRegion(path.toFillPolygon().toPolygon())
         self.setMask(region)
+        
+
 
     def taskListFocusIn(self,e):
         if e.reason()==QtCore.Qt.FocusReason.TabFocusReason:

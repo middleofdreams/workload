@@ -2,6 +2,7 @@ from PySide import QtGui,QtCore
 from ui.archive_ui import Ui_Dialog
 import datetime
 from .task import Task
+from .GuiManager import changeStyle
 class ArchiveWindow(QtGui.QDialog):
 
     def __init__(self,parent):
@@ -11,7 +12,10 @@ class ArchiveWindow(QtGui.QDialog):
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
         contexts={}
-        self.setStyleSheet(parent.WindowStyle)
+        self.settings=self.parent.settings
+        self.ui.buttonBox.buttons()[0].setProperty("custom","buttonbox")
+        self.ui.buttonBox.buttons()[1].setProperty("custom","buttonbox")
+        changeStyle(self)
         for k,v in self.parent.contexts.items():
             contexts[v]=k
         for i in parent.db.getArchive():
