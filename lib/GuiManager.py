@@ -179,7 +179,9 @@ def changeStyle(main,settings={}):
     border 1px solid:rgb(55,55,55);height:2px;margin-left:5px;margin-right:5px;}\
     QLineEdit{background:rgba"+s["textInputBG"]+";border:1px solid rgba"+s["windowFrame"]+";border-radius:2px\
     ;font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px}\
-    QLabel{font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px}"
+    QLabel{font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px}\
+    \
+    QSizeGrip{width:16px;height:16px;image:url(:res/ui/size_grip.png)}"
     
     main.setStyleSheet(WindowStyle)
 

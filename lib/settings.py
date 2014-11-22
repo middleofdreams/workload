@@ -17,6 +17,7 @@ class Settings(dict):
                          "fontFamily":"Monospace",
                          "fontSize":"8",
                          "tasklistFontSize":"8",
+                         "tasklistFont":"Monospace",
                          "tasklistFontColor":"(0,0,0,255)",
                          "workloadFontColor":"(0,0,0,255)",
                          "windowBG":"(219,237,255)",

@@ -3,6 +3,7 @@
     <file>icon.png</file>
   </qresource>
   <qresource prefix="res">
+    <file>ui/size_grip.png</file>
     <file>status/0.png</file>
     <file>status/1.png</file>
     <file>status/2.png</file>
