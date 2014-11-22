@@ -82,6 +82,7 @@ class SettingsWindow(QtGui.QDialog):
         currentIndex=self.ui.fontFamily.findText(self.settings["fontFamily"])
         self.ui.fontFamily.setCurrentIndex(currentIndex)
         self.ui.fontSize.setValue(int(self.settings["fontSize"]))
+        self.ui.tasklistFontSize.setValue(int(self.settings["tasklistFontSize"]))
         self.ui.addFonts.clicked.connect(self.addFonts)
         self.ui.removeFonts.clicked.connect(self.removeFonts)
         self.ui.mainWindowToggleKey.setText(self.settings['keyMainWindowToggle'])
@@ -192,6 +193,7 @@ class SettingsWindow(QtGui.QDialog):
             self.settings["fontFamily"]=fontFamily
             self.settings["fontSize"]=fontSize
             self.settings["tasklistFontSize"]=tasklistFontSize
+            print(tasklistFontSize)
         
     def editWindowOpacity(self,v=None,save=False):
         if not v:
