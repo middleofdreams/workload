@@ -13,7 +13,6 @@ import datetime
 from lib.helpers import timestamp
 from lib.shortcuts import ShortcutsHandler
 from lib.GuiManager import guiSettings,connectSignals, finalizeInit,changeStyle
-from PySide.QtGui import QColor, QPainterPath
 
 
 class Workload(QtGui.QMainWindow):
@@ -30,19 +29,17 @@ class Workload(QtGui.QMainWindow):
         guiSettings(self)
         connectSignals(self)
         changeStyle(self)
-
+        
         self.taskOpened = False
         self.app = app
         loadContexts(self)
         self.currentContext = self.settings.getInitContext()
         selectCurrentContext(self)
-        
         self.loadTasksList(init=True)  
         self.tray=Trayicon(self)
         self.timer=TaskReminder(self)
         self.shortcuts=ShortcutsHandler(self,self.settings['keyMainWindowToggle'])
         finalizeInit(self)
-       
 
     def resizeEvent(self,e):
        
@@ -77,7 +74,7 @@ class Workload(QtGui.QMainWindow):
 
         
     def setMarker(self,tasks):
-        icon=QtGui.QIcon(':priority/status/marker.png')
+        icon=QtGui.QIcon(':res/status/clock.png')
         items=self.ui.taskList.findItems("",QtCore.Qt.MatchContains|QtCore.Qt.MatchRecursive)
         for i in items:
             removeicon=QtGui.QIcon()
@@ -199,15 +196,15 @@ class Workload(QtGui.QMainWindow):
             self.ui.statusbar.showMessage("Priority updated.",3300)
             
     def setPriorityColor(self,item,priority):
-        icon=QtGui.QIcon(':priority/status/'+str(priority)+'.png')
+        icon=QtGui.QIcon(':res/status/'+str(priority)+'.png')
         item.setIcon(1,icon)
 
-    def openTask(self):
+    def openTask(self,taskname=None):
         if not self.taskOpened:
             item = self.getSelectedItem()
             if item:
                 Task(self,item.data(0, 32))
-            
+                
 
     def getSelectedItem(self):
         selectedItems = self.ui.taskList.selectedItems()
@@ -237,7 +234,8 @@ class Workload(QtGui.QMainWindow):
             self.addTask()
         else:
             QtGui.QLineEdit.keyPressEvent(self.ui.taskInput,e)
-
+            if len(self.ui.taskInput.text())>20:
+                Task(self,taskid=0,taskname=self.ui.taskInput.text())
 
     #ADDITIONAL FUNTIONS
     def questionPopup(self, title, msg):
@@ -344,6 +342,6 @@ if __name__ == "__main__":
     import sys
     app = QtGui.QApplication(sys.argv)
     myapp = Workload(app)
-
+    
     res = app.exec_()
     sys.exit()

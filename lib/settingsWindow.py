@@ -11,36 +11,30 @@ class SettingsWindow(QtGui.QDialog):
         self.ui = Ui_Dialog()
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint | QtCore.Qt.WindowStaysOnTopHint)
         self.ui.setupUi(self)
-        self.ui.buttonBox.buttons()[0].setProperty("custom","buttonbox")
-        self.ui.buttonBox.buttons()[1].setProperty("custom","buttonbox")
-        self.ui.resetToDefaults.setProperty("custom","buttonbox")
+        self.ui.addFonts.setProperty("custom","skinny")
+        self.ui.removeFonts.setProperty("custom","skinny")
         changeStyle(self)       
         self.currentSettings={}
-        path=QtGui.QPainterPath()
-        rect=self.size()
-        path.addRoundedRect(-1,-1,rect.width()+6,rect.height()+2,7,7)
-        region=QtGui.QRegion(path.toFillPolygon().toPolygon())
-        self.setMask(region)
-        self.changeModality()
+        
         ## CONNECT SIGNALS
         self.colorButtons={"windowBG":self.ui.windowBG,"windowFrame":self.ui.windowFrame,"tasklistBG":self.ui.tasklistBG,
-                      "tasklistFrame":self.ui.tasklistFrame,"tasklistFontColor":self.ui.tasklistFontColor,
-                      "taskEditorBG":self.ui.taskEditorBG,"selectedMenuItem":self.ui.selectedMenuItem,
-                      "alternateListItem":self.ui.alternateTasklistBG,"taskEditorFrame":self.ui.taskEditorFrame}
+                      "tasklistFrame":self.ui.tasklistFrame,"tasklistFontColor":self.ui.tasklistFontColor,"textInputBG":self.ui.textInputBG,
+                      "taskEditorBG":self.ui.taskEditorBG,"selectedItem":self.ui.selectedItem,"buttonBG":self.ui.buttonBG,
+                      "alternateListItem":self.ui.alternateTasklistBG,"taskEditorFrame":self.ui.taskEditorFrame,"workloadFontColor":self.ui.workloadFontColor}
         for k,v in self.colorButtons.items():
             v.clicked.connect(lambda button=v,setting=k :self.editStyle(button,setting))
             self.setButtonColor(v, self.settings[k])
-            
+        
+        self.ui.fontFamily.activated.connect(self.editFonts)
+        self.ui.fontSize.valueChanged.connect(self.editFonts)
+        self.ui.tasklistFontSize.valueChanged.connect(self.editFonts)
         self.ui.notificationsOn.stateChanged.connect(self.notificationsSwitch)
         self.ui.defaultDueTimeOn.stateChanged.connect(self.defaultDueSwitch)
         self.ui.notifyIntervalUnit.currentIndexChanged.connect(lambda e:self.setSpinMax(e, self.ui.notifyIntervalSpin, [600, 60]))
         self.ui.notifyTimeUnit.currentIndexChanged.connect(lambda e:self.setSpinMax(e, self.ui.notifyTimeSpin, [600, 60]))
         self.ui.defaultDueTimeUnit.currentIndexChanged.connect(lambda e:self.setSpinMax(e, self.ui.defaultDueTimeSpin, [24, 60]))
         self.ui.windowOpacity.valueChanged.connect(self.editWindowOpacity)
-        self.ui.tasklistFont.activated.connect(self.editTasklistFont)
-        self.ui.tasklistFontSize.valueChanged.connect(self.editTasklistFont)
         self.ui.resetToDefaults.clicked.connect(self.resetStyle)
-        self.ui.disableModality.stateChanged.connect(self.changeModality)
         for i in self.parent.db.getContexts():
             self.ui.startupContext.addItem(i[1],i[0])
         
@@ -77,7 +71,6 @@ class SettingsWindow(QtGui.QDialog):
         self.ui.notifyIntervalSpin.setValue(notifyInterval)
         
         self.ui.notificationsOn.setChecked(self.settings["showNotifications"])
-        self.ui.disableModality.setChecked(self.settings["windowModality"])
         self.ui.notificationsCurrentContext.setChecked(self.settings["notifyCurrentContext"])
         self.ui.defaultDueTimeOn.setChecked(self.settings["defaultDueDateOn"])
         self.ui.defaultDueTimeSpin.setValue(int(self.settings["defaultDueDateValue"]))
@@ -86,9 +79,9 @@ class SettingsWindow(QtGui.QDialog):
         self.loadFontList()
         self.ui.windowOpacity.setValue(int(self.settings["mainWindowOpacity"]))
         self.ui.taskEditorOpacity.setValue(int(self.settings["taskWindowOpacity"]))
-        currentIndex=self.ui.tasklistFont.findText(self.settings["tasklistFont"])
-        self.ui.tasklistFont.setCurrentIndex(currentIndex)
-        self.ui.tasklistFontSize.setValue(int(self.settings["tasklistFontSize"]))
+        currentIndex=self.ui.fontFamily.findText(self.settings["fontFamily"])
+        self.ui.fontFamily.setCurrentIndex(currentIndex)
+        self.ui.fontSize.setValue(int(self.settings["fontSize"]))
         self.ui.addFonts.clicked.connect(self.addFonts)
         self.ui.removeFonts.clicked.connect(self.removeFonts)
         self.ui.mainWindowToggleKey.setText(self.settings['keyMainWindowToggle'])
@@ -99,7 +92,6 @@ class SettingsWindow(QtGui.QDialog):
         posy=self.parent.y()
         parentWidth=self.parent.width()
         self.move(posx+parentWidth+30,posy-30)
-        self.changeModality()
         if self.exec_():
             #save load context values
             r=self.ui.startupContext.currentIndex()
@@ -139,28 +131,25 @@ class SettingsWindow(QtGui.QDialog):
             #save opacity settings
             self.editWindowOpacity(save=True)
             #save tasklist font settings
-            self.editTasklistFont(save=True)
+            self.editFonts(save=True)
             self.saveStyle()
-
             key=self.ui.mainWindowToggleKey.text()
             self.settings['keyMainWindowToggle']=key
             self.parent.shortcuts.key=key
         else:
             self.parent.setWindowOpacity(int(self.settings["mainWindowOpacity"])/100)
             font=QtGui.QFont(self.settings["tasklistFont"]).setPointSize(int(self.settings["tasklistFontSize"]))
-            self.parent.ui.taskList.setFont(font)
+            self.parent.setFont(font)
             changeStyle(self.parent)
             
         self.parent.shortcuts.start()
-    
-    def changeModality(self,e=None):
+    def resizeEvent(self,e):
+        path=QtGui.QPainterPath()
+        rect=self.size()
+        path.addRoundedRect(-1,-1,rect.width()+1,rect.height()+1,7,7)
+        region=QtGui.QRegion(path.toFillPolygon().toPolygon())
+        self.setMask(region)
         
-        if e==2 or self.ui.disableModality.isChecked():
-            self.settings["windowModality"]=self.ui.disableModality.isChecked()
-        else:
-            self.settings["windowModality"]=self.ui.disableModality.isChecked()
-        print(self.settings["windowModality"])
-        self.setModal(self.settings["windowModality"])
     def saveStyle(self):
         for setting,button in self.colorButtons.items():
             color=button.palette().button().color().getRgb()
@@ -190,13 +179,19 @@ class SettingsWindow(QtGui.QDialog):
         button.setStyleSheet(style)
         
     
-    def editTasklistFont(self,v=None,save=False):
-        font=QtGui.QFont(self.ui.tasklistFont.currentText())
-        font.setPointSize(self.ui.tasklistFontSize.value())
-        self.parent.ui.taskList.setFont(font)
+    def editFonts(self,v=None,save=False):
+        fontFamily=self.ui.fontFamily.currentText()
+        fontSize=self.ui.fontSize.value()
+        tasklistFontSize=self.ui.tasklistFontSize.value()
+        self.currentSettings["fontFamily"]=fontFamily
+        self.currentSettings["fontSize"]=str(fontSize)
+        self.currentSettings["tasklistFontSize"]=str(tasklistFontSize)
+        changeStyle(self.parent,self.currentSettings)
+        changeStyle(self,self.currentSettings)
         if save:
-            self.settings["tasklistFont"]=self.ui.tasklistFont.currentText()
-            self.settings["tasklistFontSize"]=self.ui.tasklistFontSize.value()
+            self.settings["fontFamily"]=fontFamily
+            self.settings["fontSize"]=fontSize
+            self.settings["tasklistFontSize"]=tasklistFontSize
         
     def editWindowOpacity(self,v=None,save=False):
         if not v:
@@ -231,7 +226,7 @@ class SettingsWindow(QtGui.QDialog):
         chosenFonts=self.settings["chosenFonts"].split("|")
         for i in chosenFonts:
             self.ui.chosenFonts.addItem(i)
-            self.ui.tasklistFont.addItem(i)
+            self.ui.fontFamily.addItem(i)
             
             
         
