@@ -193,7 +193,6 @@ class SettingsWindow(QtGui.QDialog):
             self.settings["fontFamily"]=fontFamily
             self.settings["fontSize"]=fontSize
             self.settings["tasklistFontSize"]=tasklistFontSize
-            print(tasklistFontSize)
         
     def editWindowOpacity(self,v=None,save=False):
         if not v:

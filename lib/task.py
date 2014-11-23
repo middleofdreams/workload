@@ -18,7 +18,7 @@ class Task(QtGui.QDialog):
         self.settings=self.parent.settings
         self.taskid=taskid
         self.moveIt=False
-        
+        self.setSizeGripEnabled(True)
         fontlist=self.settings["chosenFonts"].split("|")
         for i in fontlist:
             if i in fontlist:
@@ -95,13 +95,15 @@ class Task(QtGui.QDialog):
             date=date+delta
             self.ui.dueDate.setDateTime(QtCore.QDateTime(date.year,date.month,date.day,date.hour,date.minute,0,0))
         self.move(self.parent.pos())
+        self.exec_()
+        parent.taskOpened=False
+        
+    def resizeEvent(self,e):
         path=QtGui.QPainterPath()
         rect=self.size()
         path.addRoundedRect(-1,-1,rect.width()+1,rect.height()+1,10,10)
         region=QtGui.QRegion(path.toFillPolygon().toPolygon())
         self.setMask(region)
-        self.exec_()
-        parent.taskOpened=False
         
     def setPriorityText(self,priority):
         priorities=["Not set!","Now","Next","Later","Someday","Awaiting"]
