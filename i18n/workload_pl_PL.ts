@@ -757,7 +757,7 @@
         <translation>Zadanie ukończone.</translation>
     </message>
     <message>
-        <location filename="lib/contexts.py" line="61"/>
+        <location filename="lib/contexts.py" line="68"/>
         <source>Error</source>
         <translation>Błąd</translation>
     </message>
@@ -787,22 +787,22 @@
         <translation>Wprowadź nazwę nowego kontekstu</translation>
     </message>
     <message>
-        <location filename="lib/contexts.py" line="58"/>
+        <location filename="lib/contexts.py" line="65"/>
         <source>Can&apos;t remove last context</source>
         <translation>Nie można usunąć ostatniego kontekstu</translation>
     </message>
     <message>
-        <location filename="lib/contexts.py" line="61"/>
+        <location filename="lib/contexts.py" line="68"/>
         <source>Can&apos;t remove context with active tasks</source>
         <translation>Nie można usunąć kontekstu z aktywnymi zadaniami</translation>
     </message>
     <message>
-        <location filename="lib/contexts.py" line="63"/>
+        <location filename="lib/contexts.py" line="70"/>
         <source>Remove context</source>
         <translation>Usuń kontekst</translation>
     </message>
     <message>
-        <location filename="lib/contexts.py" line="63"/>
+        <location filename="lib/contexts.py" line="70"/>
         <source>Do you really want to remove active context?</source>
         <translation>Czy na pewno chcesz usunąć aktywny kontekst?</translation>
     </message>
@@ -810,6 +810,11 @@
         <location filename="main.py" line="128"/>
         <source>New task created.</source>
         <translation>Nowe zadanie utworzone.</translation>
+    </message>
+    <message>
+        <location filename="lib/contexts.py" line="55"/>
+        <source>Context with same name already exists</source>
+        <translation>Kontekst o tej samej nazwie już istnieje</translation>
     </message>
 </context>
 </TS>

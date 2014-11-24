@@ -47,11 +47,18 @@ def addContext(self):
     ok=False
     dialog=QtGui.QInputDialog.getText(self,QtGui.QApplication.translate("ui","New Context"),QtGui.QApplication.translate("ui","Please enter new context name"),QtGui.QLineEdit.Normal,"",ok)
     if dialog[0] and dialog[1]:
-        newid=self.db.addContext(str(dialog[0]))
-        self.currentContext=newid
-        self.loadTasksList()
-        loadContexts(self)
-        selectCurrentContext(self)
+        exists=False
+        for i in self.contexts.keys():
+            if i.lower()==dialog[0].lower():
+                exists=True
+        if exists:
+            QtGui.QMessageBox.critical(self,QtGui.QApplication.translate("ui","Error"),QtGui.QApplication.translate("ui","Context with same name already exists"))
+        else:
+            newid=self.db.addContext(str(dialog[0]))
+            self.currentContext=newid
+            self.loadTasksList()
+            loadContexts(self)
+            selectCurrentContext(self)
         
 def removeContext(self):
     if len(self.contexts)==1:
