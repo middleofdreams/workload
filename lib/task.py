@@ -84,11 +84,11 @@ class Task(QtGui.QDialog):
             self.ui.label_4.hide()  #Hide created date label
             self.ui.label_6.hide()  #Hide closed date label
             
-            self.setWindowTitle("Create New Task")
+            self.setWindowTitle(self.tr("Create New Task"))
             if taskname is not None:
                 self.ui.taskName.setText(taskname)
             else:
-                self.ui.taskName.setText("Enter task name here")
+                self.ui.taskName.setText(self.tr("Enter task name here"))
             self.setPriorityText(0)
             date=datetime.datetime.now()
             delta=datetime.timedelta(hours=24)
@@ -106,7 +106,7 @@ class Task(QtGui.QDialog):
         self.setMask(region)
         
     def setPriorityText(self,priority):
-        priorities=["Not set!","Now","Next","Later","Someday","Awaiting"]
+        priorities=[self.tr("Not set!"),self.tr("Now"),self.tr("Next"),self.tr("Later"),self.tr("Someday"),self.tr("Awaiting")]
         self.ui.priorityText.setText(priorities[priority])
         
     def setDueOn(self,e):
@@ -169,9 +169,10 @@ class Task(QtGui.QDialog):
                 self.parent.db.setTaskDetails(taskid,taskDescription,priority,taskname,duedate)
                 self.updateItem(taskname, priority)
                 self.close()
-                self.parent.ui.statusbar.showMessage("Task updated",3300)
+                self.parent.ui.statusbar.showMessage(self.tr("Task updated"),3300)
             else:
-                self.parent.taskAlreadyExistMsg(parent=self)
+                self.taskAlreadyExistMsg=self.parent.taskAlreadyExistMsg
+                self.taskAlreadyExistMsg(self)
             
         else:
             #create new task
@@ -184,14 +185,14 @@ class Task(QtGui.QDialog):
                 self.parent.createTaskItem(taskname, taskid, priority)
                 self.parent.adjustHeight()
                 self.close()
-                self.parent.ui.statusbar.showMessage("New task created.",3300)
+                self.parent.ui.statusbar.showMessage(self.tr("New task created."),3300)
             else:
                 self.parent.taskAlreadyExistMsg(parent=self)
         self.parent.timer.getNearEndTasks(force=True)
 
     def dropTask(self,e):
             fulldata=e.mimeData().text()    
-            self.ui.statusbar.showMessage("New task created.",3300)
+            self.ui.statusbar.showMessage(self.tr("New task created."),3300)
             date=datetime.datetime.now()
             delta=datetime.timedelta(hours=24)
             duedate=date+delta

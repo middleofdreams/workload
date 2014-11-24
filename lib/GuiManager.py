@@ -54,7 +54,8 @@ def finalizeInit(main):
 #     main.ui.taskList.setFont(font)
     main.show()
     main.adjustHeight(downSize=True, init=False)
-    main.ui.statusbar.showMessage("Hello! Ready to work ;-)",3600)
+
+    main.ui.statusbar.showMessage(QtGui.QApplication.translate("ui","Hello! Ready to work ;-)"),3600)
     
     
 def changeStyle(main,settings={}):

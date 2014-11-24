@@ -64,10 +64,10 @@ class TaskReminder(QtCore.QTimer):
                 taskNames=""
                 for v in tasks.values():
                     taskNames+="\n"+v[0]+" - "+self.formatDate(v[1])
-                msg="Following tasks:"+taskNames
+                msg=self.tr("Following tasks:")+taskNames
             else:
                 n,d=list(tasks.values())[0]
-                msg="Following task:\n"+n+" - "+self.formatDate(d)
+                msg=self.tr("Following task:")+"\n"+n+" - "+self.formatDate(d)
             self.parent.tray.showMessage("Workload", msg)
             
         
@@ -77,15 +77,15 @@ class TaskReminder(QtCore.QTimer):
         now=datetime.datetime.now()
         if d.date()==now.date():
             if d<now:
-                formatted=" already ended!"
+                formatted=self.tr(" already ended!")
             else:
-                formatted=d.strftime(" ends at %H:%M")
+                formatted=d.strftime(self.tr(" ends at ")+"%H:%M")
         elif d.date()<now.date():
-            formatted=" already ended!"
+            formatted=self.tr(" already ended!")
         elif (d.date()-now.date()).days==1:
-            formatted=d.strftime(" ends tomorrow at %H:%M")
+            formatted=d.strftime(self.tr(" ends tomorrow at")+" %H:%M")
         else:
-            formatted=d.strftime(" ends %d.%m at %H:%M")
+            formatted=d.strftime(self.tr(" ends")+" %d.%m"+self.tr(" at")+" %H:%M")
             
         return formatted
         
