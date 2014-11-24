@@ -92,7 +92,7 @@ def changeStyle(main,settings={}):
     border-radius: 8px; background-color:rgba"+s["taskEditorBG"]+"\
     ;font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px}\
     \
-    QComboBox{background-color:rgba"+s["buttonBG"]+";border:1px solid rgba(15,15,15,100);border-radius:3px;min-width:10ex;min-height:13px;\
+    QComboBox{background-color:rgba"+s["textInputBG"]+";border:1px solid rgba(15,15,15,100);border-radius:3px;min-width:10ex;min-height:13px;\
     padding-top:2px;padding-bottom:2px;padding-left:5px;padding-right:5px;border-style:outset;\
     font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px}\
     QComboBox::down-arrow{image:url(:res/ui/down_arrow.png)}\
@@ -148,7 +148,7 @@ def changeStyle(main,settings={}):
     QPushButton::flat[button=taskEditorUnderline]{border: 1px solid rgba(15,15,15,200); border-radius:2px;\
     background-color:rgba"+s["selectedItem"]+"}\
         \
-    QDateTimeEdit{background-color:rgba"+s["buttonBG"]+";border:1px solid rgba(15,15,15,100);border-radius:3px;min-width:10ex;min-height:13px;\
+    QDateTimeEdit{background-color:rgba"+s["textInputBG"]+";border:1px solid rgba(15,15,15,100);border-radius:3px;min-width:10ex;min-height:13px;\
     padding-top:2px;padding-bottom:2px;padding-left:5px;padding-right:5px;border-style:outset;\
     font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px}\
     QDateTimeEdit::down-arrow{image:url(:res/ui/down_arrow.png)}\
@@ -177,8 +177,10 @@ def changeStyle(main,settings={}):
     border:1px solid rgb(85, 170, 255);border-radius:3px}\
     QMenu::separator{background-color:rgba"+s["windowFrame"]+";\
     border 1px solid:rgb(55,55,55);height:2px;margin-left:5px;margin-right:5px;}\
+    \
     QLineEdit{background:rgba"+s["textInputBG"]+";border:1px solid rgba"+s["windowFrame"]+";border-radius:2px\
     ;font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px}\
+    \
     QLabel{font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px}\
     \
     QSizeGrip{width:16px;height:16px;image:url(:res/ui/size_grip.png)}"

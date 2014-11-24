@@ -11,12 +11,12 @@ class Settings(dict):
                          "defaultDueDateOn":True,
                          "defaultDueDateValue":"24",
                          "defaultDueDateUnit":"0",
-                         "chosenFonts":"Monospace",
+                         "chosenFonts":"Serif",
                          "mainWindowOpacity":"90",
                          "taskWindowOpacity":"90",
-                         "fontFamily":"Monospace",
-                         "fontSize":"8",
-                         "tasklistFontSize":"8",
+                         "fontFamily":"Serif",
+                         "fontSize":"10",
+                         "tasklistFontSize":"10",
                          "tasklistFont":"Monospace",
                          "tasklistFontColor":"(0,0,0,255)",
                          "workloadFontColor":"(0,0,0,255)",
@@ -27,9 +27,9 @@ class Settings(dict):
                          "tasklistBG":"(219,237,255)",
                          "tasklistFrame":"(85,170,255)",
                          "alternateListItem":"(170,213,255)",
-                         "selectedItem":"(170,213,255)",
+                         "selectedItem":"(85,170,255)",
                          "buttonBG":"(170,213,255)",
-                         "textInputBG":"(255,255,255,255)",
+                         "textInputBG":"(170,255,255,255)",
                          "keyMainWindowToggle":"Ctrl + Space"
         }
                             

@@ -15,7 +15,6 @@ class SettingsWindow(QtGui.QDialog):
         self.ui.removeFonts.setProperty("custom","skinny")
         changeStyle(self)       
         self.currentSettings={}
-        
         ## CONNECT SIGNALS
         self.colorButtons={"windowBG":self.ui.windowBG,"windowFrame":self.ui.windowFrame,"tasklistBG":self.ui.tasklistBG,
                       "tasklistFrame":self.ui.tasklistFrame,"tasklistFontColor":self.ui.tasklistFontColor,"textInputBG":self.ui.textInputBG,
@@ -133,17 +132,19 @@ class SettingsWindow(QtGui.QDialog):
             self.editWindowOpacity(save=True)
             #save tasklist font settings
             self.editFonts(save=True)
-            self.saveStyle()
+            
             key=self.ui.mainWindowToggleKey.text()
             self.settings['keyMainWindowToggle']=key
             self.parent.shortcuts.key=key
+            self.saveStyle()
         else:
             self.parent.setWindowOpacity(int(self.settings["mainWindowOpacity"])/100)
-            font=QtGui.QFont(self.settings["tasklistFont"]).setPointSize(int(self.settings["tasklistFontSize"]))
-            self.parent.setFont(font)
             changeStyle(self.parent)
-            
+#             font=QtGui.QFont(self.settings["tasklistFont"]).setPointSize(int(self.settings["tasklistFontSize"]))
+#             self.parent.setFont(font)
+                 
         self.parent.shortcuts.start()
+        
     def resizeEvent(self,e):
         path=QtGui.QPainterPath()
         rect=self.size()
@@ -152,16 +153,26 @@ class SettingsWindow(QtGui.QDialog):
         self.setMask(region)
         
     def saveStyle(self):
-        for setting,button in self.colorButtons.items():
-            color=button.palette().button().color().getRgb()
-            self.settings[setting]=str(color)    
+        for setting,value in self.currentSettings.items():
+            self.settings[setting]=self.currentSettings[setting]
+        changeStyle(self.parent,self.currentSettings)
             
     def resetStyle(self):
         for setting,button in self.colorButtons.items():
             self.setButtonColor(button, self.settings.defaults[setting])
-            self.settings[setting]=self.settings.defaults[setting]
-        changeStyle(self.parent)
-        changeStyle(self)
+            self.currentSettings[setting]=self.settings.defaults[setting]
+            
+        self.currentSettings["fontFamily"]=self.settings.defaults["fontFamily"]
+        self.currentSettings["fontSize"]=self.settings.defaults["fontSize"]
+        self.currentSettings["tasklistFontSize"]=self.settings.defaults["tasklistFontSize"]
+        currentIndex=self.ui.fontFamily.findText(self.currentSettings["fontFamily"])
+        self.ui.fontFamily.setCurrentIndex(currentIndex)
+        self.ui.fontSize.setValue(int(self.currentSettings["fontSize"]))
+        self.ui.tasklistFontSize.setValue(int(self.currentSettings["tasklistFontSize"]))
+        
+        changeStyle(self.parent,self.currentSettings)
+        changeStyle(self,self.currentSettings)
+        
           
     def editStyle(self,button,setting):
         currentColor=button.palette().button().color()
