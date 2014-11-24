@@ -28,20 +28,28 @@ class Workload(QtGui.QMainWindow):
         guiSettings(self)
         connectSignals(self)
         changeStyle(self)
-
+        
         self.taskOpened = False
         self.app = app
         loadContexts(self)
         self.currentContext = self.settings.getInitContext()
         selectCurrentContext(self)
-        
         self.loadTasksList(init=True)  
         self.tray=Trayicon(self)
         self.timer=TaskReminder(self)
         self.shortcuts=ShortcutsHandler(self,self.settings['keyMainWindowToggle'])
-        
         finalizeInit(self)
-        self.ui.statusbar.showMessage(QtGui.QApplication.translate("ui","Hello! Ready to work ;-)"),3600)
+
+
+    def resizeEvent(self,e):
+       
+        path=QtGui.QPainterPath()
+        rect=e.size()
+        path.addRoundedRect(-1,-1,rect.width()+1,rect.height()+1,7,7)
+        region=QtGui.QRegion(path.toFillPolygon().toPolygon())
+        self.setMask(region)
+        
+
 
     def taskListFocusIn(self,e):
         if e.reason()==QtCore.Qt.FocusReason.TabFocusReason:
@@ -66,7 +74,7 @@ class Workload(QtGui.QMainWindow):
 
         
     def setMarker(self,tasks):
-        icon=QtGui.QIcon(':priority/status/marker.png')
+        icon=QtGui.QIcon(':res/status/clock.png')
         items=self.ui.taskList.findItems("",QtCore.Qt.MatchContains|QtCore.Qt.MatchRecursive)
         for i in items:
             removeicon=QtGui.QIcon()
@@ -191,15 +199,15 @@ class Workload(QtGui.QMainWindow):
             self.ui.statusbar.showMessage(QtGui.QApplication.translate("ui","Priority updated."),3300)
             
     def setPriorityColor(self,item,priority):
-        icon=QtGui.QIcon(':priority/status/'+str(priority)+'.png')
+        icon=QtGui.QIcon(':res/status/'+str(priority)+'.png')
         item.setIcon(1,icon)
 
-    def openTask(self):
+    def openTask(self,taskname=None):
         if not self.taskOpened:
             item = self.getSelectedItem()
             if item:
                 Task(self,item.data(0, 32))
-            
+                
 
     def getSelectedItem(self):
         selectedItems = self.ui.taskList.selectedItems()
@@ -229,17 +237,21 @@ class Workload(QtGui.QMainWindow):
             self.addTask()
         else:
             QtGui.QLineEdit.keyPressEvent(self.ui.taskInput,e)
-
+            if len(self.ui.taskInput.text())>20:
+                Task(self,taskid=0,taskname=self.ui.taskInput.text())
 
     #ADDITIONAL FUNTIONS
     def questionPopup(self, title, msg):
         window=QtGui.QMessageBox()
+        window.setWindowFlags(QtCore.Qt.FramelessWindowHint)
         resp = window.question(self, title, msg,
         buttons=QtGui.QMessageBox.Ok | QtGui.QMessageBox.Cancel)
+       
         if resp == QtGui.QMessageBox.Ok:
             return True
         else:
             return False
+            
 
     #WINDOWS MOVEMENT
     def mouseMoveEvent(self, e):
@@ -337,6 +349,6 @@ if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
     app.installTranslator(qtTranslator)
     myapp = Workload(app)
-
+    
     res = app.exec_()
     sys.exit()

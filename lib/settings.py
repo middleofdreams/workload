@@ -14,9 +14,12 @@ class Settings(dict):
                          "chosenFonts":"Monospace",
                          "mainWindowOpacity":"90",
                          "taskWindowOpacity":"90",
-                         "tasklistFont":"Monospace",
+                         "fontFamily":"Monospace",
+                         "fontSize":"8",
                          "tasklistFontSize":"8",
+                         "tasklistFont":"Monospace",
                          "tasklistFontColor":"(0,0,0,255)",
+                         "workloadFontColor":"(0,0,0,255)",
                          "windowBG":"(219,237,255)",
                          "taskEditorBG":"(219,237,255)",
                          "taskEditorFrame":"(0,0,0,255)",
@@ -24,7 +27,9 @@ class Settings(dict):
                          "tasklistBG":"(219,237,255)",
                          "tasklistFrame":"(85,170,255)",
                          "alternateListItem":"(170,213,255)",
-                         "selectedMenuItem":"(170,213,255)",
+                         "selectedItem":"(170,213,255)",
+                         "buttonBG":"(170,213,255)",
+                         "textInputBG":"(255,255,255,255)",
                          "keyMainWindowToggle":"Ctrl + Space"
         }
                             

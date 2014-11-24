@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created: Tue Nov 18 20:08:22 2014
+# Created: Sat Nov 22 18:45:23 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -22,7 +22,8 @@ class Ui_MainWindow(object):
         MainWindow.setMinimumSize(QtCore.QSize(190, 320))
         MainWindow.setMaximumSize(QtCore.QSize(300, 600))
         font = QtGui.QFont()
-        font.setFamily("monofur")
+        font.setFamily("Serif")
+        font.setPointSize(8)
         MainWindow.setFont(font)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icon/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -41,9 +42,6 @@ class Ui_MainWindow(object):
         self.taskList = QtGui.QTreeWidget(self.centralwidget)
         self.taskList.setEnabled(True)
         self.taskList.setBaseSize(QtCore.QSize(0, 0))
-        font = QtGui.QFont()
-        font.setFamily("monofur")
-        self.taskList.setFont(font)
         self.taskList.setAcceptDrops(True)
         self.taskList.setAutoFillBackground(True)
         self.taskList.setFrameShape(QtGui.QFrame.Panel)

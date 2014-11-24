@@ -4,9 +4,9 @@ from ui.task_ui import Ui_Dialog
 import datetime,unicodedata
 from lib.helpers import timestamp,QtDateFormat
 from .GuiManager import changeStyle
-class Task(QtGui.QDialog):
 
-    def __init__(self,parent,taskid):
+class Task(QtGui.QDialog):
+    def __init__(self,parent,taskid,taskname=None):
         '''main window init'''
         parent.taskOpened=True
         QtGui.QDialog.__init__(self)
@@ -15,22 +15,25 @@ class Task(QtGui.QDialog):
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint
                             | QtCore.Qt.WindowStaysOnTopHint)
         self.parent=parent
+        self.settings=self.parent.settings
         self.taskid=taskid
         self.moveIt=False
-        self.settings=self.parent.settings
-        
+        self.setSizeGripEnabled(True)
         fontlist=self.settings["chosenFonts"].split("|")
         for i in fontlist:
             if i in fontlist:
                 self.ui.fontComboBox.addItem(i,None)
         
         windowOpacity=int(self.settings["taskWindowOpacity"])/100
-        
-        self.setProperty("dialog","taskEditor")
-        self.ui.buttonBox.buttons()[0].setProperty("custom","buttonbox")
-        self.ui.buttonBox.buttons()[1].setProperty("custom","buttonbox")
-        changeStyle(self)
         self.setWindowOpacity(float(windowOpacity))
+        self.setProperty("dialog","taskEditor")
+        editorButtons=[self.ui.editorBGcolor,self.ui.editorTextColor,self.ui.editorResetColor]
+        for i in editorButtons:
+            i.setProperty("button","taskEditor")
+        self.ui.editorBold.setProperty("button", "taskEditorBold")
+        self.ui.editorItalic.setProperty("button", "taskEditorItalic")
+        self.ui.editorUnderline.setProperty("button", "taskEditorUnderline")
+        changeStyle(self)
         self.ui.dueOn.stateChanged.connect(self.setDueOn)
         self.ui.priority.valueChanged.connect(self.setPriorityText)
         self.ui.taskDescription.cursorPositionChanged.connect(self.toggleFont)
@@ -82,17 +85,25 @@ class Task(QtGui.QDialog):
             self.ui.label_6.hide()  #Hide closed date label
             
             self.setWindowTitle(self.tr("Create New Task"))
-            self.ui.taskName.setText(self.tr("Enter task name here"))
+            if taskname is not None:
+                self.ui.taskName.setText(taskname)
+            else:
+                self.ui.taskName.setText(self.tr("Enter task name here"))
             self.setPriorityText(0)
             date=datetime.datetime.now()
             delta=datetime.timedelta(hours=24)
             date=date+delta
             self.ui.dueDate.setDateTime(QtCore.QDateTime(date.year,date.month,date.day,date.hour,date.minute,0,0))
         self.move(self.parent.pos())
-
-        r=self.exec_()
+        self.exec_()
         parent.taskOpened=False
-
+        
+    def resizeEvent(self,e):
+        path=QtGui.QPainterPath()
+        rect=self.size()
+        path.addRoundedRect(-1,-1,rect.width()+1,rect.height()+1,10,10)
+        region=QtGui.QRegion(path.toFillPolygon().toPolygon())
+        self.setMask(region)
         
     def setPriorityText(self,priority):
         priorities=[self.tr("Not set!"),self.tr("Now"),self.tr("Next"),self.tr("Later"),self.tr("Someday"),self.tr("Awaiting")]
@@ -137,7 +148,7 @@ class Task(QtGui.QDialog):
         for item in selectedItems:
             self.parent.setPriorityColor(item, priority)
             item.setText(0,str(priority))
-            item.setText(1,str(taskname))
+            item.setText(2,str(taskname))
             self.parent.ui.taskList.sortItems(0,QtCore.Qt.AscendingOrder)
     
     def openHyperlink(self,e):
