@@ -30,7 +30,8 @@ class Settings(dict):
                          "selectedItem":"(85,170,255)",
                          "buttonBG":"(170,213,255)",
                          "textInputBG":"(170,255,255,255)",
-                         "keyMainWindowToggle":"Ctrl + Space"
+                         "keyMainWindowToggle":"Ctrl + Space",
+                         "lang":"auto"
         }
                             
         self.booleans=["notifyCurrentContext","askOnExit","showNotifications","defaultDueDateOn"]

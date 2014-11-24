@@ -92,6 +92,21 @@ class SettingsWindow(QtGui.QDialog):
         posy=self.parent.y()
         parentWidth=self.parent.width()
         self.move(posx+parentWidth+30,posy-30)
+        self.findAvailableLanguages()
+        self.lang=self.settings['lang']
+        self.ui.language.setItemData(0,"auto")
+        self.ui.language.setItemData(1,"en")
+
+        if self.lang=="auto":
+            self.ui.language.setCurrentIndex(0)
+        elif self.lang=="en":
+            self.ui.language.setCurrentIndex(1)
+        else:
+            index=self.ui.language.findData(self.lang)
+            if index>-1:
+                self.ui.language.setCurrentIndex(index)
+                
+        
         if self.exec_():
             #save load context values
             r=self.ui.startupContext.currentIndex()
@@ -137,6 +152,14 @@ class SettingsWindow(QtGui.QDialog):
             self.settings['keyMainWindowToggle']=key
             self.parent.shortcuts.key=key
             self.saveStyle()
+            
+            lang=self.ui.language.currentIndex()
+            lang=self.ui.language.itemData(lang)
+            print(lang)
+            if lang!=self.lang:
+                self.settings["lang"]=lang
+                self.parent.translate(lang)
+                
         else:
             self.parent.setWindowOpacity(int(self.settings["mainWindowOpacity"])/100)
             changeStyle(self.parent)
@@ -153,7 +176,7 @@ class SettingsWindow(QtGui.QDialog):
         self.setMask(region)
         
     def saveStyle(self):
-        for setting,value in self.currentSettings.items():
+        for setting in self.currentSettings.keys():
             self.settings[setting]=self.currentSettings[setting]
         changeStyle(self.parent,self.currentSettings)
             
@@ -322,3 +345,13 @@ class SettingsWindow(QtGui.QDialog):
             del(self.posy)
         except:
             pass
+
+    def findAvailableLanguages(self):
+        import os
+        for i in os.listdir("i18n"):
+            if i.endswith(".qm"):
+                lang=i.split("_",1)[1].rstrip(".qm")
+                locale=QtCore.QLocale(lang)
+                nativelang=locale.nativeLanguageName().capitalize()
+                self.ui.language.addItem(nativelang,lang)
+                
