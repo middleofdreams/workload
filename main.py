@@ -16,14 +16,16 @@ from lib.GuiManager import guiSettings,connectSignals, finalizeInit,changeStyle
 
 class Workload(QtGui.QMainWindow):
 
-    def __init__(self,app):
+    def __init__(self,app,onlyDBAccess=False):
         '''main window init'''
         QtGui.QMainWindow.__init__(self)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.db = DB(self)
         self.settings=Settings(self)
-        
+        self.onlyDBAccess=onlyDBAccess
+        if onlyDBAccess:
+            return 
         #GUI setting
         guiSettings(self)
         connectSignals(self)
@@ -39,6 +41,7 @@ class Workload(QtGui.QMainWindow):
         self.timer=TaskReminder(self)
         self.shortcuts=ShortcutsHandler(self,self.settings['keyMainWindowToggle'])
         finalizeInit(self)
+        self.translate()
 
 
     def resizeEvent(self,e):
@@ -239,7 +242,7 @@ class Workload(QtGui.QMainWindow):
             self.addTask()
         else:
             QtGui.QLineEdit.keyPressEvent(self.ui.taskInput,e)
-            if len(self.ui.taskInput.text())>20:
+            if len(self.ui.taskInput.text())>35:
                 Task(self,taskid=0,taskname=self.ui.taskInput.text())
 
     #ADDITIONAL FUNTIONS
@@ -315,7 +318,7 @@ class Workload(QtGui.QMainWindow):
         f.close()
         QtGui.QMessageBox.information(self, QtGui.QApplication.translate("ui","About"), text, buttons=QtGui.QMessageBox.Ok )
 
-    def exit(self):
+    def exit(self,exitcode=0):
         exit_=False
         if self.settings["askOnExit"]:
             if self.questionPopup(QtGui.QApplication.translate("ui","Exit"), QtGui.QApplication.translate("ui","Are you sure?")):
@@ -324,7 +327,7 @@ class Workload(QtGui.QMainWindow):
         if exit_==True:
             self.settings.setCurrentContextAsLast()
             self.shortcuts.terminate()
-            self.app.exit()
+            self.app.exit(exitcode)
 
     def createTask(self):
         Task(self,taskid=0)
@@ -343,15 +346,47 @@ class Workload(QtGui.QMainWindow):
     def hoyKeyError(self):
         QtGui.QMessageBox.critical(self,QtGui.QApplication.translate("ui","Error"),QtGui.QApplication.translate("ui","Unable to register global shortcut"))
 
+    def changeEvent(self, e):
+        if e.type()==QtCore.QEvent.LanguageChange:
+            self.ui.retranslateUi(self)
+            self.ui.statusbar.showMessage(QtGui.QApplication.translate("ui","Hello! Ready to work ;-)"),3600)
+            loadContexts(self)
+            selectCurrentContext(self)
+            
+        QtGui.QMainWindow.changeEvent(self,e)
+        
+    def translate(self,lang=None):
+        if lang is None:
+            lang= self.settings["lang"]
+        translate=True
+        if lang=="auto":
+            locale = QtCore.QLocale.system().name()
+        
+        elif lang=="en":
+            translate=False
+            try:
+                self.app.removeTranslator(self.qtTranslator)
+            except:
+                pass
+        else:
+            locale=lang
+    
+        if translate:
+            self.qtTranslator = QtCore.QTranslator()
+            self.qtTranslator.load("i18n"+os.sep+"workload_"+locale+".qm")
+            self.app.installTranslator(self.qtTranslator)
+  
+  
+  
 if __name__ == "__main__":
     import sys,os
-    locale = QtCore.QLocale.system().name()
-    locale= "pl_PL"
-    qtTranslator = QtCore.QTranslator()
-    qtTranslator.load("i18n"+os.sep+"workload_"+locale+".qm")
+
+    exitcode=1
     app = QtGui.QApplication(sys.argv)
-    app.installTranslator(qtTranslator)
     myapp = Workload(app)
-    
-    res = app.exec_()
-    sys.exit()
+
+
+
+        #app.languageChange()
+
+    sys.exit(app.exec_())
