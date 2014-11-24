@@ -18,7 +18,7 @@ class Task(QtGui.QDialog):
         self.settings=self.parent.settings
         self.taskid=taskid
         self.moveIt=False
-        self.setSizeGripEnabled(True)
+
         fontlist=self.settings["chosenFonts"].split("|")
         for i in fontlist:
             if i in fontlist:

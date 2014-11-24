@@ -344,6 +344,7 @@ class Workload(QtGui.QMainWindow):
 if __name__ == "__main__":
     import sys,os
     locale = QtCore.QLocale.system().name()
+    locale= "pl_PL"
     qtTranslator = QtCore.QTranslator()
     qtTranslator.load("i18n"+os.sep+"workload_"+locale+".qm")
     app = QtGui.QApplication(sys.argv)
