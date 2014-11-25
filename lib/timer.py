@@ -79,13 +79,13 @@ class TaskReminder(QtCore.QTimer):
             if d<now:
                 formatted=self.tr(" already ended!")
             else:
-                formatted=d.strftime(self.tr(" ends at ")+"%H:%M")
+                formatted=self.tr(" ends at ")+d.strftime("%H:%M")
         elif d.date()<now.date():
             formatted=self.tr(" already ended!")
         elif (d.date()-now.date()).days==1:
-            formatted=d.strftime(self.tr(" ends tomorrow at")+" %H:%M")
+            formatted=self.tr(" ends tomorrow at")+d.strftime(" %H:%M")
         else:
-            formatted=d.strftime(self.tr(" ends")+" %d.%m"+self.tr(" at")+" %H:%M")
+            formatted=self.tr(" ends")+d.strftime(" %d.%m")+self.tr(" at")+d.strftime(" %H:%M")
             
         return formatted
         
