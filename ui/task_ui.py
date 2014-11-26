@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'task.ui'
 #
-# Created: Mon Nov 24 12:22:08 2014
+# Created: Wed Nov 26 17:59:27 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,19 +12,16 @@ from PySide import QtCore, QtGui
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.setWindowModality(QtCore.Qt.WindowModal)
-        Dialog.resize(626, 542)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(Dialog.sizePolicy().hasHeightForWidth())
-        Dialog.setSizePolicy(sizePolicy)
+        Dialog.setWindowModality(QtCore.Qt.ApplicationModal)
+        Dialog.resize(620, 529)
         font = QtGui.QFont()
         font.setFamily("Serif")
         Dialog.setFont(font)
-        Dialog.setSizeGripEnabled(True)
+        Dialog.setSizeGripEnabled(False)
         Dialog.setModal(False)
         self.verticalLayout = QtGui.QVBoxLayout(Dialog)
+        self.verticalLayout.setSpacing(0)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
         self.groupBox_2 = QtGui.QGroupBox(Dialog)
         self.groupBox_2.setTitle("")
@@ -78,18 +75,28 @@ class Ui_Dialog(object):
         self.createDate.setObjectName("createDate")
         self.gridLayout.addWidget(self.createDate, 0, 1, 1, 1)
         self.verticalLayout.addWidget(self.groupBox_2)
+        self.verticalLayout_2 = QtGui.QVBoxLayout()
+        self.verticalLayout_2.setSpacing(5)
+        self.verticalLayout_2.setContentsMargins(6, 0, 6, 0)
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.gridLayout_3 = QtGui.QGridLayout()
         self.gridLayout_3.setObjectName("gridLayout_3")
         self.taskName = QtGui.QLineEdit(Dialog)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.taskName.sizePolicy().hasHeightForWidth())
+        self.taskName.setSizePolicy(sizePolicy)
+        self.taskName.setMinimumSize(QtCore.QSize(400, 0))
         self.taskName.setObjectName("taskName")
         self.gridLayout_3.addWidget(self.taskName, 0, 1, 1, 1)
         self.label_5 = QtGui.QLabel(Dialog)
         self.label_5.setObjectName("label_5")
         self.gridLayout_3.addWidget(self.label_5, 0, 0, 1, 1)
-        self.verticalLayout.addLayout(self.gridLayout_3)
+        self.verticalLayout_2.addLayout(self.gridLayout_3)
         self.label_3 = QtGui.QLabel(Dialog)
         self.label_3.setObjectName("label_3")
-        self.verticalLayout.addWidget(self.label_3)
+        self.verticalLayout_2.addWidget(self.label_3)
         self.frame = QtGui.QFrame(Dialog)
         self.frame.setMinimumSize(QtCore.QSize(0, 27))
         self.frame.setMaximumSize(QtCore.QSize(16777215, 50))
@@ -212,7 +219,7 @@ class Ui_Dialog(object):
         self.editorResetColor.setMaximumSize(QtCore.QSize(40, 20))
         self.editorResetColor.setObjectName("editorResetColor")
         self.gridLayout_4.addWidget(self.editorResetColor, 0, 6, 1, 1)
-        self.verticalLayout.addWidget(self.frame)
+        self.verticalLayout_2.addWidget(self.frame)
         self.taskDescription = QtGui.QTextBrowser(Dialog)
         self.taskDescription.setMinimumSize(QtCore.QSize(100, 0))
         palette = QtGui.QPalette()
@@ -237,13 +244,16 @@ class Ui_Dialog(object):
         self.taskDescription.setHtml("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Serif\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'Serif\'; font-size:8pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'monofur\'; font-size:10pt;\"><br /></p></body></html>")
         self.taskDescription.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByKeyboard|QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextBrowserInteraction|QtCore.Qt.TextEditable|QtCore.Qt.TextEditorInteraction|QtCore.Qt.TextSelectableByKeyboard|QtCore.Qt.TextSelectableByMouse)
         self.taskDescription.setOpenExternalLinks(False)
         self.taskDescription.setOpenLinks(False)
         self.taskDescription.setObjectName("taskDescription")
-        self.verticalLayout.addWidget(self.taskDescription)
+        self.verticalLayout_2.addWidget(self.taskDescription)
+        self.verticalLayout_3 = QtGui.QVBoxLayout()
+        self.verticalLayout_3.setContentsMargins(-1, 4, 15, 0)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.buttonBox = QtGui.QDialogButtonBox(Dialog)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -253,8 +263,11 @@ class Ui_Dialog(object):
         self.buttonBox.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
+        self.buttonBox.setCenterButtons(False)
         self.buttonBox.setObjectName("buttonBox")
-        self.verticalLayout.addWidget(self.buttonBox)
+        self.verticalLayout_3.addWidget(self.buttonBox)
+        self.verticalLayout_2.addLayout(self.verticalLayout_3)
+        self.verticalLayout.addLayout(self.verticalLayout_2)
 
         self.retranslateUi(Dialog)
         self.fontComboBox.setCurrentIndex(-1)

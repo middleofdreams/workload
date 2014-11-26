@@ -17,8 +17,10 @@ class Task(QtGui.QDialog):
         self.parent=parent
         self.settings=self.parent.settings
         self.taskid=taskid
-        self.moveIt=False
-
+        #self.moveIt=False
+        statusbar=QtGui.QStatusBar(self)
+        self.ui.verticalLayout.addWidget(statusbar)
+        
         fontlist=self.settings["chosenFonts"].split("|")
         for i in fontlist:
             if i in fontlist:
@@ -104,7 +106,8 @@ class Task(QtGui.QDialog):
         path.addRoundedRect(-1,-1,rect.width()+1,rect.height()+1,10,10)
         region=QtGui.QRegion(path.toFillPolygon().toPolygon())
         self.setMask(region)
-        
+        e.accept()
+                
     def setPriorityText(self,priority):
         priorities=[self.tr("Not set!"),self.tr("Now"),self.tr("Next"),self.tr("Later"),self.tr("Someday"),self.tr("Awaiting")]
         self.ui.priorityText.setText(priorities[priority])

@@ -76,6 +76,7 @@ def changeStyle(main,settings={}):
     \
     QTreeWidget{alternate-background-color:rgba"+s["alternateListItem"]+";background-color:rgba"+s["tasklistBG"]+"\
     ;border: 1px solid rgba"+s["tasklistFrame"]+";color:rgba"+s["tasklistFontColor"]+";font:"+s["tasklistFontSize"]+"px;font-family:"+s["fontFamily"]+"}\
+    QTreeWidget QAbstractScrollArea{border:1px solid rgb(120,0,0)}\
     \
     QTabWidget::pane{border: 1px solid rgba(15,15,15,100);font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px}\
     \
@@ -183,7 +184,19 @@ def changeStyle(main,settings={}):
     \
     QLabel{font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px}\
     \
-    QSizeGrip{width:16px;height:16px;image:url(:res/ui/size_grip.png)}"
+    QSizeGrip{width:16px;height:16px;image:url(:res/ui/size_grip.png)}\
+    \
+    QScrollBar::vertical{background:rgba"+s["windowBG"]+";width:8px; }\
+    QScrollBar::handle:vertical{background:rgba"+s["buttonBG"]+";border:1px solid rgba"+s["windowFrame"]+";border-radius:3px;min-height:25px}\
+    QScrollBar::handle:vertical:pressed{background:rgba"+s["selectedItem"]+";border: 1px solid rgba(15,15,15,100)}\
+    QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical,QScrollBar::sub-page:vertical,QScrollBar::add-page:vertical{\
+    background:rgba"+s["windowBG"]+";width:0px;height:1px;}\
+    \
+    QScrollBar::horizontal{background:rgba"+s["windowBG"]+";width:8px;}\
+    QScrollBar::handle:horizontal{background:rgba"+s["buttonBG"]+";border:1px solid rgba"+s["windowFrame"]+";border-radius:3px}\
+    QScrollBar::handle:horizontal:pressed{background:rgba"+s["selectedItem"]+";border: 1px solid rgba(15,15,15,100)}\
+    QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal,QScrollBar::sub-page:horizontal,QScrollBar::add-page:horizontal{\
+    background:rgba"+s["windowBG"]+";width:0px;height}"
     
     main.setStyleSheet(WindowStyle)
 
