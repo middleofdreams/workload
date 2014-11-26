@@ -176,6 +176,8 @@ class Workload(QtGui.QMainWindow):
             tasks = []
             for item in selectedItems:
                 tasks.append(item)
+            windowtitle=QtGui.QApplication.translate("ui","Delete task")
+            text=QtGui.QApplication.translate("ui","Do you really want to delete selected  task(s) ?")
             if force:
                 self.deleteTasks(tasks)
                 windowtitle=QtGui.QApplication.translate("ui","Delete task")
