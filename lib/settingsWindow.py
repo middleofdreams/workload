@@ -81,7 +81,8 @@ class SettingsWindow(QtGui.QDialog):
         currentIndex=self.ui.fontFamily.findText(self.settings["fontFamily"])
         self.ui.fontFamily.setCurrentIndex(currentIndex)
         self.ui.fontSize.setValue(int(self.settings["fontSize"]))
-        self.ui.tasklistFontSize.setValue(int(self.settings["tasklistFontSize"]))
+        tasklistfontsize=int(self.settings["tasklistFontSize"])
+        self.ui.tasklistFontSize.setValue(tasklistfontsize)
         self.ui.addFonts.clicked.connect(self.addFonts)
         self.ui.removeFonts.clicked.connect(self.removeFonts)
         self.ui.mainWindowToggleKey.setText(self.settings['keyMainWindowToggle'])
@@ -159,6 +160,10 @@ class SettingsWindow(QtGui.QDialog):
             if lang!=self.lang:
                 self.settings["lang"]=lang
                 self.parent.translate(lang)
+            if self.ui.tasklistFontSize.value()>tasklistfontsize:
+                self.parent.adjustHeight()
+            else:
+                self.parent.adjustHeight(True)
                 
         else:
             self.parent.setWindowOpacity(int(self.settings["mainWindowOpacity"])/100)

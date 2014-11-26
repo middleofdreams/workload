@@ -42,6 +42,7 @@ class Workload(QtGui.QMainWindow):
         self.shortcuts=ShortcutsHandler(self,self.settings['keyMainWindowToggle'])
         finalizeInit(self)
         self.translate()
+        self.adjustHeight(init=True)
 
 
     def resizeEvent(self,e):
@@ -168,7 +169,6 @@ class Workload(QtGui.QMainWindow):
         self.ui.taskList.clear()
         for i in self.db.getTasks(self.currentContext):
             self.createTaskItem(i[1], i[0],i[2])
-        self.adjustHeight(init=init)
 
     def deleteSelectedTasks(self, force=False):
         selectedItems = self.ui.taskList.selectedItems()
@@ -280,13 +280,20 @@ class Workload(QtGui.QMainWindow):
         
     def adjustHeight(self,downSize=False,init=False):
         tasks=self.db.getTasks(self.currentContext)
+        if len(tasks)>0:
+            item=self.ui.taskList.topLevelItem(0)
+            qmodel=self.ui.taskList.indexFromItem(item)
+            
+            taskheight=self.ui.taskList.rowHeight(qmodel)
+        else:
+            taskheight=22
         if init:
             winheight=320
             listheight=252
         else:
             winheight=self.height()
             listheight=self.ui.taskList.height()
-        desiredHeight=22*len(tasks)+winheight-listheight+4
+        desiredHeight=taskheight*len(tasks)+winheight-listheight+6
         if ( desiredHeight>self.height() or downSize ) and desiredHeight<QtGui.QApplication.desktop().height():
             self.resize(self.width(),desiredHeight)
 
