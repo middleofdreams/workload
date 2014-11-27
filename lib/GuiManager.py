@@ -69,7 +69,9 @@ def changeStyle(main,settings={}):
 
     WindowStyle="QMainWindow{border:2px solid rgba"+s["windowFrame"]+";border-radius:6px; background-color:rgba"+s["windowBG"]+"\
     ;font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px}\
+    \
     QMessageBox{background-color:rgba"+s["windowBG"]+";font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px} \
+    \
     QDialog{background-color:rgba"+s["windowBG"]+";\
     border:2px solid rgba"+s["windowFrame"]+";border-radius:6px;font:"+s["fontSize"]+"px;\
     ;font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+"}\
@@ -91,7 +93,8 @@ def changeStyle(main,settings={}):
     \
     QDialog[dialog=taskEditor]{border: 2px solid rgba"+s["taskEditorFrame"]+";\
     border-radius: 8px; background-color:rgba"+s["taskEditorBG"]+"\
-    ;font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px}\
+    ;font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px;\
+    background-image:url(./ui/bg.png);background-repeat:no-repeat;background-position:left bottom;}\
     \
     QComboBox{background-color:rgba"+s["textInputBG"]+";border:1px solid rgba(15,15,15,100);border-radius:3px;min-width:10ex;min-height:13px;\
     padding-top:2px;padding-bottom:2px;padding-left:5px;padding-right:5px;border-style:outset;\
