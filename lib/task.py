@@ -17,7 +17,9 @@ class Task(QtGui.QDialog):
         self.parent=parent
         self.settings=self.parent.settings
         self.taskid=taskid
-        self.moveIt=False
+        #self.moveIt=False
+        statusbar=QtGui.QStatusBar(self)
+        self.ui.verticalLayout.addWidget(statusbar)
         
         fontlist=self.settings["chosenFonts"].split("|")
         for i in fontlist:
@@ -69,7 +71,7 @@ class Task(QtGui.QDialog):
                 self.ui.label_6.show()
                 closeTimestamp=int(self.task["closedat"].split(".")[0])
                 closeDate=datetime.datetime.fromtimestamp(closeTimestamp)
-                closeDate=closeDate.strftime(self.settings.getDateFormat())
+                closeDate=closeDate.strftime(self.settings["dateFormat"])
                 self.ui.closeDate.setText(closeDate)
             
             if self.task["due"] is not None:
@@ -84,27 +86,30 @@ class Task(QtGui.QDialog):
             self.ui.label_4.hide()  #Hide created date label
             self.ui.label_6.hide()  #Hide closed date label
             
-            self.setWindowTitle("Create New Task")
+            self.setWindowTitle(self.tr("Create New Task"))
             if taskname is not None:
                 self.ui.taskName.setText(taskname)
             else:
-                self.ui.taskName.setText("Enter task name here")
+                self.ui.taskName.setText(self.tr("Enter task name here"))
             self.setPriorityText(0)
             date=datetime.datetime.now()
             delta=datetime.timedelta(hours=24)
             date=date+delta
             self.ui.dueDate.setDateTime(QtCore.QDateTime(date.year,date.month,date.day,date.hour,date.minute,0,0))
         self.move(self.parent.pos())
+        self.exec_()
+        parent.taskOpened=False
+        
+    def resizeEvent(self,e):
         path=QtGui.QPainterPath()
         rect=self.size()
         path.addRoundedRect(-1,-1,rect.width()+1,rect.height()+1,10,10)
         region=QtGui.QRegion(path.toFillPolygon().toPolygon())
         self.setMask(region)
-        self.exec_()
-        parent.taskOpened=False
-        
+        e.accept()
+                
     def setPriorityText(self,priority):
-        priorities=["Not set!","Now","Next","Later","Someday","Awaiting"]
+        priorities=[self.tr("Not set!"),self.tr("Now"),self.tr("Next"),self.tr("Later"),self.tr("Someday"),self.tr("Awaiting")]
         self.ui.priorityText.setText(priorities[priority])
         
     def setDueOn(self,e):
@@ -167,9 +172,10 @@ class Task(QtGui.QDialog):
                 self.parent.db.setTaskDetails(taskid,taskDescription,priority,taskname,duedate)
                 self.updateItem(taskname, priority)
                 self.close()
-                self.parent.ui.statusbar.showMessage("Task updated",3300)
+                self.parent.ui.statusbar.showMessage(self.tr("Task updated"),3300)
             else:
-                self.parent.taskAlreadyExistMsg(parent=self)
+                self.taskAlreadyExistMsg=self.parent.taskAlreadyExistMsg
+                self.taskAlreadyExistMsg(self)
             
         else:
             #create new task
@@ -182,14 +188,14 @@ class Task(QtGui.QDialog):
                 self.parent.createTaskItem(taskname, taskid, priority)
                 self.parent.adjustHeight()
                 self.close()
-                self.parent.ui.statusbar.showMessage("New task created.",3300)
+                self.parent.ui.statusbar.showMessage(self.tr("New task created."),3300)
             else:
                 self.parent.taskAlreadyExistMsg(parent=self)
         self.parent.timer.getNearEndTasks(force=True)
 
     def dropTask(self,e):
             fulldata=e.mimeData().text()    
-            self.ui.statusbar.showMessage("New task created.",3300)
+            self.ui.statusbar.showMessage(self.tr("New task created."),3300)
             date=datetime.datetime.now()
             delta=datetime.timedelta(hours=24)
             duedate=date+delta

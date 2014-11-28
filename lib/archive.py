@@ -13,8 +13,6 @@ class ArchiveWindow(QtGui.QDialog):
         self.ui.setupUi(self)
         contexts={}
         self.settings=self.parent.settings
-        self.ui.buttonBox.buttons()[0].setProperty("custom","buttonbox")
-        self.ui.buttonBox.buttons()[1].setProperty("custom","buttonbox")
         changeStyle(self)
         for k,v in self.parent.contexts.items():
             contexts[v]=k
@@ -23,12 +21,12 @@ class ArchiveWindow(QtGui.QDialog):
             try:
                 tcontext=contexts[i[2]]
             except KeyError:
-                tcontext=str(i[2])+" [removed]"
+                tcontext=str(i[2])+self.tr(" [removed]")
             tcontext
             tcreate=datetime.datetime.fromtimestamp(int(i[3].rsplit(".")[0])).strftime(self.parent.settings["dateFormat"])
             tclose=datetime.datetime.fromtimestamp(int(i[4].rsplit(".")[0])).strftime(self.parent.settings["dateFormat"])
             item=QtGui.QTreeWidgetItem([tname,tcontext,tcreate,tclose])
-            item.setData(0,32,i[1])
+            item.setData(0,32,i[0])
             self.ui.treeWidget.addTopLevelItem(item)
             
         self.ui.treeWidget.itemActivated.connect(self.openTask)
@@ -49,6 +47,7 @@ class ArchiveWindow(QtGui.QDialog):
         
     def openTask(self,item):
         Task(self.parent,item.data(0, 32))
+        
         
     def keyPressEvent(self,e):
         if e.key()==16777216:
@@ -85,8 +84,8 @@ class ArchiveWindow(QtGui.QDialog):
                 tasks.append(item)
             if force:
                 self.removeTask(tasks)
-            elif self.questionPopup("Delete task",
-                "Do you really want to delete selected  task(s) ?"):
+            elif self.questionPopup(self.tr("Delete task"),
+                self.tr("Do you really want to delete selected  task(s) ?")):
                 self.removeTask(tasks)
 
 

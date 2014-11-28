@@ -20,12 +20,12 @@ def loadContexts(self):
             self.ui.menuContext.addAction(item)
         self.ui.menuContext.addSeparator()
         nc = QtGui.QAction(self.ui.menuContext)
-        nc.setText("Create new context")
+        nc.setText(QtGui.QApplication.translate("ui","Create new context"))
         nc.triggered.connect(lambda s=self:addContext(s))
         nc.setShortcut("Ctrl+Shift+C")
         self.ui.menuContext.addAction(nc)
         rc = QtGui.QAction(self.ui.menuContext)
-        rc.setText("Remove current context")
+        rc.setText(QtGui.QApplication.translate("ui","Remove current context"))
         rc.setShortcut("Ctrl+Shift+X")
         rc.triggered.connect(lambda s=self:removeContext(s))
         self.ui.menuContext.addAction(rc)
@@ -45,22 +45,29 @@ def switchContext(self,item):
         
 def addContext(self):
     ok=False
-    dialog=QtGui.QInputDialog.getText(self,"New Context","Please enter new context name",QtGui.QLineEdit.Normal,"",ok)
+    dialog=QtGui.QInputDialog.getText(self,QtGui.QApplication.translate("ui","New Context"),QtGui.QApplication.translate("ui","Please enter new context name"),QtGui.QLineEdit.Normal,"",ok)
     if dialog[0] and dialog[1]:
-        newid=self.db.addContext(str(dialog[0]))
-        self.currentContext=newid
-        self.loadTasksList()
-        loadContexts(self)
-        selectCurrentContext(self)
+        exists=False
+        for i in self.contexts.keys():
+            if i.lower()==dialog[0].lower():
+                exists=True
+        if exists:
+            QtGui.QMessageBox.critical(self,QtGui.QApplication.translate("ui","Error"),QtGui.QApplication.translate("ui","Context with same name already exists"))
+        else:
+            newid=self.db.addContext(str(dialog[0]))
+            self.currentContext=newid
+            self.loadTasksList()
+            loadContexts(self)
+            selectCurrentContext(self)
         
 def removeContext(self):
     if len(self.contexts)==1:
-        QtGui.QMessageBox.critical(self,"Error","Can't remove last context")
+        QtGui.QMessageBox.critical(self,QtGui.QApplication.translate("ui","Error"),QtGui.QApplication.translate("ui","Can't remove last context"))
     else:
         if len(self.db.getTasks(self.currentContext))>0:
-            QtGui.QMessageBox.critical(self,"Error","Can't remove context with active tasks")
+            QtGui.QMessageBox.critical(self,QtGui.QApplication.translate("ui","Error"),QtGui.QApplication.translate("ui","Can't remove context with active tasks"))
             return False
-        if self.questionPopup("Remove context", "Do you really want to remove active context?"):
+        if self.questionPopup(QtGui.QApplication.translate("ui","Remove context"), QtGui.QApplication.translate("ui","Do you really want to remove active context?")):
             self.db.deleteContext(self.currentContext)
             self.currentContext=self.db.getContexts()[0][0] 
             self.loadTasksList()

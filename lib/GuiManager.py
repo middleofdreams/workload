@@ -54,7 +54,7 @@ def finalizeInit(main):
 #     main.ui.taskList.setFont(font)
     main.show()
     main.adjustHeight(downSize=True, init=False)
-    main.ui.statusbar.showMessage("Hello! Ready to work ;-)",3600)
+
     
     
 def changeStyle(main,settings={}):
@@ -69,13 +69,16 @@ def changeStyle(main,settings={}):
 
     WindowStyle="QMainWindow{border:2px solid rgba"+s["windowFrame"]+";border-radius:6px; background-color:rgba"+s["windowBG"]+"\
     ;font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px}\
+    \
     QMessageBox{background-color:rgba"+s["windowBG"]+";font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px} \
+    \
     QDialog{background-color:rgba"+s["windowBG"]+";\
     border:2px solid rgba"+s["windowFrame"]+";border-radius:6px;font:"+s["fontSize"]+"px;\
     ;font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+"}\
     \
     QTreeWidget{alternate-background-color:rgba"+s["alternateListItem"]+";background-color:rgba"+s["tasklistBG"]+"\
     ;border: 1px solid rgba"+s["tasklistFrame"]+";color:rgba"+s["tasklistFontColor"]+";font:"+s["tasklistFontSize"]+"px;font-family:"+s["fontFamily"]+"}\
+    QTreeWidget QAbstractScrollArea{border:1px solid rgb(120,0,0)}\
     \
     QTabWidget::pane{border: 1px solid rgba(15,15,15,100);font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px}\
     \
@@ -90,9 +93,10 @@ def changeStyle(main,settings={}):
     \
     QDialog[dialog=taskEditor]{border: 2px solid rgba"+s["taskEditorFrame"]+";\
     border-radius: 8px; background-color:rgba"+s["taskEditorBG"]+"\
-    ;font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px}\
+    ;font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px;\
+    background-image:url(./ui/bg.png);background-repeat:no-repeat;background-position:left bottom;}\
     \
-    QComboBox{background-color:rgba"+s["buttonBG"]+";border:1px solid rgba(15,15,15,100);border-radius:3px;min-width:10ex;min-height:13px;\
+    QComboBox{background-color:rgba"+s["textInputBG"]+";border:1px solid rgba(15,15,15,100);border-radius:3px;min-width:10ex;min-height:13px;\
     padding-top:2px;padding-bottom:2px;padding-left:5px;padding-right:5px;border-style:outset;\
     font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px}\
     QComboBox::down-arrow{image:url(:res/ui/down_arrow.png)}\
@@ -148,7 +152,7 @@ def changeStyle(main,settings={}):
     QPushButton::flat[button=taskEditorUnderline]{border: 1px solid rgba(15,15,15,200); border-radius:2px;\
     background-color:rgba"+s["selectedItem"]+"}\
         \
-    QDateTimeEdit{background-color:rgba"+s["buttonBG"]+";border:1px solid rgba(15,15,15,100);border-radius:3px;min-width:10ex;min-height:13px;\
+    QDateTimeEdit{background-color:rgba"+s["textInputBG"]+";border:1px solid rgba(15,15,15,100);border-radius:3px;min-width:10ex;min-height:13px;\
     padding-top:2px;padding-bottom:2px;padding-left:5px;padding-right:5px;border-style:outset;\
     font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px}\
     QDateTimeEdit::down-arrow{image:url(:res/ui/down_arrow.png)}\
@@ -177,11 +181,25 @@ def changeStyle(main,settings={}):
     border:1px solid rgb(85, 170, 255);border-radius:3px}\
     QMenu::separator{background-color:rgba"+s["windowFrame"]+";\
     border 1px solid:rgb(55,55,55);height:2px;margin-left:5px;margin-right:5px;}\
+    \
     QLineEdit{background:rgba"+s["textInputBG"]+";border:1px solid rgba"+s["windowFrame"]+";border-radius:2px\
     ;font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px}\
+    \
     QLabel{font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px}\
     \
-    QSizeGrip{width:16px;height:16px;image:url(:res/ui/size_grip.png)}"
+    QSizeGrip{width:16px;height:16px;image:url(:res/ui/size_grip.png)}\
+    \
+    QScrollBar::vertical{background:rgba"+s["windowBG"]+";width:8px; }\
+    QScrollBar::handle:vertical{background:rgba"+s["buttonBG"]+";border:1px solid rgba"+s["windowFrame"]+";border-radius:3px;min-height:25px}\
+    QScrollBar::handle:vertical:pressed{background:rgba"+s["selectedItem"]+";border: 1px solid rgba(15,15,15,100)}\
+    QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical,QScrollBar::sub-page:vertical,QScrollBar::add-page:vertical{\
+    background:rgba"+s["windowBG"]+";width:0px;height:1px;}\
+    \
+    QScrollBar::horizontal{background:rgba"+s["windowBG"]+";width:8px;}\
+    QScrollBar::handle:horizontal{background:rgba"+s["buttonBG"]+";border:1px solid rgba"+s["windowFrame"]+";border-radius:3px}\
+    QScrollBar::handle:horizontal:pressed{background:rgba"+s["selectedItem"]+";border: 1px solid rgba(15,15,15,100)}\
+    QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal,QScrollBar::sub-page:horizontal,QScrollBar::add-page:horizontal{\
+    background:rgba"+s["windowBG"]+";width:0px;height}"
     
     main.setStyleSheet(WindowStyle)
 

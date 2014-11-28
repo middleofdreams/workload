@@ -15,7 +15,6 @@ class SettingsWindow(QtGui.QDialog):
         self.ui.removeFonts.setProperty("custom","skinny")
         changeStyle(self)       
         self.currentSettings={}
-        
         ## CONNECT SIGNALS
         self.colorButtons={"windowBG":self.ui.windowBG,"windowFrame":self.ui.windowFrame,"tasklistBG":self.ui.tasklistBG,
                       "tasklistFrame":self.ui.tasklistFrame,"tasklistFontColor":self.ui.tasklistFontColor,"textInputBG":self.ui.textInputBG,
@@ -82,7 +81,8 @@ class SettingsWindow(QtGui.QDialog):
         currentIndex=self.ui.fontFamily.findText(self.settings["fontFamily"])
         self.ui.fontFamily.setCurrentIndex(currentIndex)
         self.ui.fontSize.setValue(int(self.settings["fontSize"]))
-        self.ui.tasklistFontSize.setValue(int(self.settings["tasklistFontSize"]))
+        tasklistfontsize=int(self.settings["tasklistFontSize"])
+        self.ui.tasklistFontSize.setValue(tasklistfontsize)
         self.ui.addFonts.clicked.connect(self.addFonts)
         self.ui.removeFonts.clicked.connect(self.removeFonts)
         mainwindowtogglekey=self.settings['keyMainWindowToggle']
@@ -94,6 +94,21 @@ class SettingsWindow(QtGui.QDialog):
         posy=self.parent.y()
         parentWidth=self.parent.width()
         self.move(posx+parentWidth+30,posy-30)
+        self.findAvailableLanguages()
+        self.lang=self.settings['lang']
+        self.ui.language.setItemData(0,"auto")
+        self.ui.language.setItemData(1,"en")
+
+        if self.lang=="auto":
+            self.ui.language.setCurrentIndex(0)
+        elif self.lang=="en":
+            self.ui.language.setCurrentIndex(1)
+        else:
+            index=self.ui.language.findData(self.lang)
+            if index>-1:
+                self.ui.language.setCurrentIndex(index)
+                
+        
         if self.exec_():
             #save load context values
             r=self.ui.startupContext.currentIndex()
@@ -134,8 +149,9 @@ class SettingsWindow(QtGui.QDialog):
             self.editWindowOpacity(save=True)
             #save tasklist font settings
             self.editFonts(save=True)
-            self.saveStyle()
+            
             key=self.ui.mainWindowToggleKey.text()
+
             if key!=mainwindowtogglekey:
                 if not shctsTerminated:
                     title=QtGui.QApplication.translate("ui","Restart required")
@@ -145,14 +161,27 @@ class SettingsWindow(QtGui.QDialog):
                     self.parent.shortcuts.key=key
                 self.settings['keyMainWindowToggle']=key
 
+
+            self.saveStyle()
+            
+            lang=self.ui.language.currentIndex()
+            lang=self.ui.language.itemData(lang)
+            print(lang)
+            if lang!=self.lang:
+                self.settings["lang"]=lang
+                self.parent.translate(lang)
+            if self.ui.tasklistFontSize.value()>tasklistfontsize:
+                self.parent.adjustHeight()
+            else:
+                self.parent.adjustHeight(True)
+                
         else:
             self.parent.setWindowOpacity(int(self.settings["mainWindowOpacity"])/100)
-            font=QtGui.QFont(self.settings["tasklistFont"]).setPointSize(int(self.settings["tasklistFontSize"]))
-            self.parent.setFont(font)
             changeStyle(self.parent)
             
         if shctsTerminated:
             self.parent.shortcuts.start()
+
     def resizeEvent(self,e):
         path=QtGui.QPainterPath()
         rect=self.size()
@@ -161,16 +190,26 @@ class SettingsWindow(QtGui.QDialog):
         self.setMask(region)
         
     def saveStyle(self):
-        for setting,button in self.colorButtons.items():
-            color=button.palette().button().color().getRgb()
-            self.settings[setting]=str(color)    
+        for setting in self.currentSettings.keys():
+            self.settings[setting]=self.currentSettings[setting]
+        changeStyle(self.parent,self.currentSettings)
             
     def resetStyle(self):
         for setting,button in self.colorButtons.items():
             self.setButtonColor(button, self.settings.defaults[setting])
-            self.settings[setting]=self.settings.defaults[setting]
-        changeStyle(self.parent)
-        changeStyle(self)
+            self.currentSettings[setting]=self.settings.defaults[setting]
+            
+        self.currentSettings["fontFamily"]=self.settings.defaults["fontFamily"]
+        self.currentSettings["fontSize"]=self.settings.defaults["fontSize"]
+        self.currentSettings["tasklistFontSize"]=self.settings.defaults["tasklistFontSize"]
+        currentIndex=self.ui.fontFamily.findText(self.currentSettings["fontFamily"])
+        self.ui.fontFamily.setCurrentIndex(currentIndex)
+        self.ui.fontSize.setValue(int(self.currentSettings["fontSize"]))
+        self.ui.tasklistFontSize.setValue(int(self.currentSettings["tasklistFontSize"]))
+        
+        changeStyle(self.parent,self.currentSettings)
+        changeStyle(self,self.currentSettings)
+        
           
     def editStyle(self,button,setting):
         currentColor=button.palette().button().color()
@@ -202,7 +241,6 @@ class SettingsWindow(QtGui.QDialog):
             self.settings["fontFamily"]=fontFamily
             self.settings["fontSize"]=fontSize
             self.settings["tasklistFontSize"]=tasklistFontSize
-            print(tasklistFontSize)
         
     def editWindowOpacity(self,v=None,save=False):
         if not v:
@@ -321,3 +359,13 @@ class SettingsWindow(QtGui.QDialog):
             del(self.posy)
         except:
             pass
+
+    def findAvailableLanguages(self):
+        import os
+        for i in os.listdir("i18n"):
+            if i.endswith(".qm"):
+                lang=i.split("_",1)[1].rstrip(".qm")
+                locale=QtCore.QLocale(lang)
+                nativelang=locale.nativeLanguageName().capitalize()
+                self.ui.language.addItem(nativelang,lang)
+                

@@ -8,7 +8,6 @@ from lib.settings import Settings
 from lib.contexts import loadContexts,selectCurrentContext
 from lib.archive import ArchiveWindow
 from lib.timer import TaskReminder
-import res_rc
 import datetime
 from lib.helpers import timestamp
 from lib.shortcuts import ShortcutsHandler
@@ -17,14 +16,16 @@ from lib.GuiManager import guiSettings,connectSignals, finalizeInit,changeStyle
 
 class Workload(QtGui.QMainWindow):
 
-    def __init__(self,app):
+    def __init__(self,app,onlyDBAccess=False):
         '''main window init'''
         QtGui.QMainWindow.__init__(self)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.db = DB(self)
         self.settings=Settings(self)
-        
+        self.onlyDBAccess=onlyDBAccess
+        if onlyDBAccess:
+            return 
         #GUI setting
         guiSettings(self)
         connectSignals(self)
@@ -40,6 +41,9 @@ class Workload(QtGui.QMainWindow):
         self.timer=TaskReminder(self)
         self.shortcuts=ShortcutsHandler(self,self.settings['keyMainWindowToggle'])
         finalizeInit(self)
+        self.translate()
+        self.adjustHeight(init=True)
+
 
     def resizeEvent(self,e):
        
@@ -125,10 +129,10 @@ class Workload(QtGui.QMainWindow):
             taskid = self.db.addTask(taskname,priority, taskDescription, duedate, self.currentContext)
             self.createTaskItem(taskname, taskid, priority)
             self.adjustHeight()
-            self.ui.statusbar.showMessage("New task created.",3300)
+            self.ui.statusbar.showMessage(QtGui.QApplication.translate("ui","New task created."),3300)
         else:
             self.ui.taskInput.setText(taskname)
-            self.taskAlreadyExistMsg(self)
+            self.taskAlreadyExistMsg()
             
     def defaultDueDate(self):
         if self.settings["defaultDueDateOn"]:
@@ -154,16 +158,17 @@ class Workload(QtGui.QMainWindow):
             return True
             
             
-    def taskAlreadyExistMsg(self,parent):
-        text="Task with same name already exist, choose another"
+    def taskAlreadyExistMsg(self,parent=None):
+        text=QtGui.QApplication.translate("ui","Task with same name already exist, choose another")
+        windowtitle=QtGui.QApplication.translate("ui","Task name already exists")
         msgWindow=QtGui.QMessageBox()
-        msgWindow.information(parent, "Task name already exist", text, buttons=QtGui.QMessageBox.Ok )
+        if parent is not None: self=parent
+        msgWindow.information(self, windowtitle, text, buttons=QtGui.QMessageBox.Ok )
     
     def loadTasksList(self, archived=False,init=False):
         self.ui.taskList.clear()
         for i in self.db.getTasks(self.currentContext):
             self.createTaskItem(i[1], i[0],i[2])
-        self.adjustHeight(init=init)
 
     def deleteSelectedTasks(self, force=False):
         selectedItems = self.ui.taskList.selectedItems()
@@ -171,10 +176,13 @@ class Workload(QtGui.QMainWindow):
             tasks = []
             for item in selectedItems:
                 tasks.append(item)
+            windowtitle=QtGui.QApplication.translate("ui","Delete task")
+            text=QtGui.QApplication.translate("ui","Do you really want to delete selected  task(s) ?")
             if force:
                 self.deleteTasks(tasks)
-            elif self.questionPopup("Delete task",
-                "Do you really want to delete selected  task(s) ?"):
+                windowtitle=QtGui.QApplication.translate("ui","Delete task")
+                text=QtGui.QApplication.translate("ui","Do you really want to delete selected  task(s) ?")
+            elif self.questionPopup(windowtitle,text):
                 self.deleteTasks(tasks)
             self.adjustHeight(downSize=True)
 
@@ -183,7 +191,7 @@ class Workload(QtGui.QMainWindow):
             self.db.deleteTask(item.data(0, 32))
             index = self.ui.taskList.indexOfTopLevelItem(item)
             self.ui.taskList.takeTopLevelItem(index)
-            self.ui.statusbar.showMessage("Task removed.",3300)
+            self.ui.statusbar.showMessage(QtGui.QApplication.translate("ui","Task removed."),3300)
 
 
     def setTaskPriority(self,priority):
@@ -193,7 +201,7 @@ class Workload(QtGui.QMainWindow):
             self.setPriorityColor(item, priority)
             item.setText(0,str(priority))
             self.ui.taskList.sortItems(0,QtCore.Qt.AscendingOrder)
-            self.ui.statusbar.showMessage("Priority updated.",3300)
+            self.ui.statusbar.showMessage(QtGui.QApplication.translate("ui","Priority updated."),3300)
             
     def setPriorityColor(self,item,priority):
         icon=QtGui.QIcon(':res/status/'+str(priority)+'.png')
@@ -234,7 +242,7 @@ class Workload(QtGui.QMainWindow):
             self.addTask()
         else:
             QtGui.QLineEdit.keyPressEvent(self.ui.taskInput,e)
-            if len(self.ui.taskInput.text())>20:
+            if len(self.ui.taskInput.text())>35:
                 Task(self,taskid=0,taskname=self.ui.taskInput.text())
 
     #ADDITIONAL FUNTIONS
@@ -274,13 +282,20 @@ class Workload(QtGui.QMainWindow):
         
     def adjustHeight(self,downSize=False,init=False):
         tasks=self.db.getTasks(self.currentContext)
+        if len(tasks)>0:
+            item=self.ui.taskList.topLevelItem(0)
+            qmodel=self.ui.taskList.indexFromItem(item)
+            
+            taskheight=self.ui.taskList.rowHeight(qmodel)
+        else:
+            taskheight=22
         if init:
             winheight=320
             listheight=252
         else:
             winheight=self.height()
             listheight=self.ui.taskList.height()
-        desiredHeight=22*len(tasks)+winheight-listheight+4
+        desiredHeight=taskheight*len(tasks)+winheight-listheight+6
         if ( desiredHeight>self.height() or downSize ) and desiredHeight<QtGui.QApplication.desktop().height():
             self.resize(self.width(),desiredHeight)
 
@@ -292,14 +307,14 @@ class Workload(QtGui.QMainWindow):
 ###### MENU FUNCTIONS
 
     def importTasklist(self):
-        dialog=QtGui.QFileDialog(self, "Open", "", "CSV File (*.csv)")
+        dialog=QtGui.QFileDialog(self, QtGui.QApplication.translate("ui","Open"), "", QtGui.QApplication.translate("ui","CSV File (*.csv)"))
         if dialog.exec_():
             filename=dialog.selectedFiles()
             
     def exportTaskList(self):
         fname=QtGui.QFileDialog.getSaveFileName()#"Select file to save task list")
         if fname[0]:
-            includeArchive=self.questionPopup("Exporting tasks", "Do you want to include completed tasks?")
+            includeArchive=self.questionPopup(QtGui.QApplication.translate("ui","Exporting tasks"), QtGui.QApplication.translate("ui","Do you want to include completed tasks?"))
             tasks=self.db.exportTasks(self.currentContext, includeArchive)
             from lib import importexport
             importexport.export(tasks, fname[0],self.settings["dateFormat"])
@@ -308,18 +323,18 @@ class Workload(QtGui.QMainWindow):
         f=open("about.html")
         text=f.read()
         f.close()
-        QtGui.QMessageBox.information(self, "About", text, buttons=QtGui.QMessageBox.Ok )
+        QtGui.QMessageBox.information(self, QtGui.QApplication.translate("ui","About"), text, buttons=QtGui.QMessageBox.Ok )
 
-    def exit(self):
+    def exit(self,exitcode=0):
         exit_=False
         if self.settings["askOnExit"]:
-            if self.questionPopup("Exit", "Are you sure?"):
+            if self.questionPopup(QtGui.QApplication.translate("ui","Exit"), QtGui.QApplication.translate("ui","Are you sure?")):
                 exit_=True
         else: exit_=True
         if exit_==True:
             self.settings.setCurrentContextAsLast()
             self.shortcuts.terminate()
-            self.app.exit()
+            self.app.exit(exitcode)
 
     def createTask(self):
         Task(self,taskid=0)
@@ -330,18 +345,55 @@ class Workload(QtGui.QMainWindow):
             self.db.completeTask(i.data(0,32))
             index = self.ui.taskList.indexOfTopLevelItem(i)
             self.ui.taskList.takeTopLevelItem(index)
-            self.ui.statusbar.showMessage("Task completed.",3300)
+            self.ui.statusbar.showMessage(QtGui.QApplication.translate("ui","Task completed."),3300)
 
     def showHistory(self):
         ArchiveWindow(self)
                 
     def hoyKeyError(self):
-        QtGui.QMessageBox.critical(self,"Error","Unable to register global shortcut")
+        QtGui.QMessageBox.critical(self,QtGui.QApplication.translate("ui","Error"),QtGui.QApplication.translate("ui","Unable to register global shortcut"))
 
+    def changeEvent(self, e):
+        if e.type()==QtCore.QEvent.LanguageChange:
+            self.ui.retranslateUi(self)
+            self.ui.statusbar.showMessage(QtGui.QApplication.translate("ui","Hello! Ready to work ;-)"),3600)
+            loadContexts(self)
+            selectCurrentContext(self)
+            
+        QtGui.QMainWindow.changeEvent(self,e)
+        
+    def translate(self,lang=None):
+        if lang is None:
+            lang= self.settings["lang"]
+        translate=True
+        if lang=="auto":
+            locale = QtCore.QLocale.system().name()
+        
+        elif lang=="en":
+            translate=False
+            try:
+                self.app.removeTranslator(self.qtTranslator)
+            except:
+                pass
+        else:
+            locale=lang
+    
+        if translate:
+            self.qtTranslator = QtCore.QTranslator()
+            self.qtTranslator.load("i18n"+os.sep+"workload_"+locale+".qm")
+            self.app.installTranslator(self.qtTranslator)
+  
+  
+  
 if __name__ == "__main__":
-    import sys
+    import sys,os
+
+    exitcode=1
     app = QtGui.QApplication(sys.argv)
     myapp = Workload(app)
-    
-    res = app.exec_()
-    sys.exit()
+
+
+
+        #app.languageChange()
+
+    sys.exit(app.exec_())
