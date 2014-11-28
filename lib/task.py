@@ -71,7 +71,7 @@ class Task(QtGui.QDialog):
                 self.ui.label_6.show()
                 closeTimestamp=int(self.task["closedat"].split(".")[0])
                 closeDate=datetime.datetime.fromtimestamp(closeTimestamp)
-                closeDate=closeDate.strftime(self.settings.getDateFormat())
+                closeDate=closeDate.strftime(self.settings["dateFormat"])
                 self.ui.closeDate.setText(closeDate)
             
             if self.task["due"] is not None:
