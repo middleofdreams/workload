@@ -85,9 +85,10 @@ class SettingsWindow(QtGui.QDialog):
         self.ui.tasklistFontSize.setValue(int(self.settings["tasklistFontSize"]))
         self.ui.addFonts.clicked.connect(self.addFonts)
         self.ui.removeFonts.clicked.connect(self.removeFonts)
-        self.ui.mainWindowToggleKey.setText(self.settings['keyMainWindowToggle'])
+        mainwindowtogglekey=self.settings['keyMainWindowToggle']
+        self.ui.mainWindowToggleKey.setText(mainwindowtogglekey)
         #kill shortcut handler to be able to grab new shortcut:
-        #self.parent.shortcuts.terminate()
+        shctsTerminated=self.parent.shortcuts.end()
         self.ui.mainWindowToggleKey.keyPressEvent=self.grabToggleMainWindowKey
         posx=self.parent.x()
         posy=self.parent.y()
@@ -135,15 +136,23 @@ class SettingsWindow(QtGui.QDialog):
             self.editFonts(save=True)
             self.saveStyle()
             key=self.ui.mainWindowToggleKey.text()
-            self.settings['keyMainWindowToggle']=key
-            self.parent.shortcuts.key=key
+            if key!=mainwindowtogglekey:
+                if not shctsTerminated:
+                    title=QtGui.QApplication.translate("ui","Restart required")
+                    msg=QtGui.QApplication.translate("ui","Restart is required in order to change global shortcut.")
+                    QtGui.QMessageBox.information(self,title,msg)
+                else:
+                    self.parent.shortcuts.key=key
+                self.settings['keyMainWindowToggle']=key
+
         else:
             self.parent.setWindowOpacity(int(self.settings["mainWindowOpacity"])/100)
             font=QtGui.QFont(self.settings["tasklistFont"]).setPointSize(int(self.settings["tasklistFontSize"]))
             self.parent.setFont(font)
             changeStyle(self.parent)
             
-        self.parent.shortcuts.start()
+        if shctsTerminated:
+            self.parent.shortcuts.start()
     def resizeEvent(self,e):
         path=QtGui.QPainterPath()
         rect=self.size()
