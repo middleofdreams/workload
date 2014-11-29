@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'task.ui'
 #
-# Created: Thu Nov 27 08:43:38 2014
+# Created: Sat Nov 29 12:11:02 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -36,8 +36,8 @@ class Ui_Dialog(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.label_4.sizePolicy().hasHeightForWidth())
         self.label_4.setSizePolicy(sizePolicy)
-        self.label_4.setMinimumSize(QtCore.QSize(0, 0))
-        self.label_4.setMaximumSize(QtCore.QSize(50, 16777215))
+        self.label_4.setMinimumSize(QtCore.QSize(70, 0))
+        self.label_4.setMaximumSize(QtCore.QSize(99, 16777215))
         font = QtGui.QFont()
         font.setWeight(75)
         font.setBold(True)
@@ -63,8 +63,8 @@ class Ui_Dialog(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.label_6.sizePolicy().hasHeightForWidth())
         self.label_6.setSizePolicy(sizePolicy)
-        self.label_6.setMinimumSize(QtCore.QSize(0, 0))
-        self.label_6.setMaximumSize(QtCore.QSize(50, 16777215))
+        self.label_6.setMinimumSize(QtCore.QSize(70, 0))
+        self.label_6.setMaximumSize(QtCore.QSize(99, 16777215))
         font = QtGui.QFont()
         font.setWeight(75)
         font.setBold(True)
@@ -277,7 +277,7 @@ class Ui_Dialog(object):
         self.taskDescription.setHtml("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Serif\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'Serif\'; font-size:8pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'monofur\'; font-size:10pt;\"><br /></p></body></html>")
         self.taskDescription.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByKeyboard|QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextBrowserInteraction|QtCore.Qt.TextEditable|QtCore.Qt.TextEditorInteraction|QtCore.Qt.TextSelectableByKeyboard|QtCore.Qt.TextSelectableByMouse)
         self.taskDescription.setOpenExternalLinks(False)
