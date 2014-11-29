@@ -54,7 +54,7 @@ class Settings(dict):
     
     def __setitem__(self,key,value):
         if key in self.cache.keys():
-            if value!= self.cache[key] and unicode(value)!=self.cache[key]:
+            if value!= self.cache[key] and bytes(value)!=self.cache[key]:
                 self.db.setSetting(key,value)
         else:
             self.db.setSetting(key,value)
