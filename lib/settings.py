@@ -3,6 +3,7 @@ class Settings(dict):
         dict.__init__(self)
         self.parent=parent
         self.db=parent.db
+        self.cache={}
         self.defaults={"notifyOnlyCurrentContext":False,
                          "askOnExit":True,
                          "notifyTime":"300",
@@ -48,10 +49,15 @@ class Settings(dict):
                 setting=False
             else:
                 setting=True
+        self.cache[key]=setting
         return setting
     
     def __setitem__(self,key,value):
-        self.db.setSetting(key,value)
+        if key in self.cache.keys():
+            if value!= self.cache[key] and bytes(value)!=self.cache[key]:
+                self.db.setSetting(key,value)
+        else:
+            self.db.setSetting(key,value)
 
         
     def getInitContext(self):
