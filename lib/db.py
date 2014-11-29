@@ -123,7 +123,6 @@ class DB(object):
     
     def setSetting(self,key,value):
         t = (value,key)
-        
         if self.getSetting(key) is None:
             self.c.execute("INSERT into settings ('value','key') values (?,?)", t)
         else:

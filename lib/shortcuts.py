@@ -46,7 +46,6 @@ class ShortcutsHandler(QThread):
             root.change_attributes(event_mask = X.KeyPressMask)
             k,mods=self.readShortcut_Linux(disp)
             root.grab_key(k, mods, 1,X.GrabModeAsync, X.GrabModeAsync,onerror=__BAD_ACCESS)
-            print(k)
             disp.sync()
             if __BAD_ACCESS.get_error():
                 self.error.emit()
@@ -111,10 +110,8 @@ class ShortcutsHandler(QThread):
         if k=="Space":
             k=65
         else:
-            print(k)
             k=Xlib.XK.string_to_keysym(k.lower())
             k=disp.keysym_to_keycode(k)
-            print(k)
             #k=ord(k)
         return k,mods
 

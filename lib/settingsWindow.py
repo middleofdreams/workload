@@ -119,7 +119,6 @@ class SettingsWindow(QtGui.QDialog):
                 self.settings.setLoadContext(context)
             #save current context in db (just in case)
             self.settings.setCurrentContextAsLast()
-            
             #save notify times
             notifyTime=int(self.ui.notifyTimeSpin.value())
             if self.ui.notifyTimeUnit.currentIndex()==0:
@@ -130,7 +129,6 @@ class SettingsWindow(QtGui.QDialog):
             if self.ui.notifyIntervalUnit.currentIndex()==0:
                 notifyInterval*=60
             self.settings["notifyInterval"]=notifyInterval
-            
             # save askOnExit
             self.settings["askOnExit"]=self.ui.confirmExit.isChecked()
             # save dateformat
@@ -149,14 +147,13 @@ class SettingsWindow(QtGui.QDialog):
             self.editWindowOpacity(save=True)
             #save tasklist font settings
             self.editFonts(save=True)
-            
             key=self.ui.mainWindowToggleKey.text()
 
             if key!=mainwindowtogglekey:
                 if not shctsTerminated:
                     title=QtGui.QApplication.translate("ui","Restart required")
                     msg=QtGui.QApplication.translate("ui","Restart is required in order to change global shortcut.")
-                    QtGui.QMessageBox.information(self,title,msg)
+                    QtGui.QMessageBox.information(self.parent,title,msg)
                 else:
                     self.parent.shortcuts.key=key
                 self.settings['keyMainWindowToggle']=key
@@ -166,7 +163,6 @@ class SettingsWindow(QtGui.QDialog):
             
             lang=self.ui.language.currentIndex()
             lang=self.ui.language.itemData(lang)
-            print(lang)
             if lang!=self.lang:
                 self.settings["lang"]=lang
                 self.parent.translate(lang)
