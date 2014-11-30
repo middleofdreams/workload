@@ -55,6 +55,7 @@ class Task(QtGui.QDialog):
         self.ui.taskDescription.anchorClicked.connect(self.openHyperlink)
         self.ui.taskName.focusInEvent=self.taskNameFocus
         self.ui.taskDescription.keyPressEvent=self.getKeys
+        self.ui.taskDescription.cursorPositionChanged.connect(self.cursorSettings)
         self.task=self.parent.db.getTaskDetails(taskid)
         if self.taskid:
             self.ui.label_6.hide()  #Hide closed date label
@@ -108,28 +109,31 @@ class Task(QtGui.QDialog):
     def taskNameFocus(self,e):
         pass
     
+    def cursorSettings(self):
+        print (self.ui.taskDescription.cursor())
+        
     def keyReleaseEvent(self,e):
-        print (e.key())
         if e.key()==16777249:
             self.ctrl=False
         return QtGui.QDialog.keyReleaseEvent(self,e)
     
     def getKeys(self,e):
         print (e.key())
-        
         if e.key()==16777217:
             print ("tab pressed, make indendation here")
-        if e.key()==16777249:
-            print("ctrl pressed")
-            self.ctrl=True
-            
-        if e.key()==66 and self.ctrl==True:
-            print("bold?")
+            print (self.ui.taskDescription.textCursor())
+            self.ui.taskDescription.insertHtml("\t")
+        elif e.key()==16777249:
+            self.ctrl=True  
+        elif e.key()==66 and self.ctrl==True:
             self.setFontBold()
-
+        elif e.key()==85 and self.ctrl==True:
+            self.setFontUnderline()
+        elif e.key()==73 and self.ctrl==True:
+            self.setFontItalic()
         else:
             QtGui.QTextBrowser.keyPressEvent(self.ui.taskDescription,e)
-        
+            self.ui.taskDescription.setTextCursor(self.ui.taskDescription.textCursor())
     
     def resizeEvent(self,e):
         path=QtGui.QPainterPath()
