@@ -244,6 +244,7 @@ class Workload(QtGui.QMainWindow):
             QtGui.QLineEdit.keyPressEvent(self.ui.taskInput,e)
             if len(self.ui.taskInput.text())>35:
                 Task(self,taskid=0,taskname=self.ui.taskInput.text())
+                self.ui.taskInput.clear()
 
     #ADDITIONAL FUNTIONS
     def questionPopup(self, title, msg):

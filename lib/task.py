@@ -52,7 +52,7 @@ class Task(QtGui.QDialog):
         self.setStylesForButtons(self.ui.currentTextColor, "(0,0,0,255)")
         self.ui.editorResetColor.clicked.connect(self.resetColors)
         self.ui.taskDescription.anchorClicked.connect(self.openHyperlink)
-        
+        self.ui.taskName.focusInEvent=self.taskNameFocus
         self.task=self.parent.db.getTaskDetails(taskid)
         if self.taskid:
             self.ui.label_6.hide()  #Hide closed date label
@@ -89,6 +89,9 @@ class Task(QtGui.QDialog):
             self.setWindowTitle(self.tr("Create New Task"))
             if taskname is not None:
                 self.ui.taskName.setText(taskname)
+                self.ui.taskName.setFocus()
+                self.ui.taskName.deselect()
+                self.ui.taskName.end(True)
             else:
                 self.ui.taskName.setText(self.tr("Enter task name here"))
             self.setPriorityText(0)
@@ -99,7 +102,10 @@ class Task(QtGui.QDialog):
         self.move(self.parent.pos())
         self.exec_()
         parent.taskOpened=False
-        
+    
+    def taskNameFocus(self,e):
+        pass
+    
     def resizeEvent(self,e):
         path=QtGui.QPainterPath()
         rect=self.size()
