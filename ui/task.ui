@@ -721,7 +721,10 @@
         <number>1</number>
        </property>
        <property name="autoFormatting">
-        <set>QTextEdit::AutoNone</set>
+        <set>QTextEdit::AutoAll</set>
+       </property>
+       <property name="tabChangesFocus">
+        <bool>false</bool>
        </property>
        <property name="undoRedoEnabled">
         <bool>true</bool>

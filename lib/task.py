@@ -17,6 +17,7 @@ class Task(QtGui.QDialog):
         self.parent=parent
         self.settings=self.parent.settings
         self.taskid=taskid
+        self.ctrl=False
         #self.moveIt=False
         statusbar=QtGui.QStatusBar(self)
         self.ui.verticalLayout.addWidget(statusbar)
@@ -53,6 +54,7 @@ class Task(QtGui.QDialog):
         self.ui.editorResetColor.clicked.connect(self.resetColors)
         self.ui.taskDescription.anchorClicked.connect(self.openHyperlink)
         self.ui.taskName.focusInEvent=self.taskNameFocus
+        self.ui.taskDescription.keyPressEvent=self.getKeys
         self.task=self.parent.db.getTaskDetails(taskid)
         if self.taskid:
             self.ui.label_6.hide()  #Hide closed date label
@@ -105,6 +107,29 @@ class Task(QtGui.QDialog):
     
     def taskNameFocus(self,e):
         pass
+    
+    def keyReleaseEvent(self,e):
+        print (e.key())
+        if e.key()==16777249:
+            self.ctrl=False
+        return QtGui.QDialog.keyReleaseEvent(self,e)
+    
+    def getKeys(self,e):
+        print (e.key())
+        
+        if e.key()==16777217:
+            print ("tab pressed, make indendation here")
+        if e.key()==16777249:
+            print("ctrl pressed")
+            self.ctrl=True
+            
+        if e.key()==66 and self.ctrl==True:
+            print("bold?")
+            self.setFontBold()
+
+        else:
+            QtGui.QTextBrowser.keyPressEvent(self.ui.taskDescription,e)
+        
     
     def resizeEvent(self,e):
         path=QtGui.QPainterPath()

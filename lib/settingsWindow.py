@@ -273,22 +273,29 @@ class SettingsWindow(QtGui.QDialog):
             self.ui.chosenFonts.addItem(i)
             self.ui.fontFamily.addItem(i)
             
-            
         
     def addFonts(self):
         selectedFonts=self.ui.allFonts.selectedItems()
         for i in selectedFonts:
             self.ui.chosenFonts.addItem(i.text())
-        
-        
+            index=self.ui.allFonts.row(i)
+            self.ui.allFonts.takeItem(index)
+            self.ui.chosenFonts.sortItems(QtCore.Qt.AscendingOrder)
+            self.ui.fontFamily.addItem(i.text())
+            
     def removeFonts(self):
         selectedFonts=self.ui.chosenFonts.selectedItems()
         for i in selectedFonts:
-            item=self.ui.chosenFonts.row(i)
-            self.ui.chosenFonts.takeItem(item)
+            self.ui.allFonts.addItem(i.text())
+            index=self.ui.chosenFonts.row(i)
+            self.ui.chosenFonts.takeItem(index)
+            self.ui.allFonts.sortItems(QtCore.Qt.AscendingOrder)
+            index=self.ui.fontFamily.findText(i.text())
+            self.ui.fontFamily.removeItem(index)
+
+            
     
     def saveChosenFonts(self):
-    
         allItems=self.ui.chosenFonts.findItems("",QtCore.Qt.MatchFlags(QtCore.Qt.MatchContains|QtCore.Qt.MatchRecursive))
         allFonts=[]
         for i in allItems:

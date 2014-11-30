@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'task.ui'
 #
-# Created: Sat Nov 29 12:11:02 2014
+# Created: Sun Nov 30 19:14:24 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -271,7 +271,8 @@ class Ui_Dialog(object):
         self.taskDescription.setFrameShape(QtGui.QFrame.NoFrame)
         self.taskDescription.setFrameShadow(QtGui.QFrame.Plain)
         self.taskDescription.setLineWidth(1)
-        self.taskDescription.setAutoFormatting(QtGui.QTextEdit.AutoNone)
+        self.taskDescription.setAutoFormatting(QtGui.QTextEdit.AutoAll)
+        self.taskDescription.setTabChangesFocus(False)
         self.taskDescription.setUndoRedoEnabled(True)
         self.taskDescription.setReadOnly(False)
         self.taskDescription.setHtml("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
