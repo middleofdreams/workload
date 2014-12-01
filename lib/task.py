@@ -55,8 +55,7 @@ class Task(QtGui.QDialog):
         self.ui.editorResetColor.clicked.connect(self.resetColors)
         self.ui.taskDescription.anchorClicked.connect(self.openHyperlink)
         self.ui.taskName.focusInEvent=self.taskNameFocus
-        self.ui.taskDescription.keyPressEvent=self.getKeys
-        self.ui.taskDescription.cursorPositionChanged.connect(self.cursorPosition)
+        self.ui.taskDescription.event=self.eventFilter
         self.task=self.parent.db.getTaskDetails(taskid)
         if self.taskid:
             self.ui.label_6.hide()  #Hide closed date label
@@ -116,31 +115,33 @@ class Task(QtGui.QDialog):
     def taskNameFocus(self,e):
         pass
     
-    def cursorPosition(self):
-        cursor=self.ui.taskDescription.textCursor().position()
-        return cursor
-        
-    
-    def getKeys(self,e):
-        if e.key()==QtCore.Qt.Key_Tab:
-            cursor=self.cursorPosition()
-            print (cursor)
-            self.ui.taskDescription.textCursor().setPosition(cursor)
-            print (cursor)
-            self.ui.taskDescription.textCursor().insertText("\t bla ! ")
-        elif e.key()==16777249:
-            self.ctrl=True  
-        elif e.key()==66:
+    def eventFilter(self,e):
+        if e.type()==QtCore.QEvent.KeyPress and e.key()==QtCore.Qt.Key_Tab:
+            self.insertTabs()
+        elif e.type()==QtCore.QEvent.KeyPress and e.key()==66:
             if (QtCore.Qt.ControlModifier & e.modifiers()):
                 self.setFontBold()
-        elif e.key()==85:
+        elif e.type()==QtCore.QEvent.KeyPress and e.key()==85:
             if (QtCore.Qt.ControlModifier & e.modifiers()):
                 self.setFontUnderline()
-        elif e.key()==73:
+        elif e.type()==QtCore.QEvent.KeyPress and e.key()==73:
             if (QtCore.Qt.ControlModifier & e.modifiers()):
                 self.setFontItalic()
         else:
-            QtGui.QTextBrowser.keyPressEvent(self.ui.taskDescription,e)
+            return QtGui.QTextEdit.event(self.ui.taskDescription,e)
+        
+    def insertTabs(self):
+        cursor=self.ui.taskDescription.textCursor()
+        selection=cursor.position()
+        selectedText=cursor.selectedText()
+        if selectedText!="":
+            newtext=""
+            for i in selectedText.splitlines():
+                newtext+="\t"+i+"\n"
+            cursor.insertText(newtext)
+        else:
+            cursor.insertText("\t")
+        
     
     def resizeEvent(self,e):
         path=QtGui.QPainterPath()

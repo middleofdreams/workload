@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'task.ui'
 #
-# Created: Mon Dec  1 18:46:44 2014
+# Created: Mon Dec  1 19:07:35 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -255,23 +255,13 @@ class Ui_Dialog(object):
         self.verticalLayout_2.addWidget(self.frame)
         self.taskDescription = QtGui.QTextBrowser(Dialog)
         self.taskDescription.setMinimumSize(QtCore.QSize(100, 0))
-        palette = QtGui.QPalette()
-        brush = QtGui.QBrush(QtGui.QColor(0, 85, 0))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Button, brush)
-        brush = QtGui.QBrush(QtGui.QColor(0, 85, 0))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Button, brush)
-        brush = QtGui.QBrush(QtGui.QColor(0, 85, 0))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Button, brush)
-        self.taskDescription.setPalette(palette)
-        self.taskDescription.setFocusPolicy(QtCore.Qt.ClickFocus)
+        self.taskDescription.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.taskDescription.setAutoFillBackground(True)
         self.taskDescription.setLocale(QtCore.QLocale(QtCore.QLocale.English, QtCore.QLocale.UnitedKingdom))
         self.taskDescription.setFrameShape(QtGui.QFrame.NoFrame)
         self.taskDescription.setFrameShadow(QtGui.QFrame.Plain)
         self.taskDescription.setLineWidth(1)
-        self.taskDescription.setAutoFormatting(QtGui.QTextEdit.AutoAll)
+        self.taskDescription.setAutoFormatting(QtGui.QTextEdit.AutoBulletList)
         self.taskDescription.setTabChangesFocus(False)
         self.taskDescription.setUndoRedoEnabled(True)
         self.taskDescription.setReadOnly(False)
@@ -280,7 +270,9 @@ class Ui_Dialog(object):
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Serif\'; font-size:8pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'monofur\'; font-size:10pt;\"><br /></p></body></html>")
-        self.taskDescription.setTabStopWidth(0)
+        self.taskDescription.setOverwriteMode(False)
+        self.taskDescription.setTabStopWidth(40)
+        self.taskDescription.setCursorWidth(2)
         self.taskDescription.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByKeyboard|QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextBrowserInteraction|QtCore.Qt.TextEditable|QtCore.Qt.TextEditorInteraction|QtCore.Qt.TextSelectableByKeyboard|QtCore.Qt.TextSelectableByMouse)
         self.taskDescription.setOpenExternalLinks(False)
         self.taskDescription.setOpenLinks(False)
