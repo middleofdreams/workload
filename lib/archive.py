@@ -1,8 +1,8 @@
 from PySide import QtGui,QtCore
 from ui.archive_ui import Ui_Dialog
 import datetime
-from .task import Task
-from .GuiManager import changeStyle
+from lib.task import Task
+from lib.style import changeStyle
 class ArchiveWindow(QtGui.QDialog):
 
     def __init__(self,parent):

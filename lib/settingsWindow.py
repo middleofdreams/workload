@@ -1,6 +1,6 @@
 from PySide import QtCore,QtGui
 from ui.settings_ui import Ui_Dialog
-from .GuiManager import changeStyle
+from lib.style import changeStyle
 class SettingsWindow(QtGui.QDialog):
 
     def __init__(self,parent):

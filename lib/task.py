@@ -3,7 +3,7 @@ from PySide import QtGui, QtCore
 from ui.task_ui import Ui_Dialog
 import datetime,unicodedata
 from lib.helpers import timestamp,QtDateFormat
-from .GuiManager import changeStyle
+from lib.style import changeStyle
 
 class Task(QtGui.QDialog):
     def __init__(self,parent,taskid,taskname=None):

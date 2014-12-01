@@ -11,8 +11,8 @@ from lib.timer import TaskReminder
 import datetime
 from lib.helpers import timestamp
 from lib.shortcuts import ShortcutsHandler
-from lib.GuiManager import guiSettings,connectSignals, finalizeInit,changeStyle
-
+from lib.GuiManager import guiSettings,connectSignals, finalizeInit
+from lib.style import changeStyle
 
 class Workload(QtGui.QMainWindow):
 
