@@ -117,13 +117,17 @@ class Task(QtGui.QDialog):
         pass
     
     def cursorPosition(self):
-        #print (self.ui.taskDescription.cursor())
-        pass 
-    
+        cursor=self.ui.taskDescription.textCursor().position()
+        return cursor
+        
     
     def getKeys(self,e):
-        if e.key()==16777217:
-            pass
+        if e.key()==QtCore.Qt.Key_Tab:
+            cursor=self.cursorPosition()
+            print (cursor)
+            self.ui.taskDescription.textCursor().setPosition(cursor)
+            print (cursor)
+            self.ui.taskDescription.textCursor().insertText("\t bla ! ")
         elif e.key()==16777249:
             self.ctrl=True  
         elif e.key()==66:

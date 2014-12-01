@@ -7,7 +7,6 @@ def changeStyle(main,settings={}):
     for i in settingList:
         if i not in s.keys():
             s[i]=main.settings[i]
-
     WindowStyle="QMainWindow{border:2px solid rgba"+s["windowFrame"]+";border-radius:6px; background-color:rgba"+s["windowBG"]+"\
     ;font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px}\
     \
@@ -19,16 +18,17 @@ def changeStyle(main,settings={}):
     \
     QTreeWidget{alternate-background-color:rgba"+s["alternateListItem"]+";background-color:rgba"+s["tasklistBG"]+"\
     ;border: 1px solid rgba"+s["tasklistFrame"]+";color:rgba"+s["tasklistFontColor"]+";font:"+s["tasklistFontSize"]+"px;font-family:"+s["fontFamily"]+"}\
+    \
     QTreeWidget QAbstractScrollArea{border:1px solid rgb(120,0,0)}\
     \
     QTabWidget::pane{border: 1px solid rgba(15,15,15,100);font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px}\
     \
-    QTabBar::tab{min-height:15px;min-width:15ex;border:1px solid rgba(15,15,15,100);padding-left:5px;padding-right:5px;padding-top:5px;padding-bottom:5px;\
+    QTabBar::tab{min-height:15px;min-width:18ex;border:1px solid rgba(15,15,15,100);padding-top:2px;\
     ;font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px;\
-    margin-left:1px;border-top-left-radius: 3px;border-top-right-radius: 3px}\
+    margin-left:1px;border-top-left-radius: 3px;border-top-right-radius: 3px;}\
     QTabBar::tab::selected{background-color:rgba"+s["selectedItem"]+";\
     ;font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px;\
-    border:1px solid rgba(15,15,15,100);min-width: 15ex;;padding-left:5px;padding-right:5px;padding-top:5px;padding-bottom:5px;}\
+    border:1px solid rgba(15,15,15,100);padding-top:3px}\
     \
     QListWidget{background-color:rgba"+s["tasklistBG"]+";font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px}\
     \
