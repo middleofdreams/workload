@@ -85,6 +85,8 @@ class SettingsWindow(QtGui.QDialog):
         self.ui.tasklistFontSize.setValue(tasklistfontsize)
         self.ui.addFonts.clicked.connect(self.addFonts)
         self.ui.removeFonts.clicked.connect(self.removeFonts)
+        self.ui.allFonts.activated.connect(self.addFonts)
+        self.ui.chosenFonts.activated.connect(self.removeFonts)
         mainwindowtogglekey=self.settings['keyMainWindowToggle']
         self.ui.mainWindowToggleKey.setText(mainwindowtogglekey)
         #kill shortcut handler to be able to grab new shortcut:

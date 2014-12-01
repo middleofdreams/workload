@@ -55,7 +55,7 @@ class Task(QtGui.QDialog):
         self.ui.taskDescription.anchorClicked.connect(self.openHyperlink)
         self.ui.taskName.focusInEvent=self.taskNameFocus
         self.ui.taskDescription.keyPressEvent=self.getKeys
-        self.ui.taskDescription.cursorPositionChanged.connect(self.cursorSettings)
+        self.ui.taskDescription.cursorPositionChanged.connect(self.cursorPosition)
         self.task=self.parent.db.getTaskDetails(taskid)
         if self.taskid:
             self.ui.label_6.hide()  #Hide closed date label
@@ -109,20 +109,19 @@ class Task(QtGui.QDialog):
     def taskNameFocus(self,e):
         pass
     
-    def cursorSettings(self):
-        print (self.ui.taskDescription.cursor())
-        
+    def cursorPosition(self):
+        #print (self.ui.taskDescription.cursor())
+        pass 
+    
     def keyReleaseEvent(self,e):
         if e.key()==16777249:
             self.ctrl=False
         return QtGui.QDialog.keyReleaseEvent(self,e)
     
     def getKeys(self,e):
-        print (e.key())
+        #print (e.key())
         if e.key()==16777217:
-            print ("tab pressed, make indendation here")
-            print (self.ui.taskDescription.textCursor())
-            self.ui.taskDescription.insertHtml("\t")
+            pass
         elif e.key()==16777249:
             self.ctrl=True  
         elif e.key()==66 and self.ctrl==True:
