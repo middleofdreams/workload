@@ -85,6 +85,8 @@ class SettingsWindow(QtGui.QDialog):
         self.ui.tasklistFontSize.setValue(tasklistfontsize)
         self.ui.addFonts.clicked.connect(self.addFonts)
         self.ui.removeFonts.clicked.connect(self.removeFonts)
+        self.ui.allFonts.activated.connect(self.addFonts)
+        self.ui.chosenFonts.activated.connect(self.removeFonts)
         mainwindowtogglekey=self.settings['keyMainWindowToggle']
         self.ui.mainWindowToggleKey.setText(mainwindowtogglekey)
         #kill shortcut handler to be able to grab new shortcut:
@@ -265,10 +267,10 @@ class SettingsWindow(QtGui.QDialog):
     def loadFontList(self):
         FontDB=QtGui.QFontDatabase()
         allFonts=FontDB.families()
-        for i in allFonts:
-            self.ui.allFonts.addItem(i)
-        
         chosenFonts=self.settings["chosenFonts"].split("|")
+        for i in allFonts:
+            if i not in chosenFonts:
+                self.ui.allFonts.addItem(i.split(".")[0])
         for i in chosenFonts:
             self.ui.chosenFonts.addItem(i)
             self.ui.fontFamily.addItem(i)

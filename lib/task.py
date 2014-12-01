@@ -6,7 +6,7 @@ from lib.helpers import timestamp,QtDateFormat
 from lib.style import changeStyle
 
 class Task(QtGui.QDialog):
-    def __init__(self,parent,taskid,taskname=None):
+    def __init__(self,parent,taskid,taskname=None,description=None):
         '''main window init'''
         parent.taskOpened=True
         QtGui.QDialog.__init__(self)
@@ -17,7 +17,6 @@ class Task(QtGui.QDialog):
         self.parent=parent
         self.settings=self.parent.settings
         self.taskid=taskid
-        self.ctrl=False
         #self.moveIt=False
         statusbar=QtGui.QStatusBar(self)
         self.ui.verticalLayout.addWidget(statusbar)
@@ -36,6 +35,8 @@ class Task(QtGui.QDialog):
         self.ui.editorBold.setProperty("button", "taskEditorBold")
         self.ui.editorItalic.setProperty("button", "taskEditorItalic")
         self.ui.editorUnderline.setProperty("button", "taskEditorUnderline")
+        self.ui.label_4.setProperty("label","bold")
+        self.ui.label_6.setProperty("label","bold")
         changeStyle(self)
         self.ui.dueOn.stateChanged.connect(self.setDueOn)
         self.ui.priority.valueChanged.connect(self.setPriorityText)
@@ -55,7 +56,7 @@ class Task(QtGui.QDialog):
         self.ui.taskDescription.anchorClicked.connect(self.openHyperlink)
         self.ui.taskName.focusInEvent=self.taskNameFocus
         self.ui.taskDescription.keyPressEvent=self.getKeys
-        self.ui.taskDescription.cursorPositionChanged.connect(self.cursorSettings)
+        self.ui.taskDescription.cursorPositionChanged.connect(self.cursorPosition)
         self.task=self.parent.db.getTaskDetails(taskid)
         if self.taskid:
             self.ui.label_6.hide()  #Hide closed date label
@@ -90,13 +91,19 @@ class Task(QtGui.QDialog):
             self.ui.label_6.hide()  #Hide closed date label
             
             self.setWindowTitle(self.tr("Create New Task"))
+            if description is not None:
+                self.ui.taskDescription.append(description)
             if taskname is not None:
                 self.ui.taskName.setText(taskname)
                 self.ui.taskName.setFocus()
                 self.ui.taskName.deselect()
                 self.ui.taskName.end(True)
             else:
-                self.ui.taskName.setText(self.tr("Enter task name here"))
+                if self.parent.ui.taskInput.text()=="":
+                    self.ui.taskName.setText(self.tr("Enter task name here"))
+                else:
+                    self.ui.taskName.setText(self.parent.ui.taskInput.text())
+                    self.parent.ui.taskInput.clear()
             self.setPriorityText(0)
             date=datetime.datetime.now()
             delta=datetime.timedelta(hours=24)
@@ -109,31 +116,27 @@ class Task(QtGui.QDialog):
     def taskNameFocus(self,e):
         pass
     
-    def cursorSettings(self):
-        print (self.ui.taskDescription.cursor())
-        
-    def keyReleaseEvent(self,e):
-        if e.key()==16777249:
-            self.ctrl=False
-        return QtGui.QDialog.keyReleaseEvent(self,e)
+    def cursorPosition(self):
+        #print (self.ui.taskDescription.cursor())
+        pass 
+    
     
     def getKeys(self,e):
-        print (e.key())
         if e.key()==16777217:
-            print ("tab pressed, make indendation here")
-            print (self.ui.taskDescription.textCursor())
-            self.ui.taskDescription.insertHtml("\t")
+            pass
         elif e.key()==16777249:
             self.ctrl=True  
-        elif e.key()==66 and self.ctrl==True:
-            self.setFontBold()
-        elif e.key()==85 and self.ctrl==True:
-            self.setFontUnderline()
-        elif e.key()==73 and self.ctrl==True:
-            self.setFontItalic()
+        elif e.key()==66:
+            if (QtCore.Qt.ControlModifier & e.modifiers()):
+                self.setFontBold()
+        elif e.key()==85:
+            if (QtCore.Qt.ControlModifier & e.modifiers()):
+                self.setFontUnderline()
+        elif e.key()==73:
+            if (QtCore.Qt.ControlModifier & e.modifiers()):
+                self.setFontItalic()
         else:
             QtGui.QTextBrowser.keyPressEvent(self.ui.taskDescription,e)
-            self.ui.taskDescription.setTextCursor(self.ui.taskDescription.textCursor())
     
     def resizeEvent(self,e):
         path=QtGui.QPainterPath()
@@ -269,7 +272,7 @@ class Task(QtGui.QDialog):
         if not self.ui.taskDescription.textCursor().hasSelection():
             if currentIndex is not None:
                 self.ui.fontComboBox.setCurrentIndex(currentIndex)
-        self.ui.fontSize.setValue(currentSize)
+                self.ui.fontSize.setValue(currentSize)
            
             
     def setEditorFont(self):

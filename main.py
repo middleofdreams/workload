@@ -237,13 +237,22 @@ class Workload(QtGui.QMainWindow):
 
 
     def getKeysOnInput(self, e):
-        # print (e.key())
         if e.key()==16777221 or e.key()==16777220:  # enter/return
-            self.addTask()
+            if (QtCore.Qt.AltModifier & e.modifiers()):
+                self.createTask()
+            else:
+                self.addTask()
         else:
             QtGui.QLineEdit.keyPressEvent(self.ui.taskInput,e)
-            if len(self.ui.taskInput.text())>35:
-                Task(self,taskid=0,taskname=self.ui.taskInput.text())
+            input=self.ui.taskInput.text()
+            if len(input)>50:
+                taskname=input[:50].strip()
+                taskname=taskname.replace("\r\n","\n")
+                taskname=taskname.replace("\n"," ")
+                taskname=taskname.replace("\t"," ")
+                taskname=taskname.replace("  ","")
+                description=input
+                Task(self,taskid=0,taskname=taskname,description=description)
                 self.ui.taskInput.clear()
 
     #ADDITIONAL FUNTIONS
@@ -341,12 +350,13 @@ class Workload(QtGui.QMainWindow):
         Task(self,taskid=0)
 
     def completeTasks(self):
-        tasks=self.ui.taskList.selectedItems()
-        for i in tasks:
-            self.db.completeTask(i.data(0,32))
-            index = self.ui.taskList.indexOfTopLevelItem(i)
-            self.ui.taskList.takeTopLevelItem(index)
-            self.ui.statusbar.showMessage(QtGui.QApplication.translate("ui","Task completed."),3300)
+        if self.ui.taskList.hasFocus():
+            tasks=self.ui.taskList.selectedItems()
+            for i in tasks:
+                self.db.completeTask(i.data(0,32))
+                index = self.ui.taskList.indexOfTopLevelItem(i)
+                self.ui.taskList.takeTopLevelItem(index)
+                self.ui.statusbar.showMessage(QtGui.QApplication.translate("ui","Task completed."),3300)
 
     def showHistory(self):
         ArchiveWindow(self)
