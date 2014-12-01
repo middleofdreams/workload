@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="pl_PL">
+<!DOCTYPE TS>
+<TS version="2.0" language="pl_PL">
 <context>
     <name>ArchiveWindow</name>
     <message>
-        <location filename="lib/archive.py" line="27"/>
+        <location filename="lib/archive.py" line="24"/>
         <source> [removed]</source>
         <translation> [usunięte]</translation>
     </message>
     <message>
-        <location filename="lib/archive.py" line="88"/>
+        <location filename="lib/archive.py" line="87"/>
         <source>Delete task</source>
         <translation>Usuń zadanie</translation>
     </message>
     <message>
-        <location filename="lib/archive.py" line="89"/>
+        <location filename="lib/archive.py" line="87"/>
         <source>Do you really want to delete selected  task(s) ?</source>
         <translation>Czy na pewno chcesz usunąć wybrane zadanie(a)?</translation>
     </message>
@@ -66,142 +67,142 @@
         <translation>ukończony</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="558"/>
+        <location filename="ui/settings_ui.py" line="575"/>
         <source>workload settings</source>
         <translation>ustawienia workload</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="559"/>
+        <location filename="ui/settings_ui.py" line="576"/>
         <source>Startup context</source>
         <translation>Kontekst na starcie</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="560"/>
+        <location filename="ui/settings_ui.py" line="577"/>
         <source>Last opened</source>
         <translation>Ostatnio otwarty</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="561"/>
+        <location filename="ui/settings_ui.py" line="578"/>
         <source>Date and time format</source>
         <translation>Format daty i czasu</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="562"/>
+        <location filename="ui/settings_ui.py" line="579"/>
         <source>%d-%m-%Y %H:%M</source>
         <translation>%d-%m-%Y %H:%M</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="571"/>
+        <location filename="ui/settings_ui.py" line="588"/>
         <source>On program exit</source>
         <translation>Wyjście z programu</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="563"/>
+        <location filename="ui/settings_ui.py" line="580"/>
         <source>New tasks:</source>
         <translation>Nowe zadanie:</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="564"/>
+        <location filename="ui/settings_ui.py" line="581"/>
         <source>Set default due date/time</source>
         <translation>Ustaw domyślną date i czas ukończenia</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="580"/>
+        <location filename="ui/settings_ui.py" line="597"/>
         <source>Hour(s)</source>
         <translation>Godzina(y)</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="566"/>
+        <location filename="ui/settings_ui.py" line="583"/>
         <source>Day(s)</source>
         <translation>Dzień/Dni</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="567"/>
+        <location filename="ui/settings_ui.py" line="584"/>
         <source> after create time</source>
         <translation>po stworzeniu zadania</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="572"/>
+        <location filename="ui/settings_ui.py" line="589"/>
         <source>Confirm exit</source>
         <translation>Potwierdź wyjście</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="573"/>
+        <location filename="ui/settings_ui.py" line="590"/>
         <source> General </source>
         <translation> Ogólne </translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="574"/>
+        <location filename="ui/settings_ui.py" line="591"/>
         <source>Show notifications</source>
         <translation>Pokaż powiadomienia</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="575"/>
+        <location filename="ui/settings_ui.py" line="592"/>
         <source>Only from current context</source>
         <translation>Tylko z aktywnego kontekstu</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="576"/>
+        <location filename="ui/settings_ui.py" line="593"/>
         <source>Repeat notification every:</source>
         <translation>Potwarzaj powiadomienie  co:</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="577"/>
+        <location filename="ui/settings_ui.py" line="594"/>
         <source>Notify about ending task (before task end):</source>
         <translation>Powiadamiaj o zakończeniu zadania (przed jego ukończeniem):</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="581"/>
+        <location filename="ui/settings_ui.py" line="598"/>
         <source>Minute(s)</source>
         <translation>Minuta(y)</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="582"/>
+        <location filename="ui/settings_ui.py" line="599"/>
         <source> Notifications </source>
         <translation> Powiadomienia </translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="583"/>
+        <location filename="ui/settings_ui.py" line="600"/>
         <source>&gt;</source>
         <translation>&gt;</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="584"/>
+        <location filename="ui/settings_ui.py" line="601"/>
         <source>&lt;</source>
         <translation>&lt;</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="585"/>
+        <location filename="ui/settings_ui.py" line="602"/>
         <source>Select Fonts you would like to use in program</source>
         <translation>Wybierz czcionki które chcesz używać w programie</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="586"/>
+        <location filename="ui/settings_ui.py" line="603"/>
         <source> Fonts </source>
         <translation> Czcionki </translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="587"/>
+        <location filename="ui/settings_ui.py" line="604"/>
         <source>Window background</source>
         <translation>Tło okna</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="589"/>
+        <location filename="ui/settings_ui.py" line="606"/>
         <source>Window frame</source>
         <translation>Ramka okna</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="591"/>
+        <location filename="ui/settings_ui.py" line="608"/>
         <source>Tasklist frame</source>
         <translation>Ramka listy zadań</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="592"/>
+        <location filename="ui/settings_ui.py" line="609"/>
         <source>Tasklist background</source>
         <translation>Tło zadania</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="594"/>
+        <location filename="ui/settings_ui.py" line="611"/>
         <source>Alternate tasklist background</source>
         <translation>Alternatywne tło zadania</translation>
     </message>
@@ -211,22 +212,22 @@
         <translation type="obsolete">Wybrany element menu</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="596"/>
+        <location filename="ui/settings_ui.py" line="613"/>
         <source>Task editor Background</source>
         <translation>Tło edytora zadań</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="598"/>
+        <location filename="ui/settings_ui.py" line="615"/>
         <source>Task editor Frame</source>
         <translation>Ramka edytora zadań</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="588"/>
+        <location filename="ui/settings_ui.py" line="605"/>
         <source>Main window opacity</source>
         <translation>Widoczność głownego okna</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="590"/>
+        <location filename="ui/settings_ui.py" line="607"/>
         <source>Task editor opacity</source>
         <translation>Widoczność edytora zadań</translation>
     </message>
@@ -236,7 +237,7 @@
         <translation type="obsolete">Czcionka zadania</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="600"/>
+        <location filename="ui/settings_ui.py" line="617"/>
         <source>Tasklist font color</source>
         <translation>Kolor czcionki zadania</translation>
     </message>
@@ -256,62 +257,62 @@
         <translation type="obsolete">Włącz modalność okien</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="605"/>
+        <location filename="ui/settings_ui.py" line="622"/>
         <source> Theme </source>
         <translation> Styl </translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="606"/>
+        <location filename="ui/settings_ui.py" line="623"/>
         <source>Toggle main window</source>
         <translation>Ukrywanie/pokazywanie głównego okna</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="607"/>
+        <location filename="ui/settings_ui.py" line="624"/>
         <source> Shortcuts </source>
         <translation> Skróty klawiszowe </translation>
     </message>
     <message>
-        <location filename="ui/task_ui.py" line="266"/>
+        <location filename="ui/task_ui.py" line="313"/>
         <source>Dialog</source>
         <translation>Dialog</translation>
     </message>
     <message>
-        <location filename="ui/task_ui.py" line="267"/>
+        <location filename="ui/task_ui.py" line="319"/>
         <source>Now</source>
         <translation>Teraz</translation>
     </message>
     <message>
-        <location filename="ui/task_ui.py" line="268"/>
+        <location filename="ui/task_ui.py" line="316"/>
         <source>Due</source>
         <translation>Do</translation>
     </message>
     <message>
         <location filename="ui/task_ui.py" line="269"/>
         <source>Priority</source>
-        <translation>Priorytet</translation>
+        <translation type="obsolete">Priorytet</translation>
     </message>
     <message>
-        <location filename="ui/task_ui.py" line="270"/>
+        <location filename="ui/task_ui.py" line="314"/>
         <source>Created:</source>
         <translation>Stworzony:</translation>
     </message>
     <message>
-        <location filename="ui/task_ui.py" line="271"/>
+        <location filename="ui/task_ui.py" line="315"/>
         <source>Closed:</source>
         <translation>Zamknięty:</translation>
     </message>
     <message>
-        <location filename="ui/task_ui.py" line="272"/>
+        <location filename="ui/task_ui.py" line="317"/>
         <source>None</source>
         <translation>None</translation>
     </message>
     <message>
-        <location filename="ui/task_ui.py" line="273"/>
+        <location filename="ui/task_ui.py" line="320"/>
         <source>Task Name: </source>
         <translation>Nazwa zadania:</translation>
     </message>
     <message>
-        <location filename="ui/task_ui.py" line="274"/>
+        <location filename="ui/task_ui.py" line="321"/>
         <source>Task Description</source>
         <translation>Opis  zadania</translation>
     </message>
@@ -321,62 +322,62 @@
         <translation type="obsolete">bg color</translation>
     </message>
     <message>
-        <location filename="ui/task_ui.py" line="275"/>
+        <location filename="ui/task_ui.py" line="322"/>
         <source>BGcolor</source>
         <translation>BGColor</translation>
     </message>
     <message>
-        <location filename="ui/task_ui.py" line="276"/>
+        <location filename="ui/task_ui.py" line="323"/>
         <source>Text color</source>
         <translation>Text color</translation>
     </message>
     <message>
-        <location filename="ui/task_ui.py" line="277"/>
+        <location filename="ui/task_ui.py" line="324"/>
         <source>B</source>
         <translation>B</translation>
     </message>
     <message>
-        <location filename="ui/task_ui.py" line="278"/>
+        <location filename="ui/task_ui.py" line="325"/>
         <source>I</source>
         <translation>I</translation>
     </message>
     <message>
-        <location filename="ui/task_ui.py" line="279"/>
+        <location filename="ui/task_ui.py" line="326"/>
         <source>U</source>
         <translation>U</translation>
     </message>
     <message>
-        <location filename="ui/task_ui.py" line="280"/>
+        <location filename="ui/task_ui.py" line="327"/>
         <source>reset</source>
         <translation>reset</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="593"/>
+        <location filename="ui/settings_ui.py" line="610"/>
         <source>Workload Font</source>
         <translation>Czcionka Workload</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="595"/>
+        <location filename="ui/settings_ui.py" line="612"/>
         <source>Workload Font size</source>
         <translation>Rozmiar czcionki Workload</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="597"/>
+        <location filename="ui/settings_ui.py" line="614"/>
         <source>Workload font color</source>
         <translation>Kolor czcionki Workload</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="599"/>
+        <location filename="ui/settings_ui.py" line="616"/>
         <source>Button and controls background</source>
         <translation>Tło przycisków i kontrolek</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="601"/>
+        <location filename="ui/settings_ui.py" line="618"/>
         <source>Selected Item background</source>
         <translation>Tło zaznaczonego obiektu</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="602"/>
+        <location filename="ui/settings_ui.py" line="619"/>
         <source>Text input background</source>
         <translation>Tło pól tekstowych</translation>
     </message>
@@ -386,29 +387,34 @@
         <translation type="obsolete">Resetuj kolory</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="604"/>
+        <location filename="ui/settings_ui.py" line="621"/>
         <source>Tasklist Font size</source>
         <translation>Rozmiar czcionki listy zadań</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="568"/>
+        <location filename="ui/settings_ui.py" line="585"/>
         <source>Program Language:</source>
-        <translation type="unfinished"></translation>
+        <translation>Język programu:</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="569"/>
+        <location filename="ui/settings_ui.py" line="586"/>
         <source>Auto</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatyczny</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="570"/>
+        <location filename="ui/settings_ui.py" line="587"/>
         <source>English</source>
-        <translation type="unfinished"></translation>
+        <translation>Angielski</translation>
     </message>
     <message>
-        <location filename="ui/settings_ui.py" line="603"/>
+        <location filename="ui/settings_ui.py" line="620"/>
         <source> Reset to default settings</source>
-        <translation type="unfinished"></translation>
+        <translation> Przywróć ustawienia domyślne</translation>
+    </message>
+    <message>
+        <location filename="ui/task_ui.py" line="318"/>
+        <source>Priority:</source>
+        <translation>Priorytet:</translation>
     </message>
 </context>
 <context>
@@ -597,52 +603,52 @@
 <context>
     <name>Task</name>
     <message>
-        <location filename="lib/task.py" line="87"/>
+        <location filename="lib/task.py" line="93"/>
         <source>Create New Task</source>
         <translation>Utwórz nowe zadanie</translation>
     </message>
     <message>
-        <location filename="lib/task.py" line="91"/>
+        <location filename="lib/task.py" line="103"/>
         <source>Enter task name here</source>
         <translation>Wpisz nazwę zadania</translation>
     </message>
     <message>
-        <location filename="lib/task.py" line="109"/>
+        <location filename="lib/task.py" line="150"/>
         <source>Not set!</source>
         <translation>Nie ustawione!</translation>
     </message>
     <message>
-        <location filename="lib/task.py" line="109"/>
+        <location filename="lib/task.py" line="150"/>
         <source>Now</source>
         <translation>Teraz</translation>
     </message>
     <message>
-        <location filename="lib/task.py" line="109"/>
+        <location filename="lib/task.py" line="150"/>
         <source>Next</source>
         <translation>Następne</translation>
     </message>
     <message>
-        <location filename="lib/task.py" line="109"/>
+        <location filename="lib/task.py" line="150"/>
         <source>Later</source>
         <translation>Później</translation>
     </message>
     <message>
-        <location filename="lib/task.py" line="109"/>
+        <location filename="lib/task.py" line="150"/>
         <source>Someday</source>
         <translation>Kiedyś</translation>
     </message>
     <message>
-        <location filename="lib/task.py" line="110"/>
+        <location filename="lib/task.py" line="150"/>
         <source>Awaiting</source>
         <translation>Oczekujące</translation>
     </message>
     <message>
-        <location filename="lib/task.py" line="172"/>
+        <location filename="lib/task.py" line="213"/>
         <source>Task updated</source>
         <translation>Zadanie zaktualizowane</translation>
     </message>
     <message>
-        <location filename="lib/task.py" line="195"/>
+        <location filename="lib/task.py" line="236"/>
         <source>New task created.</source>
         <translation>Nowe zadanie utworzone.</translation>
     </message>
@@ -660,7 +666,7 @@
         <translation>Następujące zadanie:</translation>
     </message>
     <message>
-        <location filename="lib/timer.py" line="85"/>
+        <location filename="lib/timer.py" line="84"/>
         <source> already ended!</source>
         <translation> ma przekroczony czas zakończenia!</translation>
     </message>
@@ -701,77 +707,77 @@
 <context>
     <name>ui</name>
     <message>
-        <location filename="main.py" line="159"/>
+        <location filename="main.py" line="162"/>
         <source>Task with same name already exist, choose another</source>
         <translation>Zadanie z tą samą nazwą już istnieje,wybierz inną nazwę</translation>
     </message>
     <message>
-        <location filename="lib/GuiManager.py" line="58"/>
+        <location filename="main.py" line="370"/>
         <source>Hello! Ready to work ;-)</source>
         <translation>Witaj! Gotowy do pracy ;)</translation>
     </message>
     <message>
-        <location filename="main.py" line="160"/>
+        <location filename="main.py" line="163"/>
         <source>Task name already exists</source>
         <translation>Zadanie istnieje</translation>
     </message>
     <message>
-        <location filename="main.py" line="179"/>
+        <location filename="main.py" line="183"/>
         <source>Delete task</source>
         <translation>Usuń zadanie</translation>
     </message>
     <message>
-        <location filename="main.py" line="180"/>
+        <location filename="main.py" line="184"/>
         <source>Do you really want to delete selected  task(s) ?</source>
         <translation>Czy na pewno chcesz usunąć wybrane zadanie(a)?</translation>
     </message>
     <message>
-        <location filename="main.py" line="189"/>
+        <location filename="main.py" line="194"/>
         <source>Task removed.</source>
         <translation>Zadanie usunięte.</translation>
     </message>
     <message>
-        <location filename="main.py" line="199"/>
+        <location filename="main.py" line="204"/>
         <source>Priority updated.</source>
         <translation>Priorytet zaktualizowany.</translation>
     </message>
     <message>
-        <location filename="main.py" line="298"/>
+        <location filename="main.py" line="320"/>
         <source>Open</source>
         <translation>Otwórz</translation>
     </message>
     <message>
-        <location filename="main.py" line="298"/>
+        <location filename="main.py" line="320"/>
         <source>CSV File (*.csv)</source>
         <translation>Plik CSV (*.csv)</translation>
     </message>
     <message>
-        <location filename="main.py" line="305"/>
+        <location filename="main.py" line="327"/>
         <source>Exporting tasks</source>
         <translation>Eksportowanie zadań</translation>
     </message>
     <message>
-        <location filename="main.py" line="305"/>
+        <location filename="main.py" line="327"/>
         <source>Do you want to include completed tasks?</source>
         <translation>Czy chcesz dołączyć ukończone zadania?</translation>
     </message>
     <message>
-        <location filename="main.py" line="314"/>
+        <location filename="main.py" line="336"/>
         <source>About</source>
         <translation>O programie</translation>
     </message>
     <message>
-        <location filename="main.py" line="319"/>
+        <location filename="main.py" line="341"/>
         <source>Exit</source>
         <translation>Wyjście</translation>
     </message>
     <message>
-        <location filename="main.py" line="319"/>
+        <location filename="main.py" line="341"/>
         <source>Are you sure?</source>
         <translation>Czy na pewno?</translation>
     </message>
     <message>
-        <location filename="main.py" line="336"/>
+        <location filename="main.py" line="359"/>
         <source>Task completed.</source>
         <translation>Zadanie ukończone.</translation>
     </message>
@@ -781,7 +787,7 @@
         <translation>Błąd</translation>
     </message>
     <message>
-        <location filename="main.py" line="342"/>
+        <location filename="main.py" line="365"/>
         <source>Unable to register global shortcut</source>
         <translation>Nie można zarejestrować skrótu klawiszowego</translation>
     </message>
@@ -826,7 +832,7 @@
         <translation>Czy na pewno chcesz usunąć aktywny kontekst?</translation>
     </message>
     <message>
-        <location filename="main.py" line="128"/>
+        <location filename="main.py" line="132"/>
         <source>New task created.</source>
         <translation>Nowe zadanie utworzone.</translation>
     </message>
@@ -834,6 +840,16 @@
         <location filename="lib/contexts.py" line="55"/>
         <source>Context with same name already exists</source>
         <translation>Kontekst o tej samej nazwie już istnieje</translation>
+    </message>
+    <message>
+        <location filename="lib/settingsWindow.py" line="156"/>
+        <source>Restart required</source>
+        <translation>Wymagany restart</translation>
+    </message>
+    <message>
+        <location filename="lib/settingsWindow.py" line="157"/>
+        <source>Restart is required in order to change global shortcut.</source>
+        <translation>Restart aplikacji jest wymagany do zmiany skrótu globalnego.</translation>
     </message>
 </context>
 </TS>
