@@ -23,12 +23,12 @@ def changeStyle(main,settings={}):
     \
     QTabWidget::pane{border: 1px solid rgba(15,15,15,100);font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px}\
     \
-    QTabBar::tab{height:15px;border:1px solid rgba(15,15,15,100);padding: 1px;min-width: 10ex;\
+    QTabBar::tab{min-height:15px;min-width:15ex;border:1px solid rgba(15,15,15,100);padding-left:5px;padding-right:5px;padding-top:5px;padding-bottom:5px;\
     ;font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px;\
     margin-left:1px;border-top-left-radius: 3px;border-top-right-radius: 3px}\
     QTabBar::tab::selected{background-color:rgba"+s["selectedItem"]+";\
     ;font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px;\
-    border:1px solid rgba(15,15,15,100);padding: 2px;min-width: 10ex}\
+    border:1px solid rgba(15,15,15,100);min-width: 15ex;;padding-left:5px;padding-right:5px;padding-top:5px;padding-bottom:5px;}\
     \
     QListWidget{background-color:rgba"+s["tasklistBG"]+";font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px}\
     \
