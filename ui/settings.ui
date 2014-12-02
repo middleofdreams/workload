@@ -45,8 +45,8 @@
     <widget class="QTabWidget" name="tabWidget">
      <property name="minimumSize">
       <size>
-       <width>0</width>
-       <height>0</height>
+       <width>600</width>
+       <height>379</height>
       </size>
      </property>
      <property name="currentIndex">
@@ -62,7 +62,7 @@
       <bool>false</bool>
      </property>
      <property name="movable">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
      <widget class="QWidget" name="generalTab">
       <property name="sizePolicy">
@@ -424,6 +424,9 @@
          </property>
          <item>
           <widget class="QListWidget" name="allFonts">
+           <property name="alternatingRowColors">
+            <bool>true</bool>
+           </property>
            <property name="selectionMode">
             <enum>QAbstractItemView::ExtendedSelection</enum>
            </property>
@@ -470,6 +473,9 @@
          </item>
          <item>
           <widget class="QListWidget" name="chosenFonts">
+           <property name="alternatingRowColors">
+            <bool>true</bool>
+           </property>
            <property name="selectionMode">
             <enum>QAbstractItemView::ExtendedSelection</enum>
            </property>

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'settings.ui'
 #
-# Created: Mon Dec  1 17:58:38 2014
+# Created: Tue Dec  2 18:26:22 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -31,11 +31,11 @@ class Ui_Dialog(object):
         self.buttonBox.setObjectName("buttonBox")
         self.gridLayout_4.addWidget(self.buttonBox, 1, 0, 1, 1)
         self.tabWidget = QtGui.QTabWidget(Dialog)
-        self.tabWidget.setMinimumSize(QtCore.QSize(0, 0))
+        self.tabWidget.setMinimumSize(QtCore.QSize(600, 379))
         self.tabWidget.setElideMode(QtCore.Qt.ElideRight)
         self.tabWidget.setUsesScrollButtons(False)
         self.tabWidget.setDocumentMode(False)
-        self.tabWidget.setMovable(True)
+        self.tabWidget.setMovable(False)
         self.tabWidget.setObjectName("tabWidget")
         self.generalTab = QtGui.QWidget()
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.MinimumExpanding, QtGui.QSizePolicy.MinimumExpanding)
@@ -178,6 +178,7 @@ class Ui_Dialog(object):
         self.horizontalLayout_12.setContentsMargins(2, 2, 2, 2)
         self.horizontalLayout_12.setObjectName("horizontalLayout_12")
         self.allFonts = QtGui.QListWidget(self.fontsTab)
+        self.allFonts.setAlternatingRowColors(True)
         self.allFonts.setSelectionMode(QtGui.QAbstractItemView.ExtendedSelection)
         self.allFonts.setObjectName("allFonts")
         self.horizontalLayout_12.addWidget(self.allFonts)
@@ -195,6 +196,7 @@ class Ui_Dialog(object):
         self.verticalLayout.addWidget(self.removeFonts)
         self.horizontalLayout_12.addLayout(self.verticalLayout)
         self.chosenFonts = QtGui.QListWidget(self.fontsTab)
+        self.chosenFonts.setAlternatingRowColors(True)
         self.chosenFonts.setSelectionMode(QtGui.QAbstractItemView.ExtendedSelection)
         self.chosenFonts.setObjectName("chosenFonts")
         self.horizontalLayout_12.addWidget(self.chosenFonts)

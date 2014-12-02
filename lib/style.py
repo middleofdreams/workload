@@ -19,18 +19,17 @@ def changeStyle(main,settings={}):
     QTreeWidget{alternate-background-color:rgba"+s["alternateListItem"]+";background-color:rgba"+s["tasklistBG"]+"\
     ;border: 1px solid rgba"+s["tasklistFrame"]+";color:rgba"+s["tasklistFontColor"]+";font:"+s["tasklistFontSize"]+"px;font-family:"+s["fontFamily"]+"}\
     \
-    QTreeWidget QAbstractScrollArea{border:1px solid rgb(120,0,0)}\
-    \
     QTabWidget::pane{border: 1px solid rgba(15,15,15,100);font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px}\
     \
-    QTabBar::tab{min-height:15px;min-width:18ex;border:1px solid rgba(15,15,15,100);padding-top:2px;\
-    ;font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px;\
-    margin-left:1px;border-top-left-radius: 3px;border-top-right-radius: 3px;}\
+    QTabBar::tab{min-height:17px;min-width:8ex;border:1px solid rgba(15,15,15,100);padding-top:1px;\
+    ;font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:13px;\
+    margin:1px;border-top-left-radius: 4px;border-top-right-radius: 4px;}\
     QTabBar::tab::selected{background-color:rgba"+s["selectedItem"]+";\
-    ;font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px;\
-    border:1px solid rgba(15,15,15,100);padding-top:3px}\
+    ;font-family:"+s["fontFamily"]+";font: 12px; color:rgba"+s["workloadFontColor"]+";\
+    border:1px solid rgba(15,15,15,100);margin:0px;padding-top:4px}\
     \
-    QListWidget{background-color:rgba"+s["tasklistBG"]+";font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px}\
+    QListWidget{background-color:rgba"+s["tasklistBG"]+";font-family:"+s["fontFamily"]+";\
+    color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px;alternate-background-color:rgba"+s["alternateListItem"]+"}\
     \
     QDialog[dialog=taskEditor]{border: 2px solid rgba"+s["taskEditorFrame"]+";\
     border-radius: 8px; background-color:rgba"+s["taskEditorBG"]+"\

@@ -60,11 +60,10 @@ def finalizeInit(main):
     '''show window and adjust it's size'''
     windowOpacity=main.settings["mainWindowOpacity"]
     main.setWindowOpacity(int(windowOpacity)/100)
-#     font=QtGui.QFont(main.settings["fontFamily"])
-#     font.setPointSize(int(main.settings["fontSize"]))
-#     main.ui.taskList.setFont(font)
     main.show()
     main.adjustHeight(downSize=True, init=False)
+
+    
 
     
     

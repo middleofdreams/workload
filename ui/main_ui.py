@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created: Sat Nov 29 12:20:32 2014
+# Created: Tue Dec  2 19:08:20 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -42,6 +42,17 @@ class Ui_MainWindow(object):
         self.taskList = QtGui.QTreeWidget(self.centralwidget)
         self.taskList.setEnabled(True)
         self.taskList.setBaseSize(QtCore.QSize(0, 0))
+        palette = QtGui.QPalette()
+        brush = QtGui.QBrush(QtGui.QColor(0, 170, 0))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Highlight, brush)
+        brush = QtGui.QBrush(QtGui.QColor(0, 170, 0))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Highlight, brush)
+        brush = QtGui.QBrush(QtGui.QColor(160, 160, 160))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Highlight, brush)
+        self.taskList.setPalette(palette)
         self.taskList.setAcceptDrops(True)
         self.taskList.setAutoFillBackground(True)
         self.taskList.setFrameShape(QtGui.QFrame.Panel)

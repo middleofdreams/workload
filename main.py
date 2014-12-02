@@ -58,10 +58,10 @@ class Workload(QtGui.QMainWindow):
     def taskListFocusIn(self,e):
         if e.reason()==QtCore.Qt.FocusReason.TabFocusReason:
             try:
+                item=self.ui.taskList.itemAt(0)
                 self.ui.taskList.setCurrentItem(self.ui.taskList.itemAt(0))
             except:
                 pass
-               
     def toggle(self):
         if self.isVisible():
             self.hide()

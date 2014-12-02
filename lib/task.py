@@ -120,6 +120,9 @@ class Task(QtGui.QDialog):
             if e.key()==QtCore.Qt.Key_Tab:
                 self.insertTabs()
                 return True
+            if e.key()==QtCore.Qt.Key_Backtab:
+                self.removeTabs()
+                return True
             elif e.key()==66:
                 if (QtCore.Qt.ControlModifier & e.modifiers()):
                     self.setFontBold()
@@ -136,21 +139,42 @@ class Task(QtGui.QDialog):
                 if (QtCore.Qt.ControlModifier & e.modifiers()):
                     self.saveTaskDetails()
                     return True
-            
         return QtGui.QTextBrowser.event(self.ui.taskDescription,e)
        
     def insertTabs(self):
         cursor=self.ui.taskDescription.textCursor()
-        selection=cursor.position()
+        s1=cursor.selectionStart()
+        s2=cursor.selectionEnd()
         selectedText=cursor.selectedText()
         if selectedText!="":
             newtext=""
             for i in selectedText.splitlines():
                 newtext+="\t"+i+"\n"
-            cursor.insertText(newtext)
+            cursor.insertText(newtext.rstrip())
         else:
             cursor.insertText("\t")
+        cursor.setPosition(s1)
+        cursor.setPosition(s2,QtGui.QTextCursor.KeepAnchor)
+        cursor.movePosition(QtGui.QTextCursor.EndOfLine,QtGui.QTextCursor.KeepAnchor,s2)
+        self.ui.taskDescription.setTextCursor(cursor)
         
+    def removeTabs(self):
+        cursor=self.ui.taskDescription.textCursor()
+        s1=cursor.selectionStart()
+        s2=cursor.selectionEnd()
+        selectedText=cursor.selectedText()
+        if selectedText!="":
+            newtext=""
+            for i in selectedText.splitlines():
+                i=i.replace("\t\t","\t")+"\n"
+                newtext+=i
+            cursor.insertText(newtext.rstrip())
+        else:
+            print ("shift line left")
+        cursor.setPosition(s1)
+        cursor.setPosition(s2,QtGui.QTextCursor.KeepAnchor)
+        cursor.movePosition(QtGui.QTextCursor.StartOfLine,QtGui.QTextCursor.KeepAnchor,s2)
+        self.ui.taskDescription.setTextCursor(cursor)
     
     def resizeEvent(self,e):
         path=QtGui.QPainterPath()

@@ -13,6 +13,12 @@ class SettingsWindow(QtGui.QDialog):
         self.ui.setupUi(self)
         self.ui.addFonts.setProperty("custom","skinny")
         self.ui.removeFonts.setProperty("custom","skinny")
+        tabBar=self.ui.tabWidget.tabBar()
+        for i in range(0, 5):
+            t=tabBar.tabText(i)
+            tabBar.setTabText(i,"   "+t+"   ")
+
+
         changeStyle(self)       
         self.currentSettings={}
         ## CONNECT SIGNALS
