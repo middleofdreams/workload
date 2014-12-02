@@ -119,23 +119,25 @@ class Task(QtGui.QDialog):
         if e.type()==QtCore.QEvent.KeyPress:
             if e.key()==QtCore.Qt.Key_Tab:
                 self.insertTabs()
+                return True
             elif e.key()==66:
                 if (QtCore.Qt.ControlModifier & e.modifiers()):
                     self.setFontBold()
+                    return True
             elif e.key()==85:
                 if (QtCore.Qt.ControlModifier & e.modifiers()):
                     self.setFontUnderline()
+                    return True
             elif e.key()==73:
                 if (QtCore.Qt.ControlModifier & e.modifiers()):
                     self.setFontItalic()
+                    return True
             elif e.key()==83:
                 if (QtCore.Qt.ControlModifier & e.modifiers()):
                     self.saveTaskDetails()
-                else:
-                    return QtGui.QTextBrowser.event(self.ui.taskDescription,e)
-            else:
-                return QtGui.QTextBrowser.event(self.ui.taskDescription,e)
-        return True
+                    return True
+            
+        return QtGui.QTextBrowser.event(self.ui.taskDescription,e)
        
     def insertTabs(self):
         cursor=self.ui.taskDescription.textCursor()
@@ -208,7 +210,6 @@ class Task(QtGui.QDialog):
                 duedate=None
             self.parent.db.setTaskDetails(taskid,taskDescription,priority,taskname,duedate)
             self.updateItem(taskname, priority)
-            self.close()
             self.parent.ui.statusbar.showMessage(self.tr("Task updated"),3300)
         else:
             self.taskAlreadyExistMsg=self.parent.taskAlreadyExistMsg
@@ -230,6 +231,7 @@ class Task(QtGui.QDialog):
         if taskid!=0:    
             #save task details
             self.saveTaskDetails()
+            self.close()
         else:
             #create new task
             taskname=self.ui.taskName.text()

@@ -118,8 +118,8 @@ class Workload(QtGui.QMainWindow):
         except:
             pass
 #TODO: create new function to handle input (regexp etc)
-        if len(t)>20:
-            taskname=t[:20]+"..."
+        if len(t)>50:
+            taskname=t[:50]
             taskDescription=t
         else:
             taskname=t
