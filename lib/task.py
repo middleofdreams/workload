@@ -37,6 +37,7 @@ class Task(QtGui.QDialog):
         self.ui.editorUnderline.setProperty("button", "taskEditorUnderline")
         self.ui.label_4.setProperty("label","bold")
         self.ui.label_6.setProperty("label","bold")
+        self.ui.label_3.setProperty("label","bold")
         changeStyle(self)
         self.ui.dueOn.stateChanged.connect(self.setDueOn)
         self.ui.priority.valueChanged.connect(self.setPriorityText)
@@ -64,7 +65,8 @@ class Task(QtGui.QDialog):
             self.ui.taskName.setText(self.task["name"])
             self.ui.priority.setValue(self.task["priority"])
             self.setPriorityText(self.task["priority"])
-            self.ui.taskDescription.insertHtml(self.task["taskdescription"])
+            desc=self.task["taskdescription"]
+            self.ui.taskDescription.insertHtml(desc)
             createdTimestamp=int(self.task["created"].split(".")[0])
             createdDate=datetime.datetime.fromtimestamp(createdTimestamp)
             createdDate=createdDate.strftime(self.settings["dateFormat"])
@@ -117,12 +119,17 @@ class Task(QtGui.QDialog):
     
     def eventFilter(self,e):
         if e.type()==QtCore.QEvent.KeyPress:
+            #print(e.key())
             if e.key()==QtCore.Qt.Key_Tab:
                 self.insertTabs()
                 return True
             if e.key()==QtCore.Qt.Key_Backtab:
                 self.removeTabs()
                 return True
+            elif e.key()==82:
+                if (QtCore.Qt.ControlModifier & e.modifiers()):
+                    self.resetColors()
+                    return True
             elif e.key()==66:
                 if (QtCore.Qt.ControlModifier & e.modifiers()):
                     self.setFontBold()
@@ -159,7 +166,7 @@ class Task(QtGui.QDialog):
                 if i!="":
                     i="\t"+i+"\n"
                 data+=i
-            cursor.insertText(data.rstrip())
+            cursor.insertText(data.rstrip("\n"))
             s2=cursor.position()
             cursor.setPosition(s1)
             cursor.movePosition(QtGui.QTextCursor.StartOfLine,QtGui.QTextCursor.MoveAnchor,s1)
@@ -186,10 +193,10 @@ class Task(QtGui.QDialog):
                     if i!="":
                         i=bytes(i,"utf-8")
                         if i[:1]==b"\t" or i[:1]==b" ":
-                            i=i[1:]                        
-                        i=i.decode("utf-8")
-                    newtext+=i+"\n"
-            cursor.insertText(newtext.rstrip())
+                            i=i[1:]                 
+                        i=i.decode("utf-8")+"\n"
+                    newtext+=i
+            cursor.insertText(newtext.rstrip("\n"))
             s2=cursor.position()
             cursor.setPosition(s1)
             cursor.setPosition(s2,QtGui.QTextCursor.KeepAnchor)
@@ -418,3 +425,10 @@ class Task(QtGui.QDialog):
     def resetColors(self):
         self.setStylesForButtons(self.ui.currentBGcolor, color="(255,255,255,255)")
         self.setStylesForButtons(self.ui.currentTextColor, color="(0,0,0,255)")
+        cursor=self.ui.taskDescription.textCursor()
+        if cursor.hasSelection():
+            bgColor=QtGui.QColor(255,255,255)
+            textColor=QtGui.QColor(0,0,0)
+            self.ui.taskDescription.setTextColor(textColor)
+            self.ui.taskDescription.setTextBackgroundColor(bgColor)
+            

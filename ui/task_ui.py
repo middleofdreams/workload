@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'task.ui'
 #
-# Created: Mon Dec  1 19:07:35 2014
+# Created: Fri Dec  5 08:05:32 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -28,7 +28,7 @@ class Ui_Dialog(object):
         self.verticalLayout_2.setContentsMargins(6, 6, 6, 2)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.horizontalLayout_6 = QtGui.QHBoxLayout()
-        self.horizontalLayout_6.setContentsMargins(15, 6, 15, -1)
+        self.horizontalLayout_6.setContentsMargins(8, 6, 15, -1)
         self.horizontalLayout_6.setObjectName("horizontalLayout_6")
         self.label_4 = QtGui.QLabel(Dialog)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Minimum)
@@ -55,7 +55,7 @@ class Ui_Dialog(object):
         self.createDate.setText("")
         self.createDate.setObjectName("createDate")
         self.horizontalLayout_6.addWidget(self.createDate)
-        spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        spacerItem = QtGui.QSpacerItem(20, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_6.addItem(spacerItem)
         self.label_6 = QtGui.QLabel(Dialog)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Minimum)
@@ -76,9 +76,11 @@ class Ui_Dialog(object):
         self.closeDate.setText("")
         self.closeDate.setObjectName("closeDate")
         self.horizontalLayout_6.addWidget(self.closeDate)
+        spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout_6.addItem(spacerItem1)
         self.verticalLayout_2.addLayout(self.horizontalLayout_6)
         self.horizontalLayout_5 = QtGui.QHBoxLayout()
-        self.horizontalLayout_5.setContentsMargins(15, -1, -1, -1)
+        self.horizontalLayout_5.setContentsMargins(8, -1, -1, -1)
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
         self.label = QtGui.QLabel(Dialog)
         self.label.setObjectName("label")
@@ -108,11 +110,11 @@ class Ui_Dialog(object):
         self.priorityText = QtGui.QLabel(Dialog)
         self.priorityText.setObjectName("priorityText")
         self.horizontalLayout_5.addWidget(self.priorityText)
-        spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.horizontalLayout_5.addItem(spacerItem1)
+        spacerItem2 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout_5.addItem(spacerItem2)
         self.verticalLayout_2.addLayout(self.horizontalLayout_5)
         self.gridLayout_3 = QtGui.QGridLayout()
-        self.gridLayout_3.setContentsMargins(15, -1, 15, -1)
+        self.gridLayout_3.setContentsMargins(8, -1, 15, -1)
         self.gridLayout_3.setObjectName("gridLayout_3")
         self.taskName = QtGui.QLineEdit(Dialog)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
@@ -127,9 +129,6 @@ class Ui_Dialog(object):
         self.label_5.setObjectName("label_5")
         self.gridLayout_3.addWidget(self.label_5, 1, 0, 1, 1)
         self.verticalLayout_2.addLayout(self.gridLayout_3)
-        self.label_3 = QtGui.QLabel(Dialog)
-        self.label_3.setObjectName("label_3")
-        self.verticalLayout_2.addWidget(self.label_3)
         self.frame = QtGui.QFrame(Dialog)
         self.frame.setMinimumSize(QtCore.QSize(0, 27))
         self.frame.setMaximumSize(QtCore.QSize(16777215, 50))
@@ -203,8 +202,8 @@ class Ui_Dialog(object):
         self.currentTextColor.setObjectName("currentTextColor")
         self.horizontalLayout_2.addWidget(self.currentTextColor)
         self.gridLayout_4.addLayout(self.horizontalLayout_2, 0, 5, 1, 1)
-        spacerItem2 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.gridLayout_4.addItem(spacerItem2, 0, 10, 1, 1)
+        spacerItem3 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.gridLayout_4.addItem(spacerItem3, 0, 10, 1, 1)
         self.horizontalLayout_3 = QtGui.QHBoxLayout()
         self.horizontalLayout_3.setSpacing(0)
         self.horizontalLayout_3.setContentsMargins(0, -1, -1, -1)
@@ -252,6 +251,9 @@ class Ui_Dialog(object):
         self.editorResetColor.setMaximumSize(QtCore.QSize(40, 20))
         self.editorResetColor.setObjectName("editorResetColor")
         self.gridLayout_4.addWidget(self.editorResetColor, 0, 6, 1, 1)
+        self.label_3 = QtGui.QLabel(self.frame)
+        self.label_3.setObjectName("label_3")
+        self.gridLayout_4.addWidget(self.label_3, 0, 11, 1, 1)
         self.verticalLayout_2.addWidget(self.frame)
         self.taskDescription = QtGui.QTextBrowser(Dialog)
         self.taskDescription.setMinimumSize(QtCore.QSize(100, 0))
@@ -268,7 +270,7 @@ class Ui_Dialog(object):
         self.taskDescription.setHtml("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Serif\'; font-size:8pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'Serif\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'monofur\'; font-size:10pt;\"><br /></p></body></html>")
         self.taskDescription.setOverwriteMode(False)
         self.taskDescription.setTabStopWidth(40)
@@ -311,11 +313,11 @@ class Ui_Dialog(object):
         self.label_2.setText(QtGui.QApplication.translate("Dialog", "Priority:", None, QtGui.QApplication.UnicodeUTF8))
         self.priorityText.setText(QtGui.QApplication.translate("Dialog", "Now", None, QtGui.QApplication.UnicodeUTF8))
         self.label_5.setText(QtGui.QApplication.translate("Dialog", "Task Name: ", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_3.setText(QtGui.QApplication.translate("Dialog", "Task Description", None, QtGui.QApplication.UnicodeUTF8))
         self.editorBGcolor.setText(QtGui.QApplication.translate("Dialog", "BGcolor", None, QtGui.QApplication.UnicodeUTF8))
         self.editorTextColor.setText(QtGui.QApplication.translate("Dialog", "Text color", None, QtGui.QApplication.UnicodeUTF8))
         self.editorBold.setText(QtGui.QApplication.translate("Dialog", "B", None, QtGui.QApplication.UnicodeUTF8))
         self.editorItalic.setText(QtGui.QApplication.translate("Dialog", "I", None, QtGui.QApplication.UnicodeUTF8))
         self.editorUnderline.setText(QtGui.QApplication.translate("Dialog", "U", None, QtGui.QApplication.UnicodeUTF8))
         self.editorResetColor.setText(QtGui.QApplication.translate("Dialog", "reset", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_3.setText(QtGui.QApplication.translate("Dialog", "Task Description", None, QtGui.QApplication.UnicodeUTF8))
 
