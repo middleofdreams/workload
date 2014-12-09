@@ -59,6 +59,8 @@ def changeStyle(main,settings={}):
     font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px}\
     QPushButton::hover{border: 1px solid rgba(15,15,15,200); border-radius:3px;\
     padding-top:7px;border-style:inset;background-color:rgba"+s["selectedItem"]+"}\
+    QPushButton::disabled{border: 1px solid rgba(15,15,15,200); border-radius:3px;\
+    border-style:inset;background-color:rgba(35,35,35,100)}\
     \
     QPushButton[button=taskEditor]{min-height:18px;min-width:16px;margin-left:2px;border:1px solid rgba(15,15,15,100); border-radius:3px;\
     background-color:rgba"+s["buttonBG"]+";padding-left:2px;padding-right:2px;padding-top:0px;padding-bottom:0px;border-style:outset;\
