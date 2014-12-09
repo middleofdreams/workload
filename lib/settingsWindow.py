@@ -288,7 +288,7 @@ class SettingsWindow(QtGui.QDialog):
             self.ui.chosenFonts.addItem(i.text())
             index=self.ui.allFonts.row(i)
             self.ui.allFonts.takeItem(index)
-            self.ui.chosenFonts.sortItems(QtCore.Qt.AscendingOrder)
+            #self.ui.chosenFonts.sortItems(QtCore.Qt.AscendingOrder)
             self.ui.fontFamily.addItem(i.text())
             
     def removeFonts(self):

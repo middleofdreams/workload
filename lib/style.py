@@ -22,10 +22,10 @@ def changeStyle(main,settings={}):
     QTabWidget::pane{border: 1px solid rgba(15,15,15,100);font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px}\
     \
     QTabBar::tab{min-height:17px;min-width:8ex;border:1px solid rgba(15,15,15,100);padding-top:1px;\
-    ;font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:13px;\
+    ;font-family:Serif;color:rgba"+s["workloadFontColor"]+";font:13px;\
     margin:1px;border-top-left-radius: 4px;border-top-right-radius: 4px;}\
     QTabBar::tab::selected{background-color:rgba"+s["selectedItem"]+";\
-    ;font-family:"+s["fontFamily"]+";font: 12px; color:rgba"+s["workloadFontColor"]+";\
+    ;font-family:Serif;font: 12px; color:rgba"+s["workloadFontColor"]+";\
     border:1px solid rgba(15,15,15,100);margin:0px;padding-top:4px}\
     \
     QListWidget{background-color:rgba"+s["tasklistBG"]+";font-family:"+s["fontFamily"]+";\
@@ -126,6 +126,8 @@ def changeStyle(main,settings={}):
     ;font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px}\
     \
     QLabel{font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:"+s["fontSize"]+"px}\
+    \
+    QLabel[label=bold]{font-family:"+s["fontFamily"]+";color:rgba"+s["workloadFontColor"]+";font:bold "+s["fontSize"]+"px}\
     \
     QSizeGrip{width:16px;height:16px;image:url(:res/ui/size_grip.png)}\
     \
