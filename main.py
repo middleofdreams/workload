@@ -320,14 +320,18 @@ class Workload(QtGui.QMainWindow):
         dialog=QtGui.QFileDialog(self, QtGui.QApplication.translate("ui","Open"), "", QtGui.QApplication.translate("ui","CSV File (*.csv)"))
         if dialog.exec_():
             filename=dialog.selectedFiles()
+            from lib import importexport
+            importexport.importTasks(self,filename,self.settings["dateFormat"])
             
     def exportTaskList(self):
-        fname=QtGui.QFileDialog.getSaveFileName()#"Select file to save task list")
+        fname=QtGui.QFileDialog.getSaveFileName(self,QtGui.QApplication.translate("ui","Save"), "", QtGui.QApplication.translate("ui","CSV File (*.csv)"))#"Select file to save task list")
         if fname[0]:
             includeArchive=self.questionPopup(QtGui.QApplication.translate("ui","Exporting tasks"), QtGui.QApplication.translate("ui","Do you want to include completed tasks?"))
             tasks=self.db.exportTasks(self.currentContext, includeArchive)
             from lib import importexport
-            importexport.export(tasks, fname[0],self.settings["dateFormat"])
+            filename=fname[0]
+            filename=filename.split(".")[0]+".csv"
+            importexport.export(tasks, filename,self.settings["dateFormat"])
             
     def about(self):
         f=open("about.html")

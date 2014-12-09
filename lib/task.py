@@ -62,9 +62,10 @@ class Task(QtGui.QDialog):
             self.ui.dueDate.setDisplayFormat(QtDateFormat(self.settings["dateFormat"]))
             self.setWindowTitle(self.task["name"])
             self.ui.taskName.setText(self.task["name"])
-            self.ui.priority.setValue(self.task["priority"])
-            self.setPriorityText(self.task["priority"])
-            self.ui.taskDescription.insertHtml(self.task["taskdescription"])
+            self.ui.priority.setValue(int(self.task["priority"]))
+            self.setPriorityText(int(self.task["priority"]))
+            desc=self.task["taskdescription"]
+            self.ui.taskDescription.insertHtml(desc)
             createdTimestamp=int(self.task["created"].split(".")[0])
             createdDate=datetime.datetime.fromtimestamp(createdTimestamp)
             createdDate=createdDate.strftime(self.settings["dateFormat"])
@@ -91,7 +92,7 @@ class Task(QtGui.QDialog):
             
             self.setWindowTitle(self.tr("Create New Task"))
             if description is not None:
-                self.ui.taskDescription.append(description)
+                self.ui.taskDescription.insertPlainText(description)
             if taskname is not None:
                 self.ui.taskName.setText(taskname)
                 self.ui.taskName.setFocus()
