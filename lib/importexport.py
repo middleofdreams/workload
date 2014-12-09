@@ -38,54 +38,64 @@ def importTasks(self,filename,dateformat):
     f=codecs.open(filename,'r','utf-8')
     input=f.read()
     f.close()
-    columns=['taskname','taskdescription','priority','due']
+    columns=['taskname','taskdescription','priority','due',]
     entry=None
-    task=False
-    taskname=""
-    taskdescription=""              
+    task=False              
     taskdata={}
     tag=0
+    l=0
+    taskId=0
+    self.attr=""
     for i in input.splitlines():
-        if "Task" in i or task==True:   
-            if "{" in i:
-                tag+=1
+        if "taskname:" in i or task==True:
+            self.attr="taskname"
             task=True
-            for j in columns:   
-                if j in i or entry==j:
-                    entry=j
-                    if "{" in i and "}" in i and entry==j:
-                        v=i.split("{")[1]
-                        v=v.split("}")[0]
-                        entry=None
-                    if "{" in i and entry==j:
-                        v=i.split("{")[1]
-                        if entry=="taskdescription":
-                            v=i.split("{")[1]
-                            if v.strip()!="":
-                                v=v+"<br />"
-                    if "{" not in i and "}" not in i:
-                        if entry=="taskdescription":
-                            v+=i+"<br />"
-                        else:
-                            v+=i
-                    if "}" in i and entry==j:
-                        v+=i.split("}")[0]
-                        entry=None 
-                    taskdata[j]=v
-            if "}" in i:
-                tag-=1
-            if entry==None and tag==0:
-                task=False
-                desc=taskdata["taskdescription"]
-                desc="<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\"></style></head><body>"+desc+"</body></html>"
-                taskdata["taskdescription"]=desc
-                if self.checkIfExist(taskdata["taskname"]) is not True:
-                    duedate=time.mktime(time.strptime(taskdata["due"].strip(),dateformat))
-                    taskid = self.db.addTask(taskdata["taskname"],taskdata["priority"], taskdata["taskdescription"],duedate, self.currentContext)
-                    self.createTaskItem(taskdata["taskname"], taskid, int(taskdata["priority"]))
-                    self.adjustHeight()
-                    self.ui.statusbar.showMessage(QtGui.QApplication.translate("ui","Import finished."),3300)
+            if ":" in i:
+                attr=i.split(":")[0]
+                if attr not in columns:
+                    #print("attribute not in columns, pass line to taskdata:",i)
+                    pass
                 else:
-                    msg="cannot import task: "+taskdata["taskname"].strip()+", task with same name already exist on list.."
-                    msgWindow=QtGui.QMessageBox()
-                    msgWindow.information(self, "task already exist..", msg, buttons=QtGui.QMessageBox.Ok )
+                    self.attr=attr
+                    v=i[len(attr)+1:]
+                    print("attribute found, save line to following attribute: ",attr,":", v)
+                    
+            else:
+                print (self.attr,i)
+            taskdata[attr]=v
+            if i.strip()=="":
+                l+=1
+            if l==2:
+                task=False
+                self.attr=""
+                print(taskdata)
+#                     desc=taskdata["taskdescription"]
+#                     desc="<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\"></style></head><body>"+desc+"</body></html>"
+#                     taskdata["taskdescription"]=desc
+#                     if self.checkIfExist(taskdata["taskname"]) is not True:
+#                         duedate=time.mktime(time.strptime(taskdata["due"].strip(),dateformat))
+#                         taskid = self.db.addTask(taskdata["taskname"],taskdata["priority"], taskdata["taskdescription"],duedate, self.currentContext)
+#                         self.createTaskItem(taskdata["taskname"], taskid, int(taskdata["priority"]))
+#                         self.adjustHeight()
+#                         self.ui.statusbar.showMessage(QtGui.QApplication.translate("ui","Import finished."),3300)
+#                     else:
+#                         msg="cannot import task: "+taskdata["taskname"].strip()+", task with same name already exist on list.."
+#                         msgWindow=QtGui.QMessageBox()
+#                         msgWindow.information(self, "task already exist..", msg, buttons=QtGui.QMessageBox.Ok )
+                        
+                        
+#             if entry==None and tag==0:
+#                 task=False
+#                 desc=taskdata["taskdescription"]
+#                 desc="<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\"></style></head><body>"+desc+"</body></html>"
+#                 taskdata["taskdescription"]=desc
+#                 if self.checkIfExist(taskdata["taskname"]) is not True:
+#                     duedate=time.mktime(time.strptime(taskdata["due"].strip(),dateformat))
+#                     taskid = self.db.addTask(taskdata["taskname"],taskdata["priority"], taskdata["taskdescription"],duedate, self.currentContext)
+#                     self.createTaskItem(taskdata["taskname"], taskid, int(taskdata["priority"]))
+#                     self.adjustHeight()
+#                     self.ui.statusbar.showMessage(QtGui.QApplication.translate("ui","Import finished."),3300)
+#                 else:
+#                     msg="cannot import task: "+taskdata["taskname"].strip()+", task with same name already exist on list.."
+#                     msgWindow=QtGui.QMessageBox()
+#                     msgWindow.information(self, "task already exist..", msg, buttons=QtGui.QMessageBox.Ok )
