@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'settings.ui'
 #
-# Created: Tue Dec  2 18:26:22 2014
+# Created: Wed Dec 10 22:47:20 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -13,7 +13,7 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.setWindowModality(QtCore.Qt.WindowModal)
-        Dialog.resize(618, 430)
+        Dialog.resize(653, 430)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.MinimumExpanding, QtGui.QSizePolicy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -238,7 +238,7 @@ class Ui_Dialog(object):
         self.horizontalLayout_11 = QtGui.QHBoxLayout()
         self.horizontalLayout_11.setObjectName("horizontalLayout_11")
         self.label_18 = QtGui.QLabel(self.themeTab)
-        self.label_18.setMinimumSize(QtCore.QSize(145, 24))
+        self.label_18.setMinimumSize(QtCore.QSize(255, 24))
         self.label_18.setObjectName("label_18")
         self.horizontalLayout_11.addWidget(self.label_18)
         spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
@@ -275,7 +275,7 @@ class Ui_Dialog(object):
         self.horizontalLayout_8 = QtGui.QHBoxLayout()
         self.horizontalLayout_8.setObjectName("horizontalLayout_8")
         self.label_16 = QtGui.QLabel(self.themeTab)
-        self.label_16.setMinimumSize(QtCore.QSize(145, 24))
+        self.label_16.setMinimumSize(QtCore.QSize(255, 24))
         self.label_16.setObjectName("label_16")
         self.horizontalLayout_8.addWidget(self.label_16)
         spacerItem2 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
@@ -367,7 +367,7 @@ class Ui_Dialog(object):
         self.horizontalLayout_25 = QtGui.QHBoxLayout()
         self.horizontalLayout_25.setObjectName("horizontalLayout_25")
         self.label_15 = QtGui.QLabel(self.themeTab)
-        self.label_15.setMinimumSize(QtCore.QSize(145, 24))
+        self.label_15.setMinimumSize(QtCore.QSize(255, 24))
         self.label_15.setObjectName("label_15")
         self.horizontalLayout_25.addWidget(self.label_15)
         spacerItem4 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
@@ -409,7 +409,7 @@ class Ui_Dialog(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.label_20.sizePolicy().hasHeightForWidth())
         self.label_20.setSizePolicy(sizePolicy)
-        self.label_20.setMinimumSize(QtCore.QSize(145, 24))
+        self.label_20.setMinimumSize(QtCore.QSize(255, 24))
         self.label_20.setMaximumSize(QtCore.QSize(0, 16777215))
         self.label_20.setObjectName("label_20")
         self.horizontalLayout_20.addWidget(self.label_20)
@@ -471,7 +471,7 @@ class Ui_Dialog(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.label_17.sizePolicy().hasHeightForWidth())
         self.label_17.setSizePolicy(sizePolicy)
-        self.label_17.setMinimumSize(QtCore.QSize(145, 24))
+        self.label_17.setMinimumSize(QtCore.QSize(255, 24))
         self.label_17.setMaximumSize(QtCore.QSize(0, 16777215))
         self.label_17.setObjectName("label_17")
         self.horizontalLayout_7.addWidget(self.label_17)
@@ -543,7 +543,7 @@ class Ui_Dialog(object):
         self.horizontalLayout_23 = QtGui.QHBoxLayout()
         self.horizontalLayout_23.setObjectName("horizontalLayout_23")
         self.label_31 = QtGui.QLabel(self.themeTab)
-        self.label_31.setMinimumSize(QtCore.QSize(145, 24))
+        self.label_31.setMinimumSize(QtCore.QSize(255, 24))
         self.label_31.setObjectName("label_31")
         self.horizontalLayout_23.addWidget(self.label_31)
         self.tasklistFontSize = QtGui.QSpinBox(self.themeTab)

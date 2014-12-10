@@ -66,7 +66,7 @@ class Task(QtGui.QDialog):
             self.ui.priority.setValue(int(self.task["priority"]))
             self.setPriorityText(int(self.task["priority"]))
             desc=self.task["taskdescription"]
-            self.ui.taskDescription.insertHtml(desc)
+            self.ui.taskDescription.append(desc)
             createdTimestamp=int(self.task["created"].split(".")[0])
             createdDate=datetime.datetime.fromtimestamp(createdTimestamp)
             createdDate=createdDate.strftime(self.settings["dateFormat"])
@@ -228,7 +228,7 @@ class Task(QtGui.QDialog):
             self.ui.dueDate.setDisabled(True)
         
     def setStylesForButtons(self,setButton,color):
-        styleSheet="QPushButton[Button=color] {border: 1px solid rgba(0, 0, 0,190);  border-radius: 2px;border-style: outset; background-color:rgba"+str(color)+"}"
+        styleSheet="QPushButton[Button=color] {margin-left:1px; border: 1px solid rgba(0, 0, 0,190);  border-radius: 2px;border-style: outset; background-color:rgba"+str(color)+"}"
         setButton.setProperty('Button','color')
         setButton.setStyleSheet(styleSheet)
         

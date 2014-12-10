@@ -62,37 +62,37 @@ def changeStyle(main,settings={}):
     QPushButton::disabled{border: 1px solid rgba(15,15,15,200); border-radius:3px;\
     border-style:inset;background-color:rgba(35,35,35,100)}\
     \
-    QPushButton[button=taskEditor]{min-height:18px;min-width:16px;margin-left:2px;border:1px solid rgba(15,15,15,100); border-radius:3px;\
-    background-color:rgba"+s["buttonBG"]+";padding-left:2px;padding-right:2px;padding-top:0px;padding-bottom:0px;border-style:outset;\
+    QPushButton[button=taskEditor]{min-height:18px;margin-left:2px;border:1px solid rgba(15,15,15,100); border-radius:3px;\
+    background-color:rgba"+s["buttonBG"]+";padding-left:3px;padding-right:3px;padding-top:0px;padding-bottom:1px;border-style:outset;\
     ;color:rgba"+s["workloadFontColor"]+"}\
     QPushButton::hover[button=taskEditor]{border: 1px solid rgba(15,15,15,100); border-radius:2px;\
-    background-color:rgba"+s["selectedItem"]+"}\
+    background-color:rgba"+s["selectedItem"]+";padding-top:2px}\
     QPushButton::flat[button=taskEditor]{border: 1px solid rgba(15,15,15,200); border-radius:2px;\
-    background-color:rgba"+s["selectedItem"]+"}\
+    background-color:rgba"+s["selectedItem"]+";padding-top:2px}\
     \
     QPushButton[button=taskEditorBold]{min-height:18px;min-width:16px;margin-left:2px;border:1px solid rgba(15,15,15,100); border-radius:3px;\
     background-color:rgba"+s["buttonBG"]+";padding-left:2px;padding-right:2px;padding-top:0px;padding-bottom:0px;border-style:outset;\
     ;color:rgba"+s["workloadFontColor"]+";font:bold "+s["fontSize"]+"px}\
     QPushButton::hover[button=taskEditorBold]{border: 1px solid rgba(15,15,15,100); border-radius:2px;\
-    background-color:rgba"+s["selectedItem"]+"}\
+    background-color:rgba"+s["selectedItem"]+";padding-top:2px}\
     QPushButton::flat[button=taskEditorBold]{border: 1px solid rgba(15,15,15,200); border-radius:2px;\
-    background-color:rgba"+s["selectedItem"]+"}\
+    background-color:rgba"+s["selectedItem"]+";padding-top:2px}\
         \
     QPushButton[button=taskEditorItalic]{min-height:18px;min-width:16px;margin-left:2px;border:1px solid rgba(15,15,15,100); border-radius:3px;\
     background-color:rgba"+s["buttonBG"]+";padding-left:2px;padding-right:2px;padding-top:0px;padding-bottom:0px;border-style:outset;\
     ;color:rgba"+s["workloadFontColor"]+";font:italic "+s["fontSize"]+"px}\
     QPushButton::hover[button=taskEditorItalic]{border: 1px solid rgba(15,15,15,100); border-radius:2px;\
-    background-color:rgba"+s["selectedItem"]+"}\
+    background-color:rgba"+s["selectedItem"]+";padding-top:2px}\
     QPushButton::flat[button=taskEditorItalic]{border: 1px solid rgba(15,15,15,200); border-radius:2px;\
-    background-color:rgba"+s["selectedItem"]+"}\
+    background-color:rgba"+s["selectedItem"]+";padding-top:2px}\
 \
     QPushButton[button=taskEditorUnderline]{min-height:18px;min-width:16px;margin-left:2px;border:1px solid rgba(15,15,15,100); border-radius:3px;\
     background-color:rgba"+s["buttonBG"]+";padding-left:2px;padding-right:2px;padding-top:0px;padding-bottom:0px;border-style:outset;\
     ;color:rgba"+s["workloadFontColor"]+";font:underline "+s["fontSize"]+"px}\
     QPushButton::hover[button=taskEditorUnderline]{border: 1px solid rgba(15,15,15,100); border-radius:2px;\
-    background-color:rgba"+s["selectedItem"]+"}\
+    background-color:rgba"+s["selectedItem"]+";padding-top:2px}\
     QPushButton::flat[button=taskEditorUnderline]{border: 1px solid rgba(15,15,15,200); border-radius:2px;\
-    background-color:rgba"+s["selectedItem"]+"}\
+    background-color:rgba"+s["selectedItem"]+";padding-top:2px}\
         \
     QDateTimeEdit{background-color:rgba"+s["textInputBG"]+";border:1px solid rgba(15,15,15,100);border-radius:3px;min-width:10ex;min-height:13px;\
     padding-top:2px;padding-bottom:2px;padding-left:5px;padding-right:5px;border-style:outset;\
