@@ -318,7 +318,7 @@ class Workload(QtGui.QMainWindow):
 
     def importTasklist(self):
         fname=QtGui.QFileDialog.getOpenFileName(self, QtGui.QApplication.translate("ui","Open"), "", QtGui.QApplication.translate("ui","Workload Import File (*.w)"))
-        if dialog[0]:
+        if fname[0]:
             filename=fname[0]
             from lib import importexport
             importexport.importTasks(self,filename,self.settings["dateFormat"])
