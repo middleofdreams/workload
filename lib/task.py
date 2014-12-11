@@ -78,6 +78,7 @@ class Task(QtGui.QDialog):
                 closeDate=datetime.datetime.fromtimestamp(closeTimestamp)
                 closeDate=closeDate.strftime(self.settings["dateFormat"])
                 self.ui.closeDate.setText(closeDate)
+                self.ui.buttonBox.buttons()[0].setDisabled(True)
             
             if self.task["due"] is not None:
                 self.ui.dueOn.setChecked(True)

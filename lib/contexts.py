@@ -41,6 +41,7 @@ def switchContext(self,item):
         self.ui.menuContext.setTitle(item.text())
     else:
         item.setChecked(True)
+    self.timer.getNearEndTasks(force=True)
         
         
 def addContext(self):
