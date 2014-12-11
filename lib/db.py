@@ -42,7 +42,7 @@ class DB(object):
     def exportTasks(self,context,includeArchive=False):
         t = (context,)
         tasks = []
-        query="SELECT taskname,taskdescription,created,priority,due,closed,closedat FROM tasks where context=?"
+        query="SELECT taskname,created,priority,due,closed,closedat,taskdescription FROM tasks where context=?"
         if not includeArchive:
             query+=" and closed=0"
         for i in self.c.execute(query, t):
