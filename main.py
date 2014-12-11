@@ -317,20 +317,19 @@ class Workload(QtGui.QMainWindow):
 ###### MENU FUNCTIONS
 
     def importTasklist(self):
-        dialog=QtGui.QFileDialog(self, QtGui.QApplication.translate("ui","Open"), "", QtGui.QApplication.translate("ui","CSV File (*.csv)"))
-        if dialog.exec_():
-            filename=dialog.selectedFiles()
+        fname=QtGui.QFileDialog.getOpenFileName(self, QtGui.QApplication.translate("ui","Open"), "", QtGui.QApplication.translate("ui","Workload Import File (*.w)"))
+        if fname[0]:
+            filename=fname[0]
             from lib import importexport
             importexport.importTasks(self,filename,self.settings["dateFormat"])
             
     def exportTaskList(self):
-        fname=QtGui.QFileDialog.getSaveFileName(self,QtGui.QApplication.translate("ui","Save"), "", QtGui.QApplication.translate("ui","CSV File (*.csv)"))#"Select file to save task list")
+        fname=QtGui.QFileDialog.getSaveFileName(self,QtGui.QApplication.translate("ui","Save"), "", QtGui.QApplication.translate("ui","Workload Export File (*.w)"))
         if fname[0]:
             includeArchive=self.questionPopup(QtGui.QApplication.translate("ui","Exporting tasks"), QtGui.QApplication.translate("ui","Do you want to include completed tasks?"))
             tasks=self.db.exportTasks(self.currentContext, includeArchive)
             from lib import importexport
             filename=fname[0]
-            filename=filename.split(".")[0]+".csv"
             importexport.export(tasks, filename,self.settings["dateFormat"])
             
     def about(self):
@@ -397,8 +396,10 @@ class Workload(QtGui.QMainWindow):
             self.qtTranslator = QtCore.QTranslator()
             self.qtTranslator.load("i18n"+os.sep+"workload_"+locale+".qm")
             self.app.installTranslator(self.qtTranslator)
-  
-  
+    def showMsg(self,msg):
+        msgWindow=QtGui.QMessageBox()
+        msgWindow.information(self, "Workload - Information", msg, buttons=QtGui.QMessageBox.Ok )
+      
   
 if __name__ == "__main__":
     import sys,os

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'task.ui'
 #
-# Created: Fri Dec  5 08:05:32 2014
+# Created: Wed Dec 10 21:38:01 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -148,7 +148,7 @@ class Ui_Dialog(object):
         self.fontComboBox.setObjectName("fontComboBox")
         self.gridLayout_4.addWidget(self.fontComboBox, 0, 8, 1, 1)
         self.fontSize = QtGui.QSpinBox(self.frame)
-        self.fontSize.setMinimumSize(QtCore.QSize(20, 20))
+        self.fontSize.setMinimumSize(QtCore.QSize(40, 20))
         self.fontSize.setMaximumSize(QtCore.QSize(40, 20))
         self.fontSize.setButtonSymbols(QtGui.QAbstractSpinBox.UpDownArrows)
         self.fontSize.setMinimum(8)
@@ -161,8 +161,8 @@ class Ui_Dialog(object):
         self.horizontalLayout.setContentsMargins(0, -1, -1, -1)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.editorBGcolor = QtGui.QPushButton(self.frame)
-        self.editorBGcolor.setMinimumSize(QtCore.QSize(0, 20))
-        self.editorBGcolor.setMaximumSize(QtCore.QSize(60, 20))
+        self.editorBGcolor.setMinimumSize(QtCore.QSize(70, 20))
+        self.editorBGcolor.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.editorBGcolor.setCheckable(False)
         self.editorBGcolor.setObjectName("editorBGcolor")
         self.horizontalLayout.addWidget(self.editorBGcolor)
@@ -189,8 +189,8 @@ class Ui_Dialog(object):
         self.horizontalLayout_2.setContentsMargins(0, -1, -1, -1)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.editorTextColor = QtGui.QPushButton(self.frame)
-        self.editorTextColor.setMinimumSize(QtCore.QSize(0, 20))
-        self.editorTextColor.setMaximumSize(QtCore.QSize(80, 20))
+        self.editorTextColor.setMinimumSize(QtCore.QSize(75, 20))
+        self.editorTextColor.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.editorTextColor.setObjectName("editorTextColor")
         self.horizontalLayout_2.addWidget(self.editorTextColor)
         self.currentTextColor = QtGui.QPushButton(self.frame)
@@ -247,7 +247,7 @@ class Ui_Dialog(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.editorResetColor.sizePolicy().hasHeightForWidth())
         self.editorResetColor.setSizePolicy(sizePolicy)
-        self.editorResetColor.setMinimumSize(QtCore.QSize(0, 20))
+        self.editorResetColor.setMinimumSize(QtCore.QSize(45, 20))
         self.editorResetColor.setMaximumSize(QtCore.QSize(40, 20))
         self.editorResetColor.setObjectName("editorResetColor")
         self.gridLayout_4.addWidget(self.editorResetColor, 0, 6, 1, 1)
@@ -270,7 +270,7 @@ class Ui_Dialog(object):
         self.taskDescription.setHtml("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Serif\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'Serif\'; font-size:8pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'monofur\'; font-size:10pt;\"><br /></p></body></html>")
         self.taskDescription.setOverwriteMode(False)
         self.taskDescription.setTabStopWidth(40)
