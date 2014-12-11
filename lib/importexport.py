@@ -14,7 +14,9 @@ def export(tasks,filename,dateformat):
                 editor.insertHtml(desc)
                 plainDesc=editor.toPlainText()
                 plainDesc=plainDesc.replace("\r\n","\n")
-                out+="taskdescription:"+plainDesc.rstrip()+"\n\n\n"
+                if len(plainDesc.strip())!=0:
+                    out+="taskdescription:"+plainDesc.rstrip()+"\n"
+                out+="\n\n"
             else:
                 if attr==1 or attr==3 or attr==5:
                     try:
@@ -41,25 +43,27 @@ def export(tasks,filename,dateformat):
     f.write(out.rstrip())
     f.close()
     
-def doAction(self,taskdata,dateformat):  
-    if len(taskdata.keys())>=3:
+def doAction(self,taskdata,dateformat):
+    if self.checkIfExist(taskdata["taskname"]) is not True:
         try:
-            desc=taskdata["taskdescription"].rstrip()
+            desc=taskdata["taskdescription"].rstrip("<br />")
             desc="<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\"></style></head><body>"+desc+"</body></html>"
-            taskdata["taskdescription"]=desc
         except KeyError:
-            taskdata["taskdescription"]=""
-        if self.checkIfExist(taskdata["taskname"]) is not True:
+            desc=""
+        try:
             duedate=time.mktime(time.strptime(taskdata["due"].strip(),dateformat))
-            taskid = self.db.addTask(taskdata["taskname"],taskdata["priority"], taskdata["taskdescription"],duedate, self.currentContext)
-            self.createTaskItem(taskdata["taskname"], taskid, int(taskdata["priority"]))
-            self.adjustHeight()
-            self.ui.statusbar.showMessage(QtGui.QApplication.translate("ui","Import finished."),3300)
-        else:
-            msg="cannot import task: "+taskdata["taskname"].strip()+", task with same name already exist"
-            self.showMsg(msg)
+        except KeyError:
+            duedate=None
+        try:
+            priority=taskdata["priority"]
+        except KeyError:
+            priority=0
+        taskid = self.db.addTask(taskdata["taskname"],priority,desc,duedate, self.currentContext)
+        self.createTaskItem(taskdata["taskname"], taskid, int(priority))
+        self.adjustHeight()
+        self.ui.statusbar.showMessage(QtGui.QApplication.translate("ui","Import finished."),3300)
     else:
-        msg="cannot import task:\""+taskdata["taskname"].strip()+"\", task attributes are missing."
+        msg="cannot import task: "+taskdata["taskname"].strip()+", task with same name already exist"
         self.showMsg(msg)
     
 def importTasks(self,filename,dateformat):
